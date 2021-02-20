@@ -35,6 +35,9 @@
 		"GlobalNewFiles": "SpecialGlobalNewFiles"
 	},
 	"Hooks": {
+		"CreateWikiTables": [
+			"GlobalNewFilesHooks::onCreateWikiTables"
+		],
 		"LoadExtensionSchemaUpdates": [
 			"GlobalNewFilesHooks::onLoadExtensionSchemaUpdates"
 		],

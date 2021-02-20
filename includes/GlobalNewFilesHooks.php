@@ -3,6 +3,10 @@
 use MediaWiki\MediaWikiServices;
 
 class GlobalNewFilesHooks {
+	public static function onCreateWikiTables( &$tables ) {
+		$tables['gnf_files'] = 'files_dbname';
+	}
+
 	public static function onUploadComplete( $uploadBase ) {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
 
