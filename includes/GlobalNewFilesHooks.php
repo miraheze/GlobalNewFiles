@@ -5,13 +5,12 @@ use MediaWiki\MediaWikiServices;
 class GlobalNewFilesHooks {
 	public static function onUploadComplete( $uploadBase ) {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
-		$c =  new GlobalVarConfig( 'wmg' );
 
 		$uploadedFile = $uploadBase->getLocalFile();
 
 		$dbw = wfGetDB( DB_MASTER, [], $config->get( 'CreateWikiDatabase' ) );
 
-		$c =  new GlobalVarConfig( 'cw' );
+		$c = new GlobalVarConfig( 'cw' );
 
 		$dbw->insert(
 			'gnf_files',
@@ -55,13 +54,13 @@ class GlobalNewFilesHooks {
 		if ( $config->get( 'CreateWikiDatabase' ) === $config->get( 'DBname' ) ) {
 			$updater->addExtensionTable(
 				'gnf_files',
-				__DIR__ . '/../../sql/gnf_files.sql'
+				__DIR__ . '/../sql/gnf_files.sql'
 			);
 
 			$updater->modifyExtensionField(
 				'gnf_files',
 				'files_timestamp',
-				__DIR__ . '/../../sql/patch-gnf_files-binary.sql' 
+				__DIR__ . '/../sql/patch-gnf_files-binary.sql' 
 			);
 		}
 
