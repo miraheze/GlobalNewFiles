@@ -9,6 +9,9 @@
 	"url": "//github.com/miraheze/GlobalNewFiles",
 	"descriptionmsg": "globalnewfiles-description",
 	"type": "specialpage",
+	"requires": {
+		"MediaWiki": ">= 1.35.0"
+	},
 	"MessagesDirs": {
 		"GlobalNewFiles": [
 			"i18n"
