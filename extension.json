@@ -10,7 +10,10 @@
 	"descriptionmsg": "globalnewfiles-description",
 	"type": "specialpage",
 	"requires": {
-		"MediaWiki": ">= 1.35.0"
+		"MediaWiki": ">= 1.35.0",
+		"extensions": {
+			"CreateWiki": "*"
+		}
 	},
 	"MessagesDirs": {
 		"GlobalNewFiles": [
