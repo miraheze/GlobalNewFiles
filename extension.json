@@ -8,7 +8,7 @@
 	],
 	"url": "//github.com/miraheze/GlobalNewFiles",
 	"descriptionmsg": "globalnewfiles-description",
-	"type": "other",
+	"type": "specialpage",
 	"MessagesDirs": {
 		"GlobalNewFiles": [
 			"i18n"
