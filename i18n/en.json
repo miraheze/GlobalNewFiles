@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Universal Omega"
+		]
+	},
+	"globalnewfiles": "Global New Files",
+	"globalnewfiles-description": "Global new files special page",
+	"right-viewglobalprivatefiles": "View global files filtered from private wikis"
+}
