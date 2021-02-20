@@ -4,7 +4,7 @@ use MediaWiki\MediaWikiServices;
 
 class GlobalNewFilesHooks {
 	public static function onUploadComplete( $uploadBase ) {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'mirahezemagic' );
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
 		$c =  new GlobalVarConfig( 'wmg' );
 
 		$uploadedFile = $uploadBase->getLocalFile();
@@ -36,7 +36,7 @@ class GlobalNewFilesHooks {
 	 * @param string $reason
 	 */
 	public static function onFileDeleteComplete( $file, $oldimage, $article, $user, $reason ) {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'mirahezemagic' );
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
 
 		$dbw = wfGetDB( DB_MASTER, [], $config->get( 'CreateWikiDatabase' ) );
 
@@ -50,7 +50,7 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onLoadExtensionSchemaUpdates( DatabaseUpdater $updater ) {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'mirahezemagic' );
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
 
 		if ( $config->get( 'CreateWikiDatabase' ) === $config->get( 'DBname' ) ) {
 			$updater->addExtensionTable(
@@ -69,7 +69,7 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onTitleMoveComplete( $title, $newTitle, $user, $oldid, $newid, $reason, $revision ) {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'mirahezemagic' );
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
 
 		if ( !$title->inNamespace( NS_FILE ) ) {
 			return true;

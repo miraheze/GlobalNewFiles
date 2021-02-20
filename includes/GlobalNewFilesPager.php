@@ -16,7 +16,7 @@ class GlobalNewFilesPager extends TablePager {
 	}
 
 	static function getCreateWikiDatabase() {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'mirahezemagic' );
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
 
 		$factory = MediaWikiServices::getInstance()->getDBLoadBalancerFactory();
 		$lb = $factory->getMainLB( $config->get( 'CreateWikiDatabase' ) );
@@ -72,7 +72,7 @@ class GlobalNewFilesPager extends TablePager {
 	}
 
 	function getQueryInfo() {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'mirahezemagic' );
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
 
 		$info = [
 			'tables' => [ 'gnf_files' ],
