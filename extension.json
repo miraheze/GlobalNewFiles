@@ -8,6 +8,7 @@
 	],
 	"url": "//github.com/miraheze/GlobalNewFiles",
 	"descriptionmsg": "globalnewfiles-description",
+	"license-name": "GPL-3.0-or-later",
 	"type": "specialpage",
 	"requires": {
 		"MediaWiki": ">= 1.35.0",
