@@ -14,7 +14,7 @@ class GlobalNewFilesHooks {
 
 		$dbw = wfGetDB( DB_MASTER, [], $config->get( 'CreateWikiDatabase' ) );
 
-		$c = new GlobalVarConfig( 'cw' );
+		$wiki = new RemoteWiki( $config->get( 'DBname' ) );
 
 		$dbw->insert(
 			'gnf_files',
@@ -22,7 +22,7 @@ class GlobalNewFilesHooks {
 				'files_dbname' => $config->get( 'DBname' ),
 				'files_name' => $uploadedFile->getName(),
 				'files_page' => $config->get( 'Server' ) . $uploadedFile->getDescriptionUrl(),
-				'files_private' => (int)$c->get( 'Private' ),
+				'files_private' => (int)$wiki->isPrivate(),
 				'files_timestamp' => $dbw->timestamp(),
 				'files_url' => $uploadedFile->getViewURL(),
 				'files_user' => $uploadedFile->getUser()
