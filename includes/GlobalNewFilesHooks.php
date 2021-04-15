@@ -12,7 +12,7 @@ class GlobalNewFilesHooks {
 
 		$uploadedFile = $uploadBase->getLocalFile();
 
-		$dbw = wfGetDB( DB_MASTER, [], $config->get( 'CreateWikiDatabase' ) );
+		$dbw = wfGetDB( DB_PRIMARY, [], $config->get( 'CreateWikiDatabase' ) );
 
 		$wiki = new RemoteWiki( $config->get( 'DBname' ) );
 
@@ -41,7 +41,7 @@ class GlobalNewFilesHooks {
 	public static function onFileDeleteComplete( $file, $oldimage, $article, $user, $reason ) {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
 
-		$dbw = wfGetDB( DB_MASTER, [], $config->get( 'CreateWikiDatabase' ) );
+		$dbw = wfGetDB( DB_PRIMARY, [], $config->get( 'CreateWikiDatabase' ) );
 
 		$dbw->delete(
 			'gnf_files',
@@ -78,7 +78,7 @@ class GlobalNewFilesHooks {
 			return true;
 		}
 
-		$dbw = wfGetDB( DB_MASTER, [], $config->get( 'CreateWikiDatabase' ) );
+		$dbw = wfGetDB( DB_PRIMARY, [], $config->get( 'CreateWikiDatabase' ) );
 
 		$file = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo()->newFile( $newTitle );
 
