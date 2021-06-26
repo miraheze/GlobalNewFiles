@@ -4,7 +4,7 @@ use MediaWiki\MediaWikiServices;
 
 class GlobalNewFilesPager extends TablePager {
 	function __construct() {
-		$this->mDb = self::getCreateWikiDatabase();
+		$this->mDb = GlobalNewFilesHooks::getGlobalDB( DB_REPLICA );
 
 		if ( $this->getRequest()->getText( 'sort', 'files_date' ) == 'files_date' ) {
 			$this->mDefaultDirection = IndexPager::DIR_DESCENDING;
@@ -13,15 +13,6 @@ class GlobalNewFilesPager extends TablePager {
 		}
 
 		parent::__construct( $this->getContext() );
-	}
-
-	static function getCreateWikiDatabase() {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
-
-		$factory = MediaWikiServices::getInstance()->getDBLoadBalancerFactory();
-		$lb = $factory->getMainLB( $config->get( 'CreateWikiDatabase' ) );
-
-		return $lb->getConnectionRef( DB_REPLICA, 'gnf_files', $config->get( 'CreateWikiDatabase' ) );
 	}
 
 	function getFieldNames() {
