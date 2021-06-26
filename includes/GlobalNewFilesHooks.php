@@ -26,7 +26,8 @@ class GlobalNewFilesHooks {
 				'files_timestamp' => $dbw->timestamp(),
 				'files_url' => $uploadedFile->getViewURL(),
 				'files_user' => $uploadedFile->getUser()
-			]
+			],
+			__METHOD__
 		);
 	}
 
@@ -48,7 +49,8 @@ class GlobalNewFilesHooks {
 			[
 				'files_dbname' => $config->get( 'DBname' ),
 				'files_name' => $file->getTitle()->getDBkey(),
-			]
+			],
+			__METHOD__
 		);
 	}
 
@@ -92,7 +94,8 @@ class GlobalNewFilesHooks {
 			[
 				'files_dbname' => $config->get( 'DBname' ),
 				'files_name' => $title->getDBKey(),
-			]
+			],
+			__METHOD__
 		);
 
 		return true;
