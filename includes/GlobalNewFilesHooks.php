@@ -12,7 +12,7 @@ class GlobalNewFilesHooks {
 
 		$uploadedFile = $uploadBase->getLocalFile();
 
-		$dbw = wfGetDB( DB_PRIMARY, [], $config->get( 'CreateWikiDatabase' ) );
+		$dbw = self::getGlobalDB( DB_PRIMARY );
 
 		$wiki = new RemoteWiki( $config->get( 'DBname' ) );
 
@@ -42,7 +42,7 @@ class GlobalNewFilesHooks {
 	public static function onFileDeleteComplete( $file, $oldimage, $article, $user, $reason ) {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
 
-		$dbw = wfGetDB( DB_PRIMARY, [], $config->get( 'CreateWikiDatabase' ) );
+		$dbw = self::getGlobalDB( DB_PRIMARY );
 
 		$dbw->delete(
 			'gnf_files',
@@ -80,7 +80,7 @@ class GlobalNewFilesHooks {
 			return true;
 		}
 
-		$dbw = wfGetDB( DB_PRIMARY, [], $config->get( 'CreateWikiDatabase' ) );
+		$dbw = self::getGlobalDB( DB_PRIMARY );
 
 		$file = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo()->newFile( $newTitle );
 
@@ -99,5 +99,19 @@ class GlobalNewFilesHooks {
 		);
 
 		return true;
+	}
+
+	/**
+	 * @param int $index DB_PRIMARY/DB_REPLICA
+	 * @param array|string $groups
+	 * @return IDatabase
+	 */
+	public static function getGlobalDB( $index, $groups = [] ) {
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
+
+		$lbFactory = MediaWikiServices::getInstance()->getDBLoadBalancerFactory();
+		$lb = $lbFactory->getMainLB( $config->get( 'CreateWikiDatabase' ) );
+
+		return $lb->getConnectionRef( $index, $groups, $config->get( 'CreateWikiDatabase' ) );
 	}
 }
