@@ -103,15 +103,15 @@ class GlobalNewFilesHooks {
 
 	/**
 	 * @param int $index DB_PRIMARY/DB_REPLICA
-	 * @param array|string $table|[]
+	 * @param array|string $groups
 	 * @return IDatabase
 	 */
-	public static function getGlobalDB( $index, $table = [] ) {
+	public static function getGlobalDB( $index, $groups = [] ) {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
 
 		$lbFactory = MediaWikiServices::getInstance()->getDBLoadBalancerFactory();
 		$lb = $lbFactory->getMainLB( $config->get( 'CreateWikiDatabase' ) );
 
-		return $lb->getConnectionRef( $index, $table, $config->get( 'CreateWikiDatabase' ) );
+		return $lb->getConnectionRef( $index, $groups, $config->get( 'CreateWikiDatabase' ) );
 	}
 }
