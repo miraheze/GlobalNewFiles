@@ -15,7 +15,7 @@ class GlobalNewFilesHooks {
 		$dbw = wfGetDB( DB_PRIMARY, [], $config->get( 'CreateWikiDatabase' ) );
 
 		$wiki = new RemoteWiki( $config->get( 'DBname' ) );
-
+                /*
 		$dbw->insert(
 			'gnf_files',
 			[
@@ -29,6 +29,7 @@ class GlobalNewFilesHooks {
 			],
 			__METHOD__
 		);
+                */
 	}
 
 	/**
@@ -43,7 +44,7 @@ class GlobalNewFilesHooks {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
 
 		$dbw = wfGetDB( DB_PRIMARY, [], $config->get( 'CreateWikiDatabase' ) );
-
+                /*
 		$dbw->delete(
 			'gnf_files',
 			[
@@ -52,6 +53,7 @@ class GlobalNewFilesHooks {
 			],
 			__METHOD__
 		);
+                */
 	}
 
 	public static function onLoadExtensionSchemaUpdates( DatabaseUpdater $updater ) {
@@ -83,7 +85,7 @@ class GlobalNewFilesHooks {
 		$dbw = wfGetDB( DB_PRIMARY, [], $config->get( 'CreateWikiDatabase' ) );
 
 		$file = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo()->newFile( $newTitle );
-
+                /*
 		$dbw->update(
 			'gnf_files',
 			[
@@ -97,6 +99,7 @@ class GlobalNewFilesHooks {
 			],
 			__METHOD__
 		);
+                */
 
 		return true;
 	}
