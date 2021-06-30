@@ -39,5 +39,7 @@ class GlobalNewFilesInsertJob extends Job implements GenericParameterJob {
 			],
 			__METHOD__
 		);
+
+		return true;
 	}
 }
