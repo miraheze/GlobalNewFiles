@@ -66,8 +66,14 @@ class GlobalNewFilesHooks {
 			$updater->modifyExtensionField(
 				'gnf_files',
 				'files_timestamp',
-				__DIR__ . '/../sql/patch-gnf_files-binary.sql' 
+				__DIR__ . '/../sql/patches/patch-gnf_files-binary.sql' 
 			);
+
+			$updater->modifyTable(
+ 				'gnf_files',
+  				__DIR__ . '/../sql/patches/patch-gnf_files-add-indexes.sql',
+				true
+ 			);
 		}
 
 		return true;
