@@ -30,5 +30,7 @@ class GlobalNewFilesDeleteJob extends Job implements GenericParameterJob {
 			],
 			__METHOD__
 		);
+
+		return true;
 	}
 }
