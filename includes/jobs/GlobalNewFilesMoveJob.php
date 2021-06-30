@@ -41,7 +41,7 @@ class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
 			],
 			[
 				'files_dbname' => $config->get( 'DBname' ),
-				'files_name' => $$this->title->getDBKey(),
+				'files_name' => $this->title->getDBKey(),
 			],
 			__METHOD__
 		);
