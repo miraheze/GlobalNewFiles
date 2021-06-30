@@ -20,7 +20,7 @@ class GlobalNewFilesDeleteJob extends Job implements GenericParameterJob {
 	public function run() {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
 
-		$dbw = self::getGlobalDB( DB_PRIMARY );
+		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 
 		$dbw->delete(
 			'gnf_files',
