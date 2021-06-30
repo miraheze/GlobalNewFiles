@@ -28,7 +28,7 @@ class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
 			return true;
 		}
 
-		$dbw = self::getGlobalDB( DB_PRIMARY );
+		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 
 		$file = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo()->newFile( $this->newTitle );
 
