@@ -20,6 +20,10 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onTitleMoveComplete( $title, $newTitle, $user, $oldid, $newid, $reason, $revision ) {
+		if ( !$this->title->inNamespace( NS_FILE ) ) {
+			return true;
+		}
+
 		JobQueueGroup::singleton()->push(
 			new GlobalNewFilesMoveJob( [ 'title' => $title, 'newtitle' => $newTitle ] )
 		);
