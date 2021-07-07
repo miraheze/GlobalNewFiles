@@ -20,7 +20,7 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onTitleMoveComplete( $title, $newTitle, $user, $oldid, $newid, $reason, $revision ) {
-		if ( !$this->title->inNamespace( NS_FILE ) ) {
+		if ( !$title->inNamespace( NS_FILE ) ) {
 			return true;
 		}
 
