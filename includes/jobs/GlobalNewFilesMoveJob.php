@@ -24,10 +24,6 @@ class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
 	public function run() {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
 
-		if ( !$this->title->inNamespace( NS_FILE ) ) {
-			return true;
-		}
-
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 
 		$file = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo()->newFile( $this->newTitle );
