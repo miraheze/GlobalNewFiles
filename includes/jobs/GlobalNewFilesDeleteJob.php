@@ -2,16 +2,12 @@
 
 use MediaWiki\MediaWikiServices;
 
-class GlobalNewFilesDeleteJob extends Job implements GenericParameterJob {
-	private $file;
-
+class GlobalNewFilesDeleteJob extends Job {
 	/**
 	 * @param array $params
 	 */
-	public function __construct( array $params ) {
-		parent::__construct( 'GlobalNewFilesDeleteJob', $params );
-
-		$this->file = $params['file'];
+	public function __construct( $title, $params ) {
+		parent::__construct( 'GlobalNewFilesDeleteJob', $title, $params );
 	}
 
 	/**
@@ -26,7 +22,7 @@ class GlobalNewFilesDeleteJob extends Job implements GenericParameterJob {
 			'gnf_files',
 			[
 				'files_dbname' => $config->get( 'DBname' ),
-				'files_name' => $this->file->getTitle()->getDBkey(),
+				'files_name' => $this->getTitle()->getDBkey(),
 			],
 			__METHOD__
 		);
