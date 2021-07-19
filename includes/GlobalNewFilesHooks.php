@@ -15,7 +15,7 @@ class GlobalNewFilesHooks {
 
 	public static function onFileDeleteComplete( $file, $oldimage, $article, $user, $reason ) {
 		JobQueueGroup::singleton()->push(
-			new GlobalNewFilesDeleteJob( [ 'file' => $file ] )
+			new GlobalNewFilesDeleteJob( $file->getTitle(), [] )
 		);
 	}
 
