@@ -19,7 +19,7 @@ class GlobalNewFilesHooks {
 		);
 	}
 
-	public static function onPageMoveComplete( LinkTarget $old, LinkTarget $new, UserIdentity $userIdentity, int $pageid, int $redirid, string $reason, RevisionRecord $revision ) {
+	public static function onPageMoveComplete( $old, $new, $userIdentity, $pageid, $redirid, $reason, $revision ) {
 		$oldTitle = Title::newFromLinkTarget( $old );
 		$newTitle = Title::newFromLinkTarget( $new );
 
