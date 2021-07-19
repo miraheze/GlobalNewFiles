@@ -8,13 +8,8 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onUploadComplete( $uploadBase ) {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
-
 		JobQueueGroup::singleton()->push(
-			new GlobalNewFilesInsertJob( $uploadBase->getTitle(), [
-				'uploadedfile' => $uploadBase->getLocalFile(),
-				'private' => new RemoteWiki( $config->get( 'DBname' ) )
-			] )
+			new GlobalNewFilesInsertJob( $uploadBase->getTitle(), [] )
 		);
 	}
 
