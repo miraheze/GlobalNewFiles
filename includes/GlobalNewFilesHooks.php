@@ -19,10 +19,13 @@ class GlobalNewFilesHooks {
 		);
 	}
 
-	public static function onTitleMoveComplete( $title, $newTitle, $user, $oldid, $newid, $reason, $revision ) {
-		if ( $title->inNamespace( NS_FILE ) ) {
+	public static function onPageMoveComplete( LinkTarget $old, LinkTarget $new, UserIdentity $userIdentity, int $pageid, int $redirid, string $reason, RevisionRecord $revision ) {
+		$oldTitle = Title::newFromLinkTarget( $old );
+		$newTitle = Title::newFromLinkTarget( $new );
+
+		if ( $oldTitle->inNamespace( NS_FILE ) ) {
 			JobQueueGroup::singleton()->push(
-				new GlobalNewFilesMoveJob( [ 'oldtitle' => $title, 'newtitle' => $newTitle ] )
+				new GlobalNewFilesMoveJob( [ 'oldtitle' => $oldTitle, 'newtitle' => $newTitle ] )
 			);
 		}
 	}
