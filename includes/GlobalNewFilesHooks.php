@@ -22,7 +22,7 @@ class GlobalNewFilesHooks {
 	public static function onTitleMoveComplete( $title, $newTitle, $user, $oldid, $newid, $reason, $revision ) {
 		if ( $title->inNamespace( NS_FILE ) ) {
 			JobQueueGroup::singleton()->push(
-				new GlobalNewFilesMoveJob( [ 'title' => $title, 'newtitle' => $newTitle ] )
+				new GlobalNewFilesMoveJob( [ 'oldtitle' => $title, 'newtitle' => $newTitle ] )
 			);
 		}
 	}
