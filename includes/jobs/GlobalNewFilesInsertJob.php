@@ -3,15 +3,11 @@
 use MediaWiki\MediaWikiServices;
 
 class GlobalNewFilesInsertJob extends Job implements GenericParameterJob {
-	private $uploadBase;
-
 	/**
 	 * @param array $params
 	 */
 	public function __construct( array $params ) {
 		parent::__construct( 'GlobalNewFilesInsertJob', $params );
-
-		$this->uploadBase = $params['uploadbase'];
 	}
 
 	/**
@@ -20,7 +16,7 @@ class GlobalNewFilesInsertJob extends Job implements GenericParameterJob {
 	public function run() {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
 
-		$uploadedFile = $this->uploadBase->getLocalFile();
+		$uploadedFile = $this->getParams()['uploadedfile'];
 
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 
