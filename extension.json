@@ -53,8 +53,8 @@
 		"FileDeleteComplete": [
 			"GlobalNewFilesHooks::onFileDeleteComplete"
 		],
-		"TitleMoveComplete": [
-			"GlobalNewFilesHooks::onTitleMoveComplete"
+		"PageMoveComplete": [
+			"GlobalNewFilesHooks::onPageMoveComplete"
 		],
 		"UploadComplete": [
 			"GlobalNewFilesHooks::onUploadComplete"
