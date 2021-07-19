@@ -2,12 +2,12 @@
 
 use MediaWiki\MediaWikiServices;
 
-class GlobalNewFilesInsertJob extends Job implements GenericParameterJob {
+class GlobalNewFilesInsertJob extends Job {
 	/**
 	 * @param array $params
 	 */
-	public function __construct( array $params ) {
-		parent::__construct( 'GlobalNewFilesInsertJob', $params );
+	public function __construct( $title, $params ) {
+		parent::__construct( 'GlobalNewFilesInsertJob', $title, $params );
 	}
 
 	/**
