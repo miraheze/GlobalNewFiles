@@ -14,11 +14,15 @@ class GlobalNewFilesInsertJob extends Job {
 	 * @return bool
 	 */
 	public function run() {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
+		$services = MediaWikiServices::getInstance();
 
-		$uploadedFile = $this->getParams()['uploadedfile'];
+		$config = $services->getConfigFactory()->makeConfig( 'globalnewfiles' );
+
+		$uploadedFile = $services->getRepoGroup()->getLocalRepo()->newFile( $this->getTitle() );
 
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
+
+		$wiki = new RemoteWiki( $config->get( 'DBname' ) );
 
 		$dbw->insert(
 			'gnf_files',
@@ -26,7 +30,7 @@ class GlobalNewFilesInsertJob extends Job {
 				'files_dbname' => $config->get( 'DBname' ),
 				'files_name' => $uploadedFile->getName(),
 				'files_page' => $config->get( 'Server' ) . $uploadedFile->getDescriptionUrl(),
-				'files_private' => (int)$this->getParams()['private'],
+				'files_private' => (int)$wiki->isPrivate(),
 				'files_timestamp' => $dbw->timestamp(),
 				'files_url' => $uploadedFile->getViewURL(),
 				'files_user' => $uploadedFile->getUser()
