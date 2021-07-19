@@ -20,15 +20,13 @@ class GlobalNewFilesInsertJob extends Job {
 
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 
-		$wiki = new RemoteWiki( $config->get( 'DBname' ) );
-
 		$dbw->insert(
 			'gnf_files',
 			[
 				'files_dbname' => $config->get( 'DBname' ),
 				'files_name' => $uploadedFile->getName(),
 				'files_page' => $config->get( 'Server' ) . $uploadedFile->getDescriptionUrl(),
-				'files_private' => (int)$wiki->isPrivate(),
+				'files_private' => (int)$this->getParams()['private'],
 				'files_timestamp' => $dbw->timestamp(),
 				'files_url' => $uploadedFile->getViewURL(),
 				'files_user' => $uploadedFile->getUser()
