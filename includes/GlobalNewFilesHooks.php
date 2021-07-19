@@ -9,7 +9,7 @@ class GlobalNewFilesHooks {
 
 	public static function onUploadComplete( $uploadBase ) {
 		JobQueueGroup::singleton()->push(
-			new GlobalNewFilesInsertJob( [ 'uploadbase' => $uploadBase ] )
+			new GlobalNewFilesInsertJob( [ 'uploadedfile' => $uploadBase->getLocalFile() ] )
 		);
 	}
 
