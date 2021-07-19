@@ -3,7 +3,7 @@
 use MediaWiki\MediaWikiServices;
 
 class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
-	private $title;
+	private $oldTitle;
 
 	private $newTitle;
 
@@ -14,7 +14,7 @@ class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
 	public function __construct( array $params ) {
 		parent::__construct( 'GlobalNewFilesMoveJob', $params );
 
-		$this->title = $params['title'];
+		$this->oldTitle = $params['oldtitle'];
 		$this->newTitle = $params['newtitle'];
 	}
 
@@ -37,7 +37,7 @@ class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
 			],
 			[
 				'files_dbname' => $config->get( 'DBname' ),
-				'files_name' => $this->title->getDBKey(),
+				'files_name' => $this->oldTitle->getDBKey(),
 			],
 			__METHOD__
 		);
