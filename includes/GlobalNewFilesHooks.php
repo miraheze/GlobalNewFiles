@@ -20,13 +20,11 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onTitleMoveComplete( $title, $newTitle, $user, $oldid, $newid, $reason, $revision ) {
-		if ( !$title->inNamespace( NS_FILE ) ) {
-			return true;
+		if ( $title->inNamespace( NS_FILE ) ) {
+			JobQueueGroup::singleton()->push(
+				new GlobalNewFilesMoveJob( [ 'title' => $title, 'newtitle' => $newTitle ] )
+			);
 		}
-
-		JobQueueGroup::singleton()->push(
-			new GlobalNewFilesMoveJob( [ 'title' => $title, 'newtitle' => $newTitle ] )
-		);
 	}
 
 	public static function onLoadExtensionSchemaUpdates( DatabaseUpdater $updater ) {
