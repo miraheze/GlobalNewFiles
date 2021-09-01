@@ -1,18 +1,24 @@
 <?php
 
+use MediaWiki\Linker\LinkRenderer;
 use MediaWiki\MediaWikiServices;
 
 class GlobalNewFilesPager extends TablePager {
-	function __construct() {
+	/** @var LinkRenderer */
+	private $linkRenderer;
+
+	function __construct( RequestContext $context, LinkRenderer $linkRenderer ) {
+		parent::__construct( $context );
+
+		$this->linkRenderer = $linkRenderer;
+
 		$this->mDb = GlobalNewFilesHooks::getGlobalDB( DB_REPLICA, 'gnf_files' );
 
-		if ( $this->getRequest()->getText( 'sort', 'files_date' ) == 'files_date' ) {
+		if ( $context->getRequest()->getText( 'sort', 'files_date' ) == 'files_date' ) {
 			$this->mDefaultDirection = IndexPager::DIR_DESCENDING;
 		} else {
 			$this->mDefaultDirection = IndexPager::DIR_ASCENDING;
 		}
-
-		parent::__construct( $this->getContext() );
 	}
 
 	function getFieldNames() {
@@ -36,8 +42,6 @@ class GlobalNewFilesPager extends TablePager {
 	function formatValue( $name, $value ) {
 		$row = $this->mCurrentRow;
 
-		$wiki = $row->files_dbname;
-
 		switch ( $name ) {
 			case 'files_timestamp':
 				$formatted = htmlspecialchars( $this->getLanguage()->userTimeAndDate( $row->files_timestamp, $this->getUser() ) );
@@ -46,13 +50,29 @@ class GlobalNewFilesPager extends TablePager {
 				$formatted = $row->files_dbname;
 				break;
 			case 'files_url':
-				$formatted = "<img src=\"{$row->files_url}\" style=\"width:135px;height:135px;\">";
+				$formatted = Html::element(
+					'img',
+					[
+						'src' => $row->files_url,
+						'style' => 'width: 135px; height: 135px;'
+					]
+				);
 				break;
 			case 'files_name':
-				$formatted = "<a href=\"{$row->files_page}\">{$row->files_name}</a>";
+				$formatted = Html::element(
+					'a',
+					[
+						'href' => $row->files_page,
+					],
+					$row->files_name
+				);
+
 				break;
 			case 'files_user':
-				$formatted = "<a href=\"/wiki/Special:CentralAuth/{$row->files_user}\">{$row->files_user}</a>";
+				$formatted = $this->linkRenderer->makeLink(
+					SpecialPage::getTitleFor( 'CentralAuth', $row->files_user ),
+					$row->files_user
+				);
 				break;
 			default:
 				$formatted = "Unable to format $name";
