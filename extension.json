@@ -41,7 +41,12 @@
 		"GlobalNewFilesMoveJob": "GlobalNewFilesMoveJob"
 	},
 	"SpecialPages": {
-		"GlobalNewFiles": "SpecialGlobalNewFiles"
+		"GlobalNewFiles": {
+			"class": "SpecialGlobalNewFiles",
+			"services": [
+				"LinkRenderer"
+			]
+		}
 	},
 	"Hooks": {
 		"CreateWikiTables": [
