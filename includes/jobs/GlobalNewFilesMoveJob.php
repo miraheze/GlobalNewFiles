@@ -9,7 +9,6 @@ class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
 	/** @var Title */
 	private $newTitle;
 
-
 	/**
 	 * @param array $params
 	 */

@@ -46,9 +46,9 @@ class GlobalNewFilesHooks {
 			);
 
 			$updater->modifyExtensionTable(
- 				'gnf_files',
-  				__DIR__ . '/../sql/patches/patch-gnf_files-add-indexes.sql'
- 			);
+				'gnf_files',
+				__DIR__ . '/../sql/patches/patch-gnf_files-add-indexes.sql'
+			);
 		}
 
 		return true;
