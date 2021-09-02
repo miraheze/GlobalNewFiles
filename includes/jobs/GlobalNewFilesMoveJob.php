@@ -3,8 +3,10 @@
 use MediaWiki\MediaWikiServices;
 
 class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
+	/** @var Title */
 	private $oldTitle;
 
+	/** @var Title */
 	private $newTitle;
 
 
