@@ -7,7 +7,7 @@ class GlobalNewFilesPager extends TablePager {
 	/** @var LinkRenderer */
 	private $linkRenderer;
 
-	public function __construct( RequestContext $context, LinkRenderer $linkRenderer ) {
+	function __construct( RequestContext $context, LinkRenderer $linkRenderer ) {
 		parent::__construct( $context );
 
 		$this->linkRenderer = $linkRenderer;
@@ -21,7 +21,7 @@ class GlobalNewFilesPager extends TablePager {
 		}
 	}
 
-	public function getFieldNames() {
+	function getFieldNames() {
 		static $headers = null;
 
 		$headers = [
@@ -39,7 +39,7 @@ class GlobalNewFilesPager extends TablePager {
 		return $headers;
 	}
 
-	public function formatValue( $name, $value ) {
+	function formatValue( $name, $value ) {
 		$row = $this->mCurrentRow;
 
 		switch ( $name ) {
@@ -82,7 +82,7 @@ class GlobalNewFilesPager extends TablePager {
 		return $formatted;
 	}
 
-	public function getQueryInfo() {
+	function getQueryInfo() {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
 
 		$info = [
@@ -100,11 +100,11 @@ class GlobalNewFilesPager extends TablePager {
 		return $info;
 	}
 
-	public function getDefaultSort() {
+	function getDefaultSort() {
 		return 'files_timestamp';
 	}
 
-	public function isFieldSortable( $name ) {
+	function isFieldSortable( $name ) {
 		return true;
 	}
 }
