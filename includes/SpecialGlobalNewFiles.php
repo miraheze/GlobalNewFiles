@@ -6,12 +6,12 @@ class SpecialGlobalNewFiles extends SpecialPage {
 	/** @var LinkRenderer */
 	private $linkRenderer;
 
-	public function __construct( LinkRenderer $linkRenderer ) {
+	function __construct( LinkRenderer $linkRenderer ) {
 		parent::__construct( 'GlobalNewFiles' );
 		$this->linkRenderer = $linkRenderer;
 	}
 
-	public function execute( $par ) {
+	function execute( $par ) {
 		$this->setHeaders();
 		$this->outputHeader();
 
