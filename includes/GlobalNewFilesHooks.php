@@ -45,11 +45,10 @@ class GlobalNewFilesHooks {
 				__DIR__ . '/../sql/patches/patch-gnf_files-binary.sql'
 			);
 
-			$updater->modifyTable(
- 				'gnf_files',
-  				__DIR__ . '/../sql/patches/patch-gnf_files-add-indexes.sql',
-				true
- 			);
+			$updater->modifyExtensionTable(
+				'gnf_files',
+				__DIR__ . '/../sql/patches/patch-gnf_files-add-indexes.sql'
+			);
 		}
 
 		return true;
