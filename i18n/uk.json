@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"DDPAT"
+		]
+	},
+	"globalnewfiles": "Глобальні нові файли",
+	"globalnewfiles-description": "Глобальна спеціальна сторінка нових файлів",
+	"right-viewglobalprivatefiles": "Перегляд глобальних файлів, відфільтрованих з приватних вікі"
+}
