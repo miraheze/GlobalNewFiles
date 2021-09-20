@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"RYOUMA1117"
+		]
+	},
+	"globalnewfiles": "新しいファイルを公開する",
+	"globalnewfiles-description": "新しいファイルの特別ページを公開する",
+	"right-viewglobalprivatefiles": "プライベートウィキからフィルタリングされたグローバルファイルを表示する"
+}
