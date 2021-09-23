@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Kly"
+		]
+	},
+	"globalnewfiles": "全域新檔案",
+	"globalnewfiles-description": "全域新檔案特殊頁面",
+	"right-viewglobalprivatefiles": "從私有 wiki 檢視篩選的全域檔案"
+}
