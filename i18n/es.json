@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Avengium"
+		]
+	},
+	"globalnewfiles": "Nuevos archivos globales",
+	"globalnewfiles-description": "Página especial de archivos nuevos globales",
+	"right-viewglobalprivatefiles": "Ver archivos globales filtrados de wikis privados"
+}
