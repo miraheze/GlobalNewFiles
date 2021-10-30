@@ -68,11 +68,12 @@ class GlobalNewFilesPager extends TablePager {
 				);
 
 				break;
-			case 'files_user':
+			case 'files_actor':
 				$formatted = $this->linkRenderer->makeLink(
-					SpecialPage::getTitleFor( 'CentralAuth', $row->files_user ),
-					$row->files_user
+					SpecialPage::getTitleFor( 'CentralAuth', User::newFromActorId( $row->files_actor )->getName() ),
+					User::newFromActorId( $row->files_actor )->getName()
 				);
+
 				break;
 			default:
 				$formatted = "Unable to format $name";
