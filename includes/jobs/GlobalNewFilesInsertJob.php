@@ -33,7 +33,7 @@ class GlobalNewFilesInsertJob extends Job {
 				'files_private' => (int)$wiki->isPrivate(),
 				'files_timestamp' => $dbw->timestamp(),
 				'files_url' => $uploadedFile->getViewURL(),
-				'files_user' => $uploadedFile->getUser()
+				'files_actor' => $uploadedFile->getUser( 'object' )->getActorId()
 			],
 			__METHOD__
 		);
