@@ -59,7 +59,7 @@ class MigrateOldUserColumnToActor extends LoggedUpdateMaintenance {
 
 			if ( $user ) {
 				$actorId = MediaWikiServices::getInstance()->getActorNormalization()->acquireActorId( $user, $dbw );
-	
+
 				$dbw->update(
 					'gnf_files',
 					[
