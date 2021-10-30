@@ -49,6 +49,26 @@ class GlobalNewFilesHooks {
 				'gnf_files',
 				__DIR__ . '/../sql/patches/patch-gnf_files-add-indexes.sql'
 			);
+
+			if ( $updater->getDB()->fieldExists( 'gnf_files', 'files_user' ) ) {
+				$updater->addExtensionField(
+					'gnf_files',
+					'files_actor',
+					__DIR__ . '/../sql/patches/add-files_actor-to-gnf_files.sql'
+				);
+
+				$updater->addExtensionUpdate( [
+					'runMaintenance',
+					'MigrateOldUserColumnToActor',
+					'../maintenance/migrateOldUserColumnToActor.php'
+				] );
+
+				$updater->dropExtensionField(
+					'gnf_files',
+					'files_user',
+					__DIR__ . '/../sql/patches/drop-files_user-from-gnf_files.sql'
+				);
+			}
 		}
 
 		return true;
