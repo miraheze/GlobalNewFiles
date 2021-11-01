@@ -1,8 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Eduardoaddad"
+			"Eduardoaddad",
+			"Lakelimbo"
 		]
 	},
-	"globalnewfiles": "Novos arquivos globais"
+	"globalnewfiles": "Novos arquivos globais",
+	"globalnewfiles-description": "Página especial de novos arquivos globais",
+	"right-viewglobalprivatefiles": "Ver arquivos globais filtrados de wikis privadas"
 }
