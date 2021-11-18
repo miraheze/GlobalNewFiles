@@ -83,8 +83,6 @@ class GlobalNewFilesPager extends TablePager {
 	}
 
 	public function getQueryInfo() {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
-
 		$info = [
 			'tables' => [ 'gnf_files' ],
 			'fields' => [ 'files_dbname', 'files_url', 'files_page', 'files_name', 'files_user', 'files_private', 'files_timestamp' ],
@@ -92,8 +90,8 @@ class GlobalNewFilesPager extends TablePager {
 			'joins_conds' => [],
 		];
 
-		$mwService = MediaWikiServices::getInstance()->getPermissionManager();
-		if ( !$mwService->userHasRight( $config->get( 'User' ), 'viewglobalprivatefiles' ) ) {
+		$permissionManager = MediaWikiServices::getInstance()->getPermissionManager();
+		if ( !$permissionManager->userHasRight( $this->getUser(), 'viewglobalprivatefiles' ) ) {
 			$info['conds']['files_private'] = 0;
 		}
 
