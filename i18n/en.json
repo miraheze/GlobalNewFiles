@@ -4,6 +4,7 @@
 			"Universal Omega"
 		]
 	},
+	"action-viewglobalprivatefiles": "view global private files",
 	"globalnewfiles": "Global New Files",
 	"globalnewfiles-description": "Global new files special page",
 	"right-viewglobalprivatefiles": "View global files filtered from private wikis"

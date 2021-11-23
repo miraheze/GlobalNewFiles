@@ -7,7 +7,7 @@ class GlobalNewFilesPager extends TablePager {
 	/** @var LinkRenderer */
 	private $linkRenderer;
 
-	public function __construct( RequestContext $context, LinkRenderer $linkRenderer ) {
+	public function __construct( IContextSource $context, LinkRenderer $linkRenderer ) {
 		parent::__construct( $context );
 
 		$this->linkRenderer = $linkRenderer;
