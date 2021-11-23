@@ -31,27 +31,22 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onLoadExtensionSchemaUpdates( DatabaseUpdater $updater ) {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
+		$updater->addExtensionTable(
+			'gnf_files',
+			__DIR__ . '/../sql/gnf_files.sql'
+		);
 
-		if ( $config->get( 'CreateWikiDatabase' ) === $config->get( 'DBname' ) ) {
-			$updater->addExtensionTable(
-				'gnf_files',
-				__DIR__ . '/../sql/gnf_files.sql'
-			);
+		$updater->modifyExtensionField(
+			'gnf_files',
+			'files_timestamp',
+			__DIR__ . '/../sql/patches/patch-gnf_files-binary.sql'
+		);
 
-			$updater->modifyExtensionField(
-				'gnf_files',
-				'files_timestamp',
-				__DIR__ . '/../sql/patches/patch-gnf_files-binary.sql'
-			);
-
-			$updater->modifyExtensionTable(
-				'gnf_files',
-				__DIR__ . '/../sql/patches/patch-gnf_files-add-indexes.sql'
-			);
-		}
-
-		return true;
+		$updater->addExtensionIndex(
+			'gnf_files',
+			'files_dbname',
+			__DIR__ . '/../sql/patches/patch-gnf_files-add-indexes.sql'
+		);
 	}
 
 	/**
