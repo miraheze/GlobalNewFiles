@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"DreZhsh"
+			"DreZhsh",
+			"Gomoko"
 		]
 	},
+	"action-viewglobalprivatefiles": "afficher les fichiers privés globaux",
 	"globalnewfiles": "Nouveaux fichiers globaux",
 	"globalnewfiles-description": "Page spéciale des nouveaux fichiers globaux",
 	"right-viewglobalprivatefiles": "Afficher les fichiers globaux filtrés des wikis privés"
