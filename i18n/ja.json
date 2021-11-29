@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"RYOUMA1117"
+			"RYOUMA1117",
+			"しぃ"
 		]
 	},
+	"action-viewglobalprivatefiles": "グローバルプライベートファイルの閲覧",
 	"globalnewfiles": "新しいファイルを公開する",
 	"globalnewfiles-description": "新しいファイルの特別ページを公開する",
 	"right-viewglobalprivatefiles": "プライベートウィキからフィルタリングされたグローバルファイルを表示する"

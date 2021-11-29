@@ -1,10 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"Avengium"
+			"Avengium",
+			"Danniel07",
+			"Jakeukalane"
 		]
 	},
+	"action-viewglobalprivatefiles": "ver archivos privados globales",
 	"globalnewfiles": "Nuevos archivos globales",
 	"globalnewfiles-description": "Página especial de archivos nuevos globales",
-	"right-viewglobalprivatefiles": "Ver archivos globales filtrados de wikis privados"
+	"right-viewglobalprivatefiles": "Ver archivos globales filtrados de wikis privadas"
 }
