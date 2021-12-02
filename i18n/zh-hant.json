@@ -4,6 +4,7 @@
 			"Kly"
 		]
 	},
+	"action-viewglobalprivatefiles": "檢視全域私有檔案",
 	"globalnewfiles": "全域新檔案",
 	"globalnewfiles-description": "全域新檔案特殊頁面",
 	"right-viewglobalprivatefiles": "從私有 wiki 檢視篩選的全域檔案"
