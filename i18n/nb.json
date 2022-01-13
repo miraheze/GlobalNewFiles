@@ -4,6 +4,7 @@
 			"Jon Harald Søby"
 		]
 	},
+	"action-viewglobalprivatefiles": "vis globale private filer",
 	"globalnewfiles": "Globale nye filer",
 	"globalnewfiles-description": "Spesialside for globale nye filer",
 	"right-viewglobalprivatefiles": "Vis globale filer filtrert fra private wikier"
