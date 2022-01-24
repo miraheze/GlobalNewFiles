@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
+			"Can",
 			"Hedda"
 		]
 	},
+	"action-viewglobalprivatefiles": "küresel özel dosyaları görüntüle",
 	"globalnewfiles": "Küresel Yeni Dosyalar",
 	"globalnewfiles-description": "Küresel yeni dosyalar özel sayfası",
 	"right-viewglobalprivatefiles": "Özel vikilerden filtrelenen küresel dosyaları görüntüle"
