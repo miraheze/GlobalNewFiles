@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\MediaWikiServices;
+use Miraheze\CreateWiki\RemoteWiki;
 
 class GlobalNewFilesInsertJob extends Job {
 	/**
