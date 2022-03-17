@@ -4,6 +4,7 @@
 			"Sabelöga"
 		]
 	},
+	"action-viewglobalprivatefiles": "visa privata globala filer",
 	"globalnewfiles": "Globala nya filer",
 	"globalnewfiles-description": "Specialsidan Globala nya filer",
 	"right-viewglobalprivatefiles": "Visa globala filer filtrerade från privata wikier"
