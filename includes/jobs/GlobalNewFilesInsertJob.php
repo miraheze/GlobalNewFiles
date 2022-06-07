@@ -1,6 +1,5 @@
 <?php
 
-use File;
 use MediaWiki\MediaWikiServices;
 use Miraheze\CreateWiki\RemoteWiki;
 
