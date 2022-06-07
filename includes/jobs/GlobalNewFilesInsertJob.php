@@ -1,5 +1,6 @@
 <?php
 
+use File;
 use MediaWiki\MediaWikiServices;
 use Miraheze\CreateWiki\RemoteWiki;
 
@@ -25,6 +26,9 @@ class GlobalNewFilesInsertJob extends Job {
 
 		$wiki = new RemoteWiki( $config->get( 'DBname' ) );
 
+		$uploader = $uploadedFile->getUploader( File::RAW ) ??
+				MediaWikiServices::getInstance()->getActorStore()->getUnknownActor();
+
 		$dbw->insert(
 			'gnf_files',
 			[
@@ -34,7 +38,7 @@ class GlobalNewFilesInsertJob extends Job {
 				'files_private' => (int)$wiki->isPrivate(),
 				'files_timestamp' => $dbw->timestamp(),
 				'files_url' => $uploadedFile->getViewURL(),
-				'files_user' => $uploadedFile->getUser()
+				'files_user' => $uploader->getName(),
 			],
 			__METHOD__
 		);
