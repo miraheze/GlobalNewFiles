@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Nekky-chan"
+		]
+	},
+	"action-viewglobalprivatefiles": "Globale private Dateien anzeigen",
+	"globalnewfiles": "Globale neue Dateien",
+	"globalnewfiles-description": "Spezialseite für globale neue Dateien",
+	"right-viewglobalprivatefiles": "Globale Dateien aus privaten Wikis gefiltert anzeigen"
+}
