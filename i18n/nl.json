@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Mainframe98",
+			"McDutchie"
+		]
+	},
+	"action-viewglobalprivatefiles": "globale bestanden van privéwiki's te bekijken",
+	"globalnewfiles": "Globale nieuwe bestanden",
+	"globalnewfiles-description": "Speciale pagina voor globale nieuwe bestanden",
+	"right-viewglobalprivatefiles": "Globale bestanden bekijken die zijn gefilterd uit privéwiki's"
+}
