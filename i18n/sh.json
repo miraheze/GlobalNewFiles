@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Vlad5250"
+		]
+	},
+	"action-viewglobalprivatefiles": "pregled globalnih privatnih datoteka",
+	"globalnewfiles": "Globalne nove datoteke",
+	"right-viewglobalprivatefiles": "Pregled globalnih datoteka filtriranih sa privatnih wikija"
+}
