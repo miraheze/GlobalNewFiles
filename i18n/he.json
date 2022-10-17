@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Amire80"
+		]
+	},
+	"action-viewglobalprivatefiles": "להציג קבצים פרטיים גלובליים",
+	"globalnewfiles": "קבצים חדשים גלובליים",
+	"globalnewfiles-description": "דף מיוחד של קבצים חדשים גלובליים",
+	"right-viewglobalprivatefiles": "הצגת קבצים גלובליים שסוננו מאתרי ויקי פרטיים"
+}
