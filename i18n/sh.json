@@ -6,5 +6,6 @@
 	},
 	"action-viewglobalprivatefiles": "pregled globalnih privatnih datoteka",
 	"globalnewfiles": "Globalne nove datoteke",
+	"globalnewfiles-description": "Posebna stranica za globalne nove datoteke",
 	"right-viewglobalprivatefiles": "Pregled globalnih datoteka filtriranih sa privatnih wikija"
 }
