@@ -14,10 +14,8 @@ $cfg['exclude_analysis_directory_list'] = array_merge(
 	]
 );
 
-$cfg['suppress_issue_types'] = array_merge(
-	$cfg['suppress_issue_types'], []
-);
-
-$cfg['scalar_implicit_cast'] = true;
+$cfg['suppress_issue_types'] = [
+	'SecurityCheck-LikelyFalsePositive'
+];
 
 return $cfg;
