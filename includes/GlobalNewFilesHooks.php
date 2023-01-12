@@ -8,13 +8,13 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onUploadComplete( $uploadBase ) {
-		JobQueueGroup::singleton()->push(
+		MediaWikiServices::getInstance()->getJobQueueGroup()->push(
 			new GlobalNewFilesInsertJob( $uploadBase->getTitle(), [] )
 		);
 	}
 
 	public static function onFileDeleteComplete( $file, $oldimage, $article, $user, $reason ) {
-		JobQueueGroup::singleton()->push(
+		MediaWikiServices::getInstance()->getJobQueueGroup()->push(
 			new GlobalNewFilesDeleteJob( $file->getTitle(), [] )
 		);
 	}
@@ -24,7 +24,7 @@ class GlobalNewFilesHooks {
 		$newTitle = Title::newFromLinkTarget( $new );
 
 		if ( $oldTitle->inNamespace( NS_FILE ) ) {
-			JobQueueGroup::singleton()->push(
+			MediaWikiServices::getInstance()->getJobQueueGroup()->push(
 				new GlobalNewFilesMoveJob( [ 'oldtitle' => $oldTitle, 'newtitle' => $newTitle ] )
 			);
 		}
