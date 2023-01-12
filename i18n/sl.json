@@ -5,7 +5,7 @@
 		]
 	},
 	"action-viewglobalprivatefiles": "ogled globalnih zasebnih datotek",
-	"globalnewfiles": "Globalne nove datoteke",
-	"globalnewfiles-description": "Posebna stran za globalne nove datoteke",
-	"right-viewglobalprivatefiles": "Ogled globalnih novih datotek, filtriranih iz zasebnih vikijev"
+	"globalnewfiles": "Nove globalne datoteke",
+	"globalnewfiles-description": "Posebna stran za nove globalne datoteke",
+	"right-viewglobalprivatefiles": "Ogled globalnih datotek, filtriranih iz zasebnih vikijev"
 }
