@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Nokeoo"
+		]
+	},
+	"action-viewglobalprivatefiles": "peržiūrėti visuotinius privačius failus",
+	"globalnewfiles": "Visuotiniai nauji failai",
+	"globalnewfiles-description": "Visuotinių naujų failų specialus puslapis",
+	"right-viewglobalprivatefiles": "Žiūrėti visuotinius failus, filtruojamus iš privačių viki"
+}
