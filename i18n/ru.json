@@ -1,10 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
+			"BerryAVGN",
 			"DDPAT",
 			"Ice bulldog"
 		]
 	},
+	"action-viewglobalprivatefiles": "просмотр глобальных закрытых файлов",
 	"globalnewfiles": "Глобальные новые файлы",
-	"globalnewfiles-description": "Служебная страница глобальных новых файлов"
+	"globalnewfiles-description": "Служебная страница глобальных новых файлов",
+	"right-viewglobalprivatefiles": "Просмотр глобальных файлов, отфильтрованных из закрытых вики"
 }
