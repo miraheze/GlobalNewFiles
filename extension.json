@@ -49,12 +49,6 @@
 		}
 	},
 	"Hooks": {
-		"CreateWikiDeletion": [
-			"GlobalNewFilesHooks::onCreateWikiDeletion"
-		],
-		"CreateWikiRename": [
-			"GlobalNewFilesHooks::onCreateWikiRename"
-		],
 		"CreateWikiStatePrivate": [
 			"GlobalNewFilesHooks::onCreateWikiStatePrivate"
 		],
