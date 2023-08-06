@@ -4,7 +4,7 @@ use MediaWiki\MediaWikiServices;
 
 class GlobalNewFilesHooks {
 	/**
-	 * Used for when renaming or deleting the wiki, the entry is removed
+	 * Used for when renaming or deleting the wiki, the entry is removed or updated
 	 * from the GlobalNewFiles table.
 	 */
 	public static function onCreateWikiTables( &$tables ) {
