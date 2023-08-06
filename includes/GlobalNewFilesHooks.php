@@ -8,7 +8,7 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onCreateWikiDeletion( $dbw, $wiki ) {
-		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
+		$dbw = self::getGlobalDB( DB_PRIMARY );
 		$dbw->delete(
 			'gnf_files',
 			[
