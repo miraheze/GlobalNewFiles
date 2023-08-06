@@ -49,14 +49,14 @@
 		}
 	},
 	"Hooks": {
+		"CreateWikiTables": [
+			"GlobalNewFilesHooks::onCreateWikiTables"
+		],
 		"CreateWikiStatePrivate": [
 			"GlobalNewFilesHooks::onCreateWikiStatePrivate"
 		],
 		"CreateWikiStatePublic": [
 			"GlobalNewFilesHooks::onCreateWikiStatePublic"
-		],
-		"CreateWikiTables": [
-			"GlobalNewFilesHooks::onCreateWikiTables"
 		],
 		"LoadExtensionSchemaUpdates": [
 			"GlobalNewFilesHooks::onLoadExtensionSchemaUpdates"
