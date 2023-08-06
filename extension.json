@@ -52,7 +52,7 @@
 		"CreateWikiDeletion": [
 			"GlobalNewFilesHooks::onCreateWikiDeletion"
 		],
-		"onCreateWikiRename": [
+		"CreateWikiRename": [
 			"GlobalNewFilesHooks::onCreateWikiRename"
 		],
 		"CreateWikiStatePrivate": [
