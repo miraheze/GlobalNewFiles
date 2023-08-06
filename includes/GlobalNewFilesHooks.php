@@ -8,13 +8,52 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onCreateWikiDeletion( $dbw, $wiki ) {
-		$dbw = self::getGlobalDB( DB_PRIMARY );
+		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 		$dbw->delete(
 			'gnf_files',
 			[
 				'files_dbname' => $wiki,
 			],
 			__METHOD__
+		);
+	}
+
+	public static function onCreateWikiRename( $dbw, $old, $new ) {
+		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
+		$dbw->update(
+			'gnf_files',
+			[
+				'files_dbname' => $new
+			],
+			[
+				'files_dbname' => $old
+			]
+		);
+	}
+
+	public static function onCreateWikiStatePrivate( $dbname ) {
+		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
+		$dbw->update(
+			'gnf_files',
+			[
+				'files_private' => 1
+			],
+			[
+				'files_dbname' => $dbname
+			]
+		);
+	}
+
+	public static function onCreateWikiStatePublic( $dbname ) {
+		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
+		$dbw->update(
+			'gnf_files',
+			[
+				'files_private' => 0
+			],
+			[
+				'files_dbname' => $dbname
+			]
 		);
 	}
 
