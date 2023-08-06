@@ -3,8 +3,38 @@
 use MediaWiki\MediaWikiServices;
 
 class GlobalNewFilesHooks {
+	/**
+	 * Used for when renaming or deleting the wiki, the entry is removed or updated
+	 * from the GlobalNewFiles table.
+	 */
 	public static function onCreateWikiTables( &$tables ) {
 		$tables['gnf_files'] = 'files_dbname';
+	}
+
+	public static function onCreateWikiStatePrivate( $dbname ) {
+		$dbw = self::getGlobalDB( DB_PRIMARY );
+		$dbw->update(
+			'gnf_files',
+			[
+				'files_private' => 1
+			],
+			[
+				'files_dbname' => $dbname
+			]
+		);
+	}
+
+	public static function onCreateWikiStatePublic( $dbname ) {
+		$dbw = self::getGlobalDB( DB_PRIMARY );
+		$dbw->update(
+			'gnf_files',
+			[
+				'files_private' => 0
+			],
+			[
+				'files_dbname' => $dbname
+			]
+		);
 	}
 
 	public static function onUploadComplete( $uploadBase ) {

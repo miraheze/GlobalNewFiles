@@ -52,6 +52,12 @@
 		"CreateWikiTables": [
 			"GlobalNewFilesHooks::onCreateWikiTables"
 		],
+		"CreateWikiStatePrivate": [
+			"GlobalNewFilesHooks::onCreateWikiStatePrivate"
+		],
+		"CreateWikiStatePublic": [
+			"GlobalNewFilesHooks::onCreateWikiStatePublic"
+		],
 		"LoadExtensionSchemaUpdates": [
 			"GlobalNewFilesHooks::onLoadExtensionSchemaUpdates"
 		],
