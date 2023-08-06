@@ -7,6 +7,17 @@ class GlobalNewFilesHooks {
 		$tables['gnf_files'] = 'files_dbname';
 	}
 
+	public static function onCreateWikiDeletion( $dbw, $wiki ) {
+		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
+		$dbw->delete(
+			'gnf_files',
+			[
+				'files_dbname' => $wiki,
+			],
+			__METHOD__
+		);
+	}
+
 	public static function onUploadComplete( $uploadBase ) {
 		MediaWikiServices::getInstance()->getJobQueueGroup()->push(
 			new GlobalNewFilesInsertJob( $uploadBase->getTitle(), [] )
