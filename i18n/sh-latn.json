@@ -1,10 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
+			"Vlad5250",
 			"Winston Sung"
 		]
 	},
-	"action-viewglobalprivatefiles": "pregled globalnih privatnih datoteka",
+	"action-viewglobalprivatefiles": "pregledate globalne privatne datoteke",
 	"globalnewfiles": "Globalne nove datoteke",
 	"globalnewfiles-description": "Posebna stranica za globalne nove datoteke",
 	"right-viewglobalprivatefiles": "Pregledanje globalnih datoteka filtriranih sa privatnih vikija"

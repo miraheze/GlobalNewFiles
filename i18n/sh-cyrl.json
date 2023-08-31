@@ -1,0 +1,11 @@
+{
+	"@metadata": {
+		"authors": [
+			"Vlad5250"
+		]
+	},
+	"action-viewglobalprivatefiles": "прегледате глобалне приватне датотеке",
+	"globalnewfiles": "Глобалне нове датотеке",
+	"globalnewfiles-description": "Посебна страница за глобалне нове датотеке",
+	"right-viewglobalprivatefiles": "Прегледање глобалних датотека филтрираних са приватних викија"
+}
