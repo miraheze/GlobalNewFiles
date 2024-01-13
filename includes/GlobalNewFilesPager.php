@@ -26,7 +26,7 @@ class GlobalNewFilesPager extends TablePager {
 
 		$headers = [
 			'files_timestamp' => 'listfiles_date',
-			'files_dbname'    => 'createwiki-label-dbname',
+			'files_dbname'    => 'globalnewfiles-label-dbname',
 			'files_name'      => 'listfiles_name',
 			'files_url'       => 'listfiles_thumb',
 			'files_user'      => 'listfiles_user',
