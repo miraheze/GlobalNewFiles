@@ -11,10 +11,7 @@
 	"license-name": "GPL-3.0-or-later",
 	"type": "specialpage",
 	"requires": {
-		"MediaWiki": ">= 1.36.0",
-		"extensions": {
-			"CreateWiki": "*"
-		}
+		"MediaWiki": ">= 1.36.0"
 	},
 	"MessagesDirs": {
 		"GlobalNewFiles": [
@@ -70,6 +67,12 @@
 		"UploadComplete": [
 			"GlobalNewFilesHooks::onUploadComplete"
 		]
+	},
+	"config": {
+		"GlobalNewFilesDatabase": {
+			"description": "Required. The global database to use for GlobalNewFiles.",
+			"value": ""
+		}
 	},
 	"ConfigRegistry": {
 		"globalnewfiles": "GlobalVarConfig::newInstance"
