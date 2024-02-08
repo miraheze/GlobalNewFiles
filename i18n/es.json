@@ -3,11 +3,13 @@
 		"authors": [
 			"Avengium",
 			"Danniel07",
-			"Jakeukalane"
+			"Jakeukalane",
+			"No se"
 		]
 	},
 	"action-viewglobalprivatefiles": "ver archivos privados globales",
 	"globalnewfiles": "Nuevos archivos globales",
 	"globalnewfiles-description": "Página especial de archivos nuevos globales",
+	"globalnewfiles-label-dbname": "Nombre de la base de datos:",
 	"right-viewglobalprivatefiles": "Ver archivos globales filtrados de wikis privadas"
 }

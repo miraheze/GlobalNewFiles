@@ -7,5 +7,6 @@
 	"action-viewglobalprivatefiles": "להציג קבצים פרטיים גלובליים",
 	"globalnewfiles": "קבצים חדשים גלובליים",
 	"globalnewfiles-description": "דף מיוחד של קבצים חדשים גלובליים",
+	"globalnewfiles-label-dbname": "שם מסד הנתונים:",
 	"right-viewglobalprivatefiles": "הצגת קבצים גלובליים שסוננו מאתרי ויקי פרטיים"
 }

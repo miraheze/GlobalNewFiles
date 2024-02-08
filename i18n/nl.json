@@ -2,11 +2,13 @@
 	"@metadata": {
 		"authors": [
 			"Mainframe98",
-			"McDutchie"
+			"McDutchie",
+			"Mitsjol"
 		]
 	},
 	"action-viewglobalprivatefiles": "globale bestanden van privéwiki's te bekijken",
 	"globalnewfiles": "Globale nieuwe bestanden",
 	"globalnewfiles-description": "Speciale pagina voor globale nieuwe bestanden",
+	"globalnewfiles-label-dbname": "Databasenaam:",
 	"right-viewglobalprivatefiles": "Globale bestanden bekijken die zijn gefilterd uit privéwiki's"
 }
