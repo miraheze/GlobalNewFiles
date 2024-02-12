@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Pisceskaze"
+		]
+	},
+	"action-viewglobalprivatefiles": "xem các tập tin riêng tư toàn cục",
+	"globalnewfiles": "Tập tin mới toàn cục",
+	"globalnewfiles-description": "Trang đặc biệt về tập tin mới toàn cục",
+	"globalnewfiles-label-dbname": "Tên cơ sở dữ liệu:",
+	"right-viewglobalprivatefiles": "Xem các tập tin chung được lọc từ các wiki riêng tư"
+}
