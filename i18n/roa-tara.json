@@ -7,5 +7,6 @@
 	"action-viewglobalprivatefiles": "'ndruche le file globbale private",
 	"globalnewfiles": "File nuève globbale",
 	"globalnewfiles-description": "Pàgena speciale de le file nuève globbale",
+	"globalnewfiles-label-dbname": "Nome d'u database:",
 	"right-viewglobalprivatefiles": "'Ndruche le file globbale filtrate da le uicchi private"
 }

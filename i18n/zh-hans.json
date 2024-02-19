@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
+			"Anterdc99",
 			"SolidBlock"
 		]
 	},
 	"action-viewglobalprivatefiles": "查看全域私有文件",
 	"globalnewfiles": "全域新文件",
 	"globalnewfiles-description": "全域新文件特殊页面",
+	"globalnewfiles-label-dbname": "数据库名称：",
 	"right-viewglobalprivatefiles": "查看从私有wiki筛选的全域文件"
 }
