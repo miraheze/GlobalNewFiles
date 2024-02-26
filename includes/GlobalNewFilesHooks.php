@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\MediaWikiServices;
+use Wikimedia\Rdbms\DBConnRef;
 
 class GlobalNewFilesHooks {
 	/**
@@ -82,7 +83,7 @@ class GlobalNewFilesHooks {
 	/**
 	 * @param int $index DB_PRIMARY/DB_REPLICA
 	 * @param array|string $groups
-	 * @return IDatabase
+	 * @return DBConnRef
 	 */
 	public static function getGlobalDB( $index, $groups = [] ) {
 		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
