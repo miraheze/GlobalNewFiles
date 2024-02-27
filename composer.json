@@ -19,7 +19,7 @@
 		}
 	],
 	"support": {
-		"issues": "https://phabricator.miraheze.org/tag/globalnewfiles/",
+		"issues": "https://issue-tracker.miraheze.org/tag/globalnewfiles/",
 		"wiki": "https://www.mediawiki.org/wiki/Extension:GlobalNewFiles"
 	},
 	"require": {
