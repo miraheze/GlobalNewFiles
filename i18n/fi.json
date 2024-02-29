@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"MITO"
+			"MITO",
+			"Pyscowicz"
 		]
 	},
 	"globalnewfiles": "Järjestelmänlaajuiset uudet tiedostot",
-	"globalnewfiles-description": "Tarjoaa toimintosivun järjestelmänlaajuisille uusille tiedostoille"
+	"globalnewfiles-description": "Tarjoaa toimintosivun järjestelmänlaajuisille uusille tiedostoille",
+	"globalnewfiles-label-dbname": "Tietokannan nimi:"
 }
