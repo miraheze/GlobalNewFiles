@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Ekminarin"
+		]
+	},
+	"action-viewglobalprivatefiles": "ดูไฟล์ส่วนตัวข้ามโครงการ",
+	"globalnewfiles": "ไฟล์ใหม่ข้ามโครงการ",
+	"globalnewfiles-description": "หน้าพิเศษไฟล์ใหม่ข้ามโครงการ",
+	"globalnewfiles-label-dbname": "ชื่อฐานข้อมูล:",
+	"right-viewglobalprivatefiles": "ดูไฟล์ข้ามโครงการที่กรองจากวิกิส่วนตัว"
+}
