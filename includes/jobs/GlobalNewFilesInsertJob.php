@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\WikiMap\WikiMap;
 
 class GlobalNewFilesInsertJob extends Job {
 	/**
@@ -24,18 +25,20 @@ class GlobalNewFilesInsertJob extends Job {
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 
 		$uploader = $uploadedFile->getUploader( File::RAW ) ??
-				MediaWikiServices::getInstance()->getActorStore()->getUnknownActor();
+				$services->getActorStore()->getUnknownActor();
+
+		$centralIdLookup = $services->getCentralIdLookup();
 
 		$dbw->insert(
 			'gnf_files',
 			[
-				'files_dbname' => $config->get( 'DBname' ),
+				'files_dbname' => WikiMap::getCurrentWikiId(),
 				'files_name' => $uploadedFile->getName(),
 				'files_page' => $config->get( 'Server' ) . $uploadedFile->getDescriptionUrl(),
 				'files_private' => (int)!$permissionManager->isEveryoneAllowed( 'read' ),
 				'files_timestamp' => $dbw->timestamp(),
 				'files_url' => $uploadedFile->getViewURL(),
-				'files_user' => $uploader->getName(),
+				'files_uploader' => $centralIdLookup->centralIdFromLocalUser( $uploader ),
 			],
 			__METHOD__
 		);
