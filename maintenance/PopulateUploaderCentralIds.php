@@ -74,16 +74,16 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 					->caller( __METHOD__ )
 					->execute();
 
-					$count += $dbw->affectedRows();
-					$this->output( "$count migrated; $failed failed\n" );
+				// $count += $dbw->affectedRows();
+				// $this->output( "$count migrated; $failed failed\n" );
 			}
 
 			if ( $failed >= $res->numRows() ) {
 				break;
 			}
 
-			// $count += $dbw->affectedRows();
-			// $this->output( "$count\n" );
+			$count += $dbw->affectedRows();
+			$this->output( "$count\n" );
 		} while ( true );
 
 		$this->output( "Completed migration, updated $count row(s), migration failed for $failed row(s).\n" );
