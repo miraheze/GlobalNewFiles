@@ -35,7 +35,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 
 		if ( !$dbr->fieldExists( 'gnf_files', 'files_user', __METHOD__ ) ) {
 			$this->output( 'files_user field in gnf_files table does not exist. May have already been dropped?' );
-			return;
+			return true;
 		}
 
 		$count = 0;
