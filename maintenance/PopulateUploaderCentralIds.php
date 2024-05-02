@@ -33,12 +33,10 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 		$lookup = $this->getServiceContainer()->getCentralIdLookup();
 		$wikiId = WikiMap::getCurrentWikiId();
 
-		$batchSize = $this->getBatchSize();
-
 		$count = 0;
 		$failed = 0;
 
-		do {
+		while ( true ) {
 			$res = $dbr->newSelectQueryBuilder()
 				->select( 'files_user' )
 				->from( 'gnf_files' )
@@ -46,7 +44,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 					'files_uploader' => null,
 					'files_dbname' => $wikiId,
 				] )
-				->limit( $batchSize )
+				->limit( $this->getBatchSize() )
 				->caller( __METHOD__ )
 				->fetchResultSet();
 
@@ -73,7 +71,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 			$count += $dbw->affectedRows();
 			$this->waitForReplication();
 			$this->output( "$count\n" );
-		} while ( true );
+		}
 
 		$this->output( "Completed migration, updated $count row(s), migration failed for $failed row(s).\n" );
 
