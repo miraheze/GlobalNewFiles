@@ -36,10 +36,8 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 		$wikiId = WikiMap::getCurrentWikiId();
 
 		$count = 0;
-		$failed = 0;
-
 		foreach ( $this->getConfig()->get( MainConfigNames::LocalDatabases ) as $wiki ) {
-			do {
+			while ( true ) {
 				$res = $dbr->newSelectQueryBuilder()
 					->select( 'files_user' )
 					->from( 'gnf_files' )
@@ -60,7 +58,6 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 					$centralId = $lookup->centralIdFromName( $row->files_user, CentralIdLookup::AUDIENCE_RAW );
 
 					if ( $centralId === 0 ) {
-						$failed++;
 						$dbw->newDeleteQueryBuilder()
 							->deleteFrom( 'gnf_files' )
 							->where( [
@@ -85,9 +82,9 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 
 				$count += $dbw->affectedRows();
 				$this->output( "$count\n" );
-			} while ( true );
+			}
 
-			$this->output( "Completed migration for $wiki, updated $count row(s), migration failed for $failed row(s).\n" );
+			$this->output( "Completed migration for $wiki\n" );
 		}
 
 		return true;
