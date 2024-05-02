@@ -71,6 +71,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 
 			$count += $dbw->affectedRows();
 			$offset += $batchSize;
+			$this->output( "$count\n" );
 
 		} while ( $res->numRows() >= $batchSize );
 
