@@ -7,6 +7,7 @@ if ( $IP === false ) {
 
 require_once "$IP/maintenance/Maintenance.php";
 
+use MediaWiki\MainConfigNames;
 use MediaWiki\User\CentralId\CentralIdLookup;
 use MediaWiki\WikiMap\WikiMap;
 
@@ -14,6 +15,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 
 	public function __construct() {
 		parent::__construct();
+		$this->setBatchSize( 1 );
 		$this->requireExtension( 'GlobalNewFiles' );
 	}
 
@@ -34,37 +36,56 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 		$wikiId = WikiMap::getCurrentWikiId();
 
 		$count = 0;
-		$failed = 0;
+		foreach ( $this->getConfig()->get( MainConfigNames::LocalDatabases ) as $wiki ) {
+			while ( true ) {
+				$res = $dbr->newSelectQueryBuilder()
+					->select( 'files_user' )
+					->from( 'gnf_files' )
+					->where( [
+						'files_uploader' => null,
+						'files_dbname' => $wiki,
+					] )
+					->limit( $this->getBatchSize() )
+					->useIndex( 'files_dbname' )
+					->caller( __METHOD__ )
+					->fetchResultSet();
 
-		$res = $dbr->newSelectQueryBuilder()
-			->select( 'files_user' )
-			->from( 'gnf_files' )
-			->where( [
-				'files_uploader' => null,
-				'files_dbname' => $wikiId,
-			] )
-			->caller( __METHOD__ )
-			->fetchResultSet();
+				if ( !$res->numRows() ) {
+					break;
+				}
 
-		foreach ( $res as $row ) {
-			$centralId = $lookup->centralIdFromName( $row->files_user, CentralIdLookup::AUDIENCE_RAW );
+				foreach ( $res as $row ) {
+					$centralId = $lookup->centralIdFromName( $row->files_user, CentralIdLookup::AUDIENCE_RAW );
 
-			if ( $centralId === 0 ) {
-				$failed++;
-				continue;
+					if ( $centralId === 0 ) {
+						$dbw->newDeleteQueryBuilder()
+							->deleteFrom( 'gnf_files' )
+							->where( [
+								'files_user' => $row->files_user,
+								'files_dbname' => $wiki,
+							] )
+							->caller( __METHOD__ )
+							->execute();
+						continue;
+					}
+
+					$dbw->newUpdateQueryBuilder()
+						->update( 'gnf_files' )
+						->set( [ 'files_uploader' => $centralId ] )
+						->where( [
+							'files_user' => $row->files_user,
+							'files_dbname' => $wiki,
+						] )
+						->caller( __METHOD__ )
+						->execute();
+				}
+
+				$count += $dbw->affectedRows();
+				$this->output( "$count\n" );
 			}
 
-			$dbw->newUpdateQueryBuilder()
-				->update( 'gnf_files' )
-				->set( [ 'files_uploader' => $centralId ] )
-				->where( [ 'files_user' => $row->files_user ] )
-				->caller( __METHOD__ )
-				->execute();
+			$this->output( "Completed migration for $wiki\n" );
 		}
-
-		$count = $dbw->affectedRows();
-
-		$this->output( "Completed migration, updated $count row(s), migration failed for $failed row(s).\n" );
 
 		return true;
 	}
