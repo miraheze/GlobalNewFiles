@@ -45,6 +45,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 					'files_dbname' => $wikiId,
 				] )
 				->limit( $this->getBatchSize() )
+				->useIndex( 'files_dbname' )
 				->caller( __METHOD__ )
 				->fetchResultSet();
 
