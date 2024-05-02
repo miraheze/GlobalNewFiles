@@ -71,8 +71,8 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 			}
 
 			$count += $dbw->affectedRows();
+			$this->waitForReplication();
 			$this->output( "$count\n" );
-
 		} while ( true );
 
 		$this->output( "Completed migration, updated $count row(s), migration failed for $failed row(s).\n" );
