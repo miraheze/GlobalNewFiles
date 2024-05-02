@@ -9,7 +9,6 @@ require_once "$IP/maintenance/Maintenance.php";
 
 use MediaWiki\MainConfigNames;
 use MediaWiki\User\CentralId\CentralIdLookup;
-use MediaWiki\WikiMap\WikiMap;
 
 class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 
@@ -33,7 +32,10 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 		$dbr = GlobalNewFilesHooks::getGlobalDB( DB_REPLICA );
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 		$lookup = $this->getServiceContainer()->getCentralIdLookup();
-		$wikiId = WikiMap::getCurrentWikiId();
+
+		if ( !$dbw->fieldExists( 'gnf_files', 'files_user', __METHOD__ ) ) {
+			$this->error( 'files_user field in gnf_files table does not exist. May have already been dropped?' );
+		}
 
 		$count = 0;
 		foreach ( $this->getConfig()->get( MainConfigNames::LocalDatabases ) as $wiki ) {
