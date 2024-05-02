@@ -60,7 +60,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 					$failed++;
 					$dbw->newDeleteQueryBuilder()
 						->deleteFrom( 'gnf_files' )
-						->where( [ 'files_user' => $row->files_user ] )
+						->where( [ 'files_user' => $row->files_user, 'files_dbname' => $wikiId ] )
 						->caller( __METHOD__ )
 						->execute();
 					continue;
