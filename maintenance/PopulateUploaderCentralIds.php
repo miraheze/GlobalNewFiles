@@ -76,7 +76,6 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 			}
 
 			$count += $dbw->affectedRows();
-			$this->waitForReplication();
 			$this->output( "$count\n" );
 		} while ( true );
 
