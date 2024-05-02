@@ -61,7 +61,6 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 					$dbw->newDeleteQueryBuilder()
 						->deleteFrom( 'gnf_files' )
 						->where( [ 'files_user' => $row->files_user ] )
-						->limit( $this->getBatchSize() )
 						->caller( __METHOD__ )
 						->execute();
 					continue;
