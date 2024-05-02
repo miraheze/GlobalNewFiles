@@ -29,7 +29,7 @@ class GlobalNewFilesPager extends TablePager {
 			'files_dbname'    => 'globalnewfiles-label-dbname',
 			'files_name'      => 'listfiles_name',
 			'files_url'       => 'listfiles_thumb',
-			'files_uploader'  => 'listfiles_uploader',
+			'files_uploader'  => 'listfiles_user',
 		];
 
 		foreach ( $headers as &$msg ) {
