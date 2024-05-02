@@ -64,7 +64,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 					++$stuckCount;
 					continue;
 				}
-				
+
 				// Reset stuck counter
 				$stuckCount = 0;
 
