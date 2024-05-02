@@ -86,6 +86,18 @@ class GlobalNewFilesHooks {
 		);
 
 		$updater->addPostDatabaseUpdateMaintenance( PopulateUploaderCentralIds::class );
+
+		$updater->modifyExtensionField(
+			'gnf_files',
+			'files_uploader',
+			__DIR__ . '/../sql/patches/patch-gnf_files-modify-files_uploader-default.sql'
+		);
+
+		$updater->dropExtensionField(
+			'gnf_files',
+			'files_user',
+			__DIR__ . '/../sql/patches/patch-gnf_files-drop-files_user.sql'
+		);
 	}
 
 	/**
