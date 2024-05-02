@@ -11,7 +11,7 @@
 	"license-name": "GPL-3.0-or-later",
 	"type": "specialpage",
 	"requires": {
-		"MediaWiki": ">= 1.36.0"
+		"MediaWiki": ">= 1.41.0"
 	},
 	"MessagesDirs": {
 		"GlobalNewFiles": [
@@ -30,7 +30,8 @@
 		"SpecialGlobalNewFiles": "includes/SpecialGlobalNewFiles.php",
 		"GlobalNewFilesInsertJob": "includes/jobs/GlobalNewFilesInsertJob.php",
 		"GlobalNewFilesDeleteJob": "includes/jobs/GlobalNewFilesDeleteJob.php",
-		"GlobalNewFilesMoveJob": "includes/jobs/GlobalNewFilesMoveJob.php"
+		"GlobalNewFilesMoveJob": "includes/jobs/GlobalNewFilesMoveJob.php",
+		"PopulateUploaderCentralIds": "maintenance/PopulateUploaderCentralIds.php"
 	},
 	"JobClasses": {
 		"GlobalNewFilesInsertJob": "GlobalNewFilesInsertJob",
