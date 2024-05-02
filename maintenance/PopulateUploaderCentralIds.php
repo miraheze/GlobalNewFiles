@@ -38,8 +38,6 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 		$count = 0;
 		$failed = 0;
 
-		$offset = 0;
-
 		do {
 			$res = $dbr->newSelectQueryBuilder()
 				->select( 'files_user' )
@@ -49,7 +47,6 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 					'files_dbname' => $wikiId,
 				] )
 				->limit( $batchSize )
-				->offset( $offset )
 				->caller( __METHOD__ )
 				->fetchResultSet();
 
@@ -70,7 +67,6 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 			}
 
 			$count += $dbw->affectedRows();
-			$offset += $batchSize;
 			$this->output( "$count\n" );
 
 		} while ( $res->numRows() >= $batchSize );
