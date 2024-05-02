@@ -42,7 +42,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 				->from( 'gnf_files' )
 				->where( [
 					'files_uploader' => null,
-					//'files_dbname' => $wikiId,
+					// 'files_dbname' => $wikiId,
 				] )
 				->limit( $this->getBatchSize() )
 				->useIndex( 'files_dbname' )
