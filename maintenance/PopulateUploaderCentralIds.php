@@ -39,58 +39,58 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 		$failed = 0;
 
 		foreach ( $this->getConfig()->get( MainConfigNames::LocalDatabases ) as $wiki ) {
-		do {
-			$res = $dbr->newSelectQueryBuilder()
+			do {
+				$res = $dbr->newSelectQueryBuilder()
 				->select( 'files_user' )
 				->from( 'gnf_files' )
 				->where( [
 					'files_uploader' => null,
 					'files_dbname' => $wiki,
 				] )
-				->limit( $this->getBatchSize() )
-				->useIndex( 'files_dbname' )
-				->caller( __METHOD__ )
-				->fetchResultSet();
+					->limit( $this->getBatchSize() )
+					->useIndex( 'files_dbname' )
+					->caller( __METHOD__ )
+					->fetchResultSet();
 
-			if ( !$res->numRows() ) {
-				break;
-			}
+				if ( !$res->numRows() ) {
+					break;
+				}
 
-			foreach ( $res as $row ) {
-				$centralId = $lookup->centralIdFromName( $row->files_user, CentralIdLookup::AUDIENCE_RAW );
+				foreach ( $res as $row ) {
+					$centralId = $lookup->centralIdFromName( $row->files_user, CentralIdLookup::AUDIENCE_RAW );
 
-				if ( $centralId === 0 ) {
-					$failed++;
-					$dbw->newDeleteQueryBuilder()
+					if ( $centralId === 0 ) {
+						$failed++;
+						$dbw->newDeleteQueryBuilder()
 						->deleteFrom( 'gnf_files' )
 						->where( [
 							'files_user' => $row->files_user,
 							'files_dbname' => $wiki,
 						] )
-						->caller( __METHOD__ )
-						->execute();
-					continue;
-				}
+							->caller( __METHOD__ )
+							->execute();
+						continue;
+					}
 
-				$dbw->newUpdateQueryBuilder()
+					$dbw->newUpdateQueryBuilder()
 					->update( 'gnf_files' )
 					->set( [ 'files_uploader' => $centralId ] )
 					->where( [
 						'files_user' => $row->files_user,
 						'files_dbname' => $wiki,
 					] )
-					->caller( __METHOD__ )
-					->execute();
+						->caller( __METHOD__ )
+						->execute();
 
-				// $count += $dbw->affectedRows();
-				// $this->output( "$count migrated; $failed failed\n" );
-			}
+					// $count += $dbw->affectedRows();
+					// $this->output( "$count migrated; $failed failed\n" );
+				}
 
-			$count += $dbw->affectedRows();
-			$this->output( "$count\n" );
-		} while ( true );
+				$count += $dbw->affectedRows();
+				$this->output( "$count\n" );
+			} while ( true );
 
-		$this->output( "Completed migration for $wiki, updated $count row(s), migration failed for $failed row(s).\n" );
+			$this->output( "Completed migration for $wiki, updated $count row(s), migration failed for $failed row(s).\n" );
 		}
 
 		return true;
