@@ -1,2 +1,2 @@
 ALTER TABLE /*_*/gnf_files
-  ADD COLUMN files_uploader INT UNSIGNED NOT NULL AFTER files_name;
+  ADD COLUMN files_uploader INT UNSIGNED DEFAULT NULL AFTER files_name;
