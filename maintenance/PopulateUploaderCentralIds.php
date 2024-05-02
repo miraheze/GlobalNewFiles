@@ -52,9 +52,9 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 						->caller( __METHOD__ )
 						->fetchResultSet();
 
-					if ( !$res->numRows() ) {
-						break;
-					}
+				if ( !$res->numRows() ) {
+					break;
+				}
 
 				foreach ( $res as $row ) {
 					$centralId = $lookup->centralIdFromName( $row->files_user, CentralIdLookup::AUDIENCE_RAW );
