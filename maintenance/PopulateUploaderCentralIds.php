@@ -14,6 +14,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 
 	public function __construct() {
 		parent::__construct();
+		$this->setBatchSize( 1 );
 		$this->requireExtension( 'GlobalNewFiles' );
 	}
 
