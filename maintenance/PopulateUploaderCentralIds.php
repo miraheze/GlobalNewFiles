@@ -50,6 +50,10 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 				->caller( __METHOD__ )
 				->fetchResultSet();
 
+			if ( !$res ) {
+				break;
+			}
+
 			foreach ( $res as $row ) {
 				$centralId = $lookup->centralIdFromName( $row->files_user, CentralIdLookup::AUDIENCE_RAW );
 
@@ -69,7 +73,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 			$count += $dbw->affectedRows();
 			$this->output( "$count\n" );
 
-		} while ( $res->numRows() >= $batchSize );
+		} while ( true );
 
 		$this->output( "Completed migration, updated $count row(s), migration failed for $failed row(s).\n" );
 
