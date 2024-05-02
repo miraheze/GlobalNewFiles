@@ -7,6 +7,7 @@ if ( $IP === false ) {
 
 require_once "$IP/maintenance/Maintenance.php";
 
+use MediaWiki\MainConfigNames;
 use MediaWiki\User\CentralId\CentralIdLookup;
 use MediaWiki\WikiMap\WikiMap;
 
@@ -37,13 +38,14 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 		$count = 0;
 		$failed = 0;
 
+		foreach ( $this->getConfig()->get( MainConfigNames::LocalDatabases ) as $wiki ) {
 		do {
 			$res = $dbr->newSelectQueryBuilder()
 				->select( 'files_user' )
 				->from( 'gnf_files' )
 				->where( [
 					'files_uploader' => null,
-					'files_dbname' => $wikiId,
+					'files_dbname' => $wiki,
 				] )
 				->limit( $this->getBatchSize() )
 				->useIndex( 'files_dbname' )
@@ -63,7 +65,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 						->deleteFrom( 'gnf_files' )
 						->where( [
 							'files_user' => $row->files_user,
-							'files_dbname' => $wikiId,
+							'files_dbname' => $wiki,
 						] )
 						->caller( __METHOD__ )
 						->execute();
@@ -75,7 +77,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 					->set( [ 'files_uploader' => $centralId ] )
 					->where( [
 						'files_user' => $row->files_user,
-						'files_dbname' => $wikiId,
+						'files_dbname' => $wiki,
 					] )
 					->caller( __METHOD__ )
 					->execute();
@@ -88,7 +90,8 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 			$this->output( "$count\n" );
 		} while ( true );
 
-		$this->output( "Completed migration, updated $count row(s), migration failed for $failed row(s).\n" );
+		$this->output( "Completed migration for $wiki, updated $count row(s), migration failed for $failed row(s).\n" );
+		}
 
 		return true;
 	}
