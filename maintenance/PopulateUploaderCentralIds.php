@@ -7,7 +7,6 @@ if ( $IP === false ) {
 
 require_once "$IP/maintenance/Maintenance.php";
 
-use MediaWiki\MediaWikiServices;
 use MediaWiki\User\CentralId\CentralIdLookup;
 use MediaWiki\WikiMap\WikiMap;
 
@@ -31,7 +30,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 	public function doDbUpdates() {
 		$dbr = GlobalNewFilesHooks::getGlobalDB( DB_REPLICA );
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
-		$lookup = MediaWikiServices::getInstance()->getCentralIdLookup();
+		$lookup = $this->getServiceContainer()->getCentralIdLookup();
 		$wikiId = WikiMap::getCurrentWikiId();
 
 		$count = 0;
