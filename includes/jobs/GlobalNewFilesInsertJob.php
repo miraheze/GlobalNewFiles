@@ -39,7 +39,6 @@ class GlobalNewFilesInsertJob extends Job {
 				'files_timestamp' => $dbw->timestamp(),
 				'files_url' => $uploadedFile->getViewURL(),
 				'files_uploader' => $centralIdLookup->centralIdFromLocalUser( $uploader ),
-				'files_user' => $uploader->getName(),
 			],
 			__METHOD__
 		);
