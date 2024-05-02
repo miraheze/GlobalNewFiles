@@ -69,8 +69,13 @@ class GlobalNewFilesPager extends TablePager {
 
 				break;
 			case 'files_uploader':
-				$centralIdLookup = MediaWikiServices::getInstance()->getCentralIdLookup();
-				$name = $centralIdLookup->nameFromCentralId( $row->files_uploader );
+				if ( $row->files_uploader ) {
+					$centralIdLookup = MediaWikiServices::getInstance()->getCentralIdLookup();
+					$name = $centralIdLookup->nameFromCentralId( $row->files_uploader );
+				} else {
+					$name = $row->files_user;
+				}
+
 				$formatted = $this->linkRenderer->makeLink(
 					SpecialPage::getTitleFor( 'CentralAuth', $name ),
 					$name
@@ -87,7 +92,7 @@ class GlobalNewFilesPager extends TablePager {
 	public function getQueryInfo() {
 		$info = [
 			'tables' => [ 'gnf_files' ],
-			'fields' => [ 'files_dbname', 'files_url', 'files_page', 'files_name', 'files_uploader', 'files_private', 'files_timestamp' ],
+			'fields' => [ 'files_dbname', 'files_url', 'files_page', 'files_name', 'files_uploader', 'files_user', 'files_private', 'files_timestamp' ],
 			'conds' => [],
 			'joins_conds' => [],
 		];
