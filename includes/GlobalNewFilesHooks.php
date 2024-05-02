@@ -78,6 +78,14 @@ class GlobalNewFilesHooks {
 			'files_dbname',
 			__DIR__ . '/../sql/patches/patch-gnf_files-add-indexes.sql'
 		);
+
+		$updater->addExtensionField(
+			'gnf_files',
+			'files_uploader',
+			__DIR__ . '/../sql/patches/patch-gnf_files-add-files_uploader.sql'
+		);
+
+		$updater->addPostDatabaseUpdateMaintenance( PopulateUploaderCentralIds::class );
 	}
 
 	/**
