@@ -50,7 +50,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 				->caller( __METHOD__ )
 				->fetchResultSet();
 
-			if ( !$res ) {
+			if ( !$res->numRows() ) {
 				break;
 			}
 
