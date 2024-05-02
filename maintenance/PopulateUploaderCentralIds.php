@@ -36,7 +36,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 		$count = 0;
 		$failed = 0;
 
-		while ( true ) {
+		do {
 			$res = $dbr->newSelectQueryBuilder()
 				->select( 'files_user' )
 				->from( 'gnf_files' )
@@ -47,10 +47,6 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 				->limit( $this->getBatchSize() )
 				->caller( __METHOD__ )
 				->fetchResultSet();
-
-			if ( !$res->numRows() ) {
-				break;
-			}
 
 			foreach ( $res as $row ) {
 				$centralId = $lookup->centralIdFromName( $row->files_user, CentralIdLookup::AUDIENCE_RAW );
@@ -71,7 +67,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 			$count += $dbw->affectedRows();
 			$this->waitForReplication();
 			$this->output( "$count\n" );
-		}
+		} while ( $res->numRows() >= $this->getBatchSize() );
 
 		$this->output( "Completed migration, updated $count row(s), migration failed for $failed row(s).\n" );
 
