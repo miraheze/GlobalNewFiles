@@ -47,10 +47,10 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 						'files_uploader' => null,
 						'files_dbname' => $wiki,
 					] )
-						->limit( $this->getBatchSize() )
-						->useIndex( 'files_dbname' )
-						->caller( __METHOD__ )
-						->fetchResultSet();
+					->limit( $this->getBatchSize() )
+					->useIndex( 'files_dbname' )
+					->caller( __METHOD__ )
+					->fetchResultSet();
 
 				if ( !$res->numRows() ) {
 					break;
