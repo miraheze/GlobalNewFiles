@@ -42,7 +42,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 				->from( 'gnf_files' )
 				->where( [
 					'files_uploader' => null,
-					'files_dbname' => $wikiId,
+					//'files_dbname' => $wikiId,
 				] )
 				->limit( $this->getBatchSize() )
 				->useIndex( 'files_dbname' )
@@ -60,7 +60,8 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 					$failed++;
 					$dbw->newDeleteQueryBuilder()
 						->deleteFrom( 'gnf_files' )
-						->where( [ 'files_user' => $row->files_user, 'files_dbname' => $wikiId ] )
+						->where( [ 'files_user' => $row->files_user ] )
+						->limit( $this->getBatchSize() )
 						->caller( __METHOD__ )
 						->execute();
 					continue;
