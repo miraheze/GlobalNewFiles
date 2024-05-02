@@ -33,8 +33,9 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 		$lookup = $this->getServiceContainer()->getCentralIdLookup();
 
-		if ( !$dbw->fieldExists( 'gnf_files', 'files_user', __METHOD__ ) ) {
-			$this->error( 'files_user field in gnf_files table does not exist. May have already been dropped?' );
+		if ( !$dbr->fieldExists( 'gnf_files', 'files_user', __METHOD__ ) ) {
+			$this->output( 'files_user field in gnf_files table does not exist. May have already been dropped?' );
+			return;
 		}
 
 		$count = 0;
