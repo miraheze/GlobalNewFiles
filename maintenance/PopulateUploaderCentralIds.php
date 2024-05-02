@@ -33,36 +33,46 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 		$lookup = $this->getServiceContainer()->getCentralIdLookup();
 		$wikiId = WikiMap::getCurrentWikiId();
 
+		$batchSize = $this->getBatchSize();
+
 		$count = 0;
 		$failed = 0;
 
-		$res = $dbr->newSelectQueryBuilder()
-			->select( 'files_user' )
-			->from( 'gnf_files' )
-			->where( [
-				'files_uploader' => null,
-				'files_dbname' => $wikiId,
-			] )
-			->caller( __METHOD__ )
-			->fetchResultSet();
+		$offset = 0;
 
-		foreach ( $res as $row ) {
-			$centralId = $lookup->centralIdFromName( $row->files_user, CentralIdLookup::AUDIENCE_RAW );
+		do {
+			$res = $dbr->newSelectQueryBuilder()
+				->select( 'files_user' )
+				->from( 'gnf_files' )
+				->where( [
+					'files_uploader' => null,
+					'files_dbname' => $wikiId,
+				] )
+				->limit( $batchSize )
+				->offset( $offset )
+				->caller( __METHOD__ )
+				->fetchResultSet();
 
-			if ( $centralId === 0 ) {
-				$failed++;
-				continue;
+			foreach ( $res as $row ) {
+				$centralId = $lookup->centralIdFromName( $row->files_user, CentralIdLookup::AUDIENCE_RAW );
+
+				if ( $centralId === 0 ) {
+					$failed++;
+					continue;
+				}
+
+				$dbw->newUpdateQueryBuilder()
+					->update( 'gnf_files' )
+					->set( [ 'files_uploader' => $centralId ] )
+					->where( [ 'files_user' => $row->files_user ] )
+					->caller( __METHOD__ )
+					->execute();
 			}
 
-			$dbw->newUpdateQueryBuilder()
-				->update( 'gnf_files' )
-				->set( [ 'files_uploader' => $centralId ] )
-				->where( [ 'files_user' => $row->files_user ] )
-				->caller( __METHOD__ )
-				->execute();
-		}
+			$count += $dbw->affectedRows();
+			$offset += $batchSize;
 
-		$count = $dbw->affectedRows();
+		} while ( $res->numRows() >= $batchSize );
 
 		$this->output( "Completed migration, updated $count row(s), migration failed for $failed row(s).\n" );
 
