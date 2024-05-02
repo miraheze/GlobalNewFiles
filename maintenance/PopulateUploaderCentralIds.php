@@ -35,10 +35,8 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 
 		$count = 0;
 		$failed = 0;
-		$stuckCount = 0;
 
 		do {
-			$bSize = ( $stuckCount + 1 ) * $this->getBatchSize();
 			$res = $dbr->newSelectQueryBuilder()
 				->select( 'files_user' )
 				->from( 'gnf_files' )
@@ -46,7 +44,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 					'files_uploader' => null,
 					'files_dbname' => $wikiId,
 				] )
-				->limit( $bSize )
+				->limit( $this->getBatchSize() )
 				->useIndex( 'files_dbname' )
 				->caller( __METHOD__ )
 				->fetchResultSet();
@@ -60,12 +58,13 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 
 				if ( $centralId === 0 ) {
 					$failed++;
-					++$stuckCount;
+					$dbw->newDeleteQueryBuilder()
+						->deleteFrom( 'gnf_files' )
+						->where( [ 'files_user' => $row->files_user ] )
+						->caller( __METHOD__ )
+						->execute();
 					continue;
 				}
-
-				// Reset stuck counter
-				$stuckCount = 0;
 
 				$dbw->newUpdateQueryBuilder()
 					->update( 'gnf_files' )
@@ -76,10 +75,6 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 
 				// $count += $dbw->affectedRows();
 				// $this->output( "$count migrated; $failed failed\n" );
-			}
-
-			if ( $failed >= $res->numRows() ) {
-				break;
 			}
 
 			$count += $dbw->affectedRows();
