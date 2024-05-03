@@ -76,7 +76,7 @@
 		}
 	},
 	"ConfigRegistry": {
-		"globalnewfiles": "GlobalVarConfig::newInstance"
+		"GlobalNewFiles": "GlobalVarConfig::newInstance"
 	},
 	"manifest_version": 2
 }

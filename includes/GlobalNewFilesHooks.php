@@ -106,7 +106,7 @@ class GlobalNewFilesHooks {
 	 * @return DBConnRef
 	 */
 	public static function getGlobalDB( $index, $groups = [] ) {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'globalnewfiles' );
+		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'GlobalNewFiles' );
 
 		$lbFactory = MediaWikiServices::getInstance()->getDBLoadBalancerFactory();
 		$lb = $lbFactory->getMainLB( $config->get( 'GlobalNewFilesDatabase' ) );
