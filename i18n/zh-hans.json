@@ -2,6 +2,7 @@
 	"@metadata": {
 		"authors": [
 			"Anterdc99",
+			"GuoPC",
 			"SolidBlock",
 			"铁桶"
 		]
@@ -9,6 +10,6 @@
 	"action-viewglobalprivatefiles": "查看全域非公开文件",
 	"globalnewfiles": "全域新文件",
 	"globalnewfiles-description": "全域新文件特殊页面",
-	"globalnewfiles-label-dbname": "数据库名称：",
+	"globalnewfiles-label-dbname": "数据库名称",
 	"right-viewglobalprivatefiles": "查看从非公开wiki筛选的全域文件"
 }

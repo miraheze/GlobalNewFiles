@@ -8,6 +8,6 @@
 	"action-viewglobalprivatefiles": "檢視全域非公開檔案",
 	"globalnewfiles": "全域新檔案",
 	"globalnewfiles-description": "全域新檔案特殊頁面",
-	"globalnewfiles-label-dbname": "資料庫名稱：",
+	"globalnewfiles-label-dbname": "資料庫名稱",
 	"right-viewglobalprivatefiles": "檢視從非公開 wiki 篩選的全域檔案"
 }

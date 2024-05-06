@@ -3,12 +3,13 @@
 		"authors": [
 			"Chqaz",
 			"RYOUMA1117",
+			"Waki285",
 			"しぃ"
 		]
 	},
 	"action-viewglobalprivatefiles": "グローバルプライベートファイルの閲覧",
 	"globalnewfiles": "新しいファイルを公開する",
 	"globalnewfiles-description": "新しいファイルの特別ページを公開する",
-	"globalnewfiles-label-dbname": "データベース名:",
+	"globalnewfiles-label-dbname": "データベース名",
 	"right-viewglobalprivatefiles": "プライベートウィキからフィルタリングされたグローバルファイルを表示する"
 }

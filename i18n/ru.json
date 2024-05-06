@@ -4,12 +4,13 @@
 			"BerryAVGN",
 			"DDPAT",
 			"Ice bulldog",
+			"Putnik",
 			"WerySkok"
 		]
 	},
 	"action-viewglobalprivatefiles": "просмотр глобальных закрытых файлов",
 	"globalnewfiles": "Глобальные новые файлы",
 	"globalnewfiles-description": "Служебная страница глобальных новых файлов",
-	"globalnewfiles-label-dbname": "Имя базы данных:",
+	"globalnewfiles-label-dbname": "Имя базы данных",
 	"right-viewglobalprivatefiles": "Просмотр глобальных файлов, отфильтрованных из закрытых вики"
 }
