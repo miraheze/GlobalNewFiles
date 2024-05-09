@@ -7,6 +7,6 @@
 	"action-viewglobalprivatefiles": "vider files global private",
 	"globalnewfiles": "Files nove global",
 	"globalnewfiles-description": "Pagina special de files nove global",
-	"globalnewfiles-label-dbname": "Nomine del base de datos:",
+	"globalnewfiles-label-dbname": "Nomine del base de datos",
 	"right-viewglobalprivatefiles": "Vider files global filtrate de wikis private"
 }
