@@ -7,5 +7,6 @@
 	"action-viewglobalprivatefiles": "ver ficheiros privados globais",
 	"globalnewfiles": "Ficheiros novos globais",
 	"globalnewfiles-description": "Página especial de ficheiros novos globais",
+	"globalnewfiles-label-dbname": "Nome da base de dados",
 	"right-viewglobalprivatefiles": "Ver ficheiros globais filtrados de wikis privadas"
 }
