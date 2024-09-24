@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\Linker\LinkRenderer;
+use MediaWiki\SpecialPage\SpecialPage;
 
 class SpecialGlobalNewFiles extends SpecialPage {
 	/** @var LinkRenderer */
