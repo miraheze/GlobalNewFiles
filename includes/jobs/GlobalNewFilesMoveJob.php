@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 
 class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
 	/** @var Title */

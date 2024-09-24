@@ -1,6 +1,8 @@
 <?php
 
+use MediaWiki\Installer\DatabaseUpdater;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 use Wikimedia\Rdbms\DBConnRef;
 
 class GlobalNewFilesHooks {

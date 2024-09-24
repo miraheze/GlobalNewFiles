@@ -1,7 +1,12 @@
 <?php
 
+use MediaWiki\Context\IContextSource;
+use MediaWiki\Html\Html;
 use MediaWiki\Linker\LinkRenderer;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Pager\IndexPager;
+use MediaWiki\Pager\TablePager;
+use MediaWiki\SpecialPage\SpecialPage;
 
 class GlobalNewFilesPager extends TablePager {
 	/** @var LinkRenderer */
