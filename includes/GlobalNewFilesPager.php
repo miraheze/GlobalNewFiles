@@ -27,8 +27,6 @@ class GlobalNewFilesPager extends TablePager {
 	}
 
 	public function getFieldNames() {
-		static $headers = null;
-
 		$headers = [
 			'files_timestamp' => 'listfiles_date',
 			'files_dbname'    => 'globalnewfiles-label-dbname',
