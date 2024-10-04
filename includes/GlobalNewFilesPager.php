@@ -42,15 +42,25 @@ class GlobalNewFilesPager extends TablePager {
 		return $headers;
 	}
 
+	/**
+	 * Safely HTML-escapes $value
+	 *
+	 * @param string $value
+	 * @return string
+	 */
+	private function escape( $value ) {
+		return htmlspecialchars( $value, ENT_QUOTES );
+	}
+
 	public function formatValue( $name, $value ) {
 		$row = $this->mCurrentRow;
 
 		switch ( $name ) {
 			case 'files_timestamp':
-				$formatted = htmlspecialchars( $this->getLanguage()->userTimeAndDate( $row->files_timestamp, $this->getUser() ) );
+				$formatted = $this->escape( $this->getLanguage()->userTimeAndDate( $row->files_timestamp, $this->getUser() ) );
 				break;
 			case 'files_dbname':
-				$formatted = $row->files_dbname;
+				$formatted = $this->escape( $row->files_dbname );
 				break;
 			case 'files_url':
 				$formatted = Html::element(
@@ -81,7 +91,7 @@ class GlobalNewFilesPager extends TablePager {
 				);
 				break;
 			default:
-				$formatted = "Unable to format $name";
+				$formatted = $this->escape( "Unable to format $name" );
 				break;
 		}
 
