@@ -18,6 +18,7 @@ class SpecialGlobalNewFiles extends SpecialPage {
 
 		$pager = new GlobalNewFilesPager( $this->getContext(), $this->linkRenderer );
 
+		$this->getOutput()->addModuleStyles( [ 'ext.globalnewfiles.styles' ] );
 		$this->getOutput()->addParserOutputContent( $pager->getFullOutput() );
 	}
 

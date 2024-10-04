@@ -46,6 +46,15 @@
 			]
 		}
 	},
+	"ResourceModules": {
+		"ext.globalnewfiles.styles": {
+			"styles": "ext.globalnewfiles.styles.css"
+		}
+	},
+	"ResourceFileModulePaths": {
+		"localBasePath": "resources",
+		"remoteExtPath": "GlobalNewFiles/resources"
+	},
 	"Hooks": {
 		"CreateWikiTables": [
 			"GlobalNewFilesHooks::onCreateWikiTables"
