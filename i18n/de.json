@@ -1,11 +1,13 @@
 {
 	"@metadata": {
 		"authors": [
-			"Nekky-chan"
+			"Nekky-chan",
+			"TheRabbit22"
 		]
 	},
 	"action-viewglobalprivatefiles": "Globale private Dateien anzeigen",
 	"globalnewfiles": "Globale neue Dateien",
 	"globalnewfiles-description": "Spezialseite für globale neue Dateien",
+	"globalnewfiles-label-dbname": "Datenbankname",
 	"right-viewglobalprivatefiles": "Globale Dateien aus privaten Wikis gefiltert anzeigen"
 }
