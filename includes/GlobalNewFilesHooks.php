@@ -53,12 +53,12 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onPageMoveComplete( $old, $new, $userIdentity, $pageid, $redirid, $reason, $revision ) {
-		$oldTitle = Title::newFromLinkTarget( $old );
-		$newTitle = Title::newFromLinkTarget( $new );
+		$oldTitle = (Title)Title::newFromLinkTarget( $old );
+		$newTitle = (Title)Title::newFromLinkTarget( $new );
 
 		if ( $oldTitle->inNamespace( NS_FILE ) ) {
 			MediaWikiServices::getInstance()->getJobQueueGroup()->push(
-				new GlobalNewFilesMoveJob( [ 'oldtitle' => ( Title )$oldTitle, 'newtitle' => ( Title )$newTitle ] )
+				new GlobalNewFilesMoveJob( [ 'oldtitle' => $oldTitle, 'newtitle' => $newTitle ] )
 			);
 		}
 	}
