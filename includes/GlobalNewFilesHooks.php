@@ -53,8 +53,8 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onPageMoveComplete( $old, $new, $userIdentity, $pageid, $redirid, $reason, $revision ) {
-		$oldTitle = (Title)Title::newFromLinkTarget( $old );
-		$newTitle = (Title)Title::newFromLinkTarget( $new );
+		$oldTitle = Title::newFromLinkTarget( $old );
+		$newTitle = Title::newFromLinkTarget( $new );
 
 		if ( $oldTitle->inNamespace( NS_FILE ) ) {
 			MediaWikiServices::getInstance()->getJobQueueGroup()->push(
