@@ -58,7 +58,7 @@ class GlobalNewFilesHooks {
 
 		if ( $oldTitle->inNamespace( NS_FILE ) ) {
 			MediaWikiServices::getInstance()->getJobQueueGroup()->push(
-				new GlobalNewFilesMoveJob( [ 'oldtitle' => $oldTitle, 'newtitle' => $newTitle ] )
+				new GlobalNewFilesMoveJob( [ 'oldtitle' => ( Title )$oldTitle, 'newtitle' => ( Title )$newTitle ] )
 			);
 		}
 	}
