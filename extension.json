@@ -78,14 +78,8 @@
 			"GlobalNewFilesHooks::onUploadComplete"
 		]
 	},
-	"config": {
-		"GlobalNewFilesDatabase": {
-			"description": "Required. The global database to use for GlobalNewFiles.",
-			"value": ""
-		}
-	},
-	"ConfigRegistry": {
-		"GlobalNewFiles": "MediaWiki\\Config\\GlobalVarConfig::newInstance"
-	},
+	"DatabaseVirtualDomains": [
+		"virtual-globalnewfiles"
+	],
 	"manifest_version": 2
 }
