@@ -3,9 +3,10 @@
 use MediaWiki\Installer\DatabaseUpdater;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
-use Wikimedia\Rdbms\DBConnRef;
+use Wikimedia\Rdbms\IDatabase;
 
 class GlobalNewFilesHooks {
+
 	/**
 	 * Used for when renaming or deleting the wiki, the entry is removed or updated
 	 * from the GlobalNewFiles table.
@@ -104,15 +105,16 @@ class GlobalNewFilesHooks {
 
 	/**
 	 * @param int $index DB_PRIMARY/DB_REPLICA
-	 * @param array|string $groups
-	 * @return DBConnRef
+	 * @param string|null $group
+	 * @return IDatabase
 	 */
-	public static function getGlobalDB( $index, $groups = [] ) {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'GlobalNewFiles' );
+	public static function getGlobalDB( int $index, ?string $group = null ): IDatabase {
+		$connectionProvider = MediaWikiServices::getInstance()->getConnectionProvider();
 
-		$lbFactory = MediaWikiServices::getInstance()->getDBLoadBalancerFactory();
-		$lb = $lbFactory->getMainLB( $config->get( 'GlobalNewFilesDatabase' ) );
+		if ( $index === DB_PRIMARY ) {
+			return $connectionProvider->getPrimaryDatabase( 'virtual-globalnewfiles' );
+		}
 
-		return $lb->getMaintenanceConnectionRef( $index, $groups, $config->get( 'GlobalNewFilesDatabase' ) );
+		return $connectionProvider->getReplicaDatabase( 'virtual-globalnewfiles', $group );
 	}
 }
