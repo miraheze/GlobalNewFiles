@@ -85,7 +85,7 @@
 		}
 	},
 	"ConfigRegistry": {
-		"GlobalNewFiles": "GlobalVarConfig::newInstance"
+		"GlobalNewFiles": "MediaWiki\\Config\\GlobalVarConfig::newInstance"
 	},
 	"manifest_version": 2
 }
