@@ -89,7 +89,11 @@ class GlobalNewFilesHooks {
 			__DIR__ . '/../sql/patches/patch-gnf_files-add-files_uploader.sql'
 		);
 
-		$updater->addPostDatabaseUpdateMaintenance( PopulateUploaderCentralIds::class );
+		$updater->addExtensionUpdateOnVirtualDomain( [
+			'virtual-globalnewfiles',
+			'runMaintenance',
+			PopulateUploaderCentralIds::class,
+		] );
 
 		$updater->modifyExtensionField(
 			'gnf_files',
