@@ -11,7 +11,10 @@
 	"license-name": "GPL-3.0-or-later",
 	"type": "specialpage",
 	"requires": {
-		"MediaWiki": ">= 1.42.0"
+		"MediaWiki": ">= 1.42.0",
+		"platform": {
+			"php": ">= 8.0"
+		}
 	},
 	"MessagesDirs": {
 		"GlobalNewFiles": [
@@ -78,14 +81,8 @@
 			"GlobalNewFilesHooks::onUploadComplete"
 		]
 	},
-	"config": {
-		"GlobalNewFilesDatabase": {
-			"description": "Required. The global database to use for GlobalNewFiles.",
-			"value": ""
-		}
-	},
-	"ConfigRegistry": {
-		"GlobalNewFiles": "MediaWiki\\Config\\GlobalVarConfig::newInstance"
-	},
+	"DatabaseVirtualDomains": [
+		"virtual-globalnewfiles"
+	],
 	"manifest_version": 2
 }

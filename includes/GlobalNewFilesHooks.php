@@ -3,9 +3,11 @@
 use MediaWiki\Installer\DatabaseUpdater;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
-use Wikimedia\Rdbms\DBConnRef;
+use Wikimedia\Rdbms\IDatabase;
+use Wikimedia\Rdbms\IReadableDatabase;
 
 class GlobalNewFilesHooks {
+
 	/**
 	 * Used for when renaming or deleting the wiki, the entry is removed or updated
 	 * from the GlobalNewFiles table.
@@ -64,55 +66,78 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onLoadExtensionSchemaUpdates( DatabaseUpdater $updater ) {
-		$updater->addExtensionTable(
+		$updater->addExtensionUpdateOnVirtualDomain( [
+			'virtual-globalnewfiles',
+			'addTable',
 			'gnf_files',
-			__DIR__ . '/../sql/gnf_files.sql'
-		);
+			__DIR__ . '/../sql/gnf_files.sql',
+			true,
+		] );
 
-		$updater->modifyExtensionField(
-			'gnf_files',
+		$updater->addExtensionUpdateOnVirtualDomain( [
+			'virtual-globalnewfiles',
+			'modifyField',
 			'files_timestamp',
-			__DIR__ . '/../sql/patches/patch-gnf_files-binary.sql'
-		);
+			__DIR__ . '/../sql/patches/patch-gnf_files-binary.sql',
+			true,
+		] );
 
-		$updater->addExtensionIndex(
+		$updater->addExtensionUpdateOnVirtualDomain( [
+			'virtual-globalnewfiles',
+			'addIndex',
 			'gnf_files',
 			'files_dbname',
-			__DIR__ . '/../sql/patches/patch-gnf_files-add-indexes.sql'
-		);
+			__DIR__ . '/../sql/patches/patch-gnf_files-add-indexes.sql',
+			true,
+		] );
 
-		$updater->addExtensionField(
+		$updater->addExtensionUpdateOnVirtualDomain( [
+			'virtual-globalnewfiles',
+			'addField',
 			'gnf_files',
 			'files_uploader',
-			__DIR__ . '/../sql/patches/patch-gnf_files-add-files_uploader.sql'
-		);
+			__DIR__ . '/../sql/patches/patch-gnf_files-add-files_uploader.sql',
+			true,
+		] );
 
-		$updater->addPostDatabaseUpdateMaintenance( PopulateUploaderCentralIds::class );
+		$updater->addExtensionUpdateOnVirtualDomain( [
+			'virtual-globalnewfiles',
+			'runMaintenance',
+			PopulateUploaderCentralIds::class,
+			PopulateUploaderCentralIds::class,
+		] );
 
-		$updater->modifyExtensionField(
+		$updater->addExtensionUpdateOnVirtualDomain( [
+			'virtual-globalnewfiles',
+			'modifyField',
 			'gnf_files',
 			'files_uploader',
-			__DIR__ . '/../sql/patches/patch-gnf_files-modify-files_uploader-default.sql'
-		);
+			__DIR__ . '/../sql/patches/patch-gnf_files-modify-files_uploader-default.sql',
+			true,
+		] );
 
-		$updater->dropExtensionField(
+		$updater->addExtensionUpdateOnVirtualDomain( [
+			'virtual-globalnewfiles',
+			'dropField',
 			'gnf_files',
 			'files_user',
-			__DIR__ . '/../sql/patches/patch-gnf_files-drop-files_user.sql'
-		);
+			__DIR__ . '/../sql/patches/patch-gnf_files-drop-files_user.sql',
+			true,
+		] );
 	}
 
 	/**
 	 * @param int $index DB_PRIMARY/DB_REPLICA
-	 * @param array|string $groups
-	 * @return DBConnRef
+	 * @param string|null $group
+	 * @return IDatabase|IReadableDatabase
 	 */
-	public static function getGlobalDB( $index, $groups = [] ) {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'GlobalNewFiles' );
+	public static function getGlobalDB( int $index, ?string $group = null ): IDatabase|IReadableDatabase {
+		$connectionProvider = MediaWikiServices::getInstance()->getConnectionProvider();
 
-		$lbFactory = MediaWikiServices::getInstance()->getDBLoadBalancerFactory();
-		$lb = $lbFactory->getMainLB( $config->get( 'GlobalNewFilesDatabase' ) );
+		if ( $index === DB_PRIMARY ) {
+			return $connectionProvider->getPrimaryDatabase( 'virtual-globalnewfiles' );
+		}
 
-		return $lb->getMaintenanceConnectionRef( $index, $groups, $config->get( 'GlobalNewFilesDatabase' ) );
+		return $connectionProvider->getReplicaDatabase( 'virtual-globalnewfiles', $group );
 	}
 }
