@@ -85,6 +85,7 @@ class GlobalNewFilesHooks {
 		$updater->addExtensionUpdateOnVirtualDomain( [
 			'virtual-globalnewfiles',
 			'addIndex',
+			'gnf_files',
 			'files_dbname',
 			__DIR__ . '/../sql/patches/patch-gnf_files-add-indexes.sql',
 			true,
