@@ -9,6 +9,7 @@ require_once "$IP/maintenance/Maintenance.php";
 
 use MediaWiki\MainConfigNames;
 use MediaWiki\User\CentralId\CentralIdLookup;
+use Wikimedia\Rdbms\IMaintainableDatabase;
 
 class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 
@@ -29,9 +30,14 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 	 * @inheritDoc
 	 */
 	public function doDbUpdates() {
-		$dbr = GlobalNewFilesHooks::getGlobalDB( DB_REPLICA );
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 		$lookup = $this->getServiceContainer()->getCentralIdLookup();
+
+		$connectionProvider = $this->getServiceContainer()->getConnectionProvider();
+		$dbr = $connectionProvider->getReplicaDatabase( 'virtual-globalnewfiles' );
+		if ( !( $dbr instanceof IMaintainableDatabase ) ) {
+			throw new RuntimeException( 'Database class must be IMaintainableDatabase' );
+		}
 
 		if ( !$dbr->fieldExists( 'gnf_files', 'files_user', __METHOD__ ) ) {
 			$this->output( 'files_user field in gnf_files table does not exist. May have already been dropped?' );
