@@ -1,4 +1,4 @@
-<?php
+ <?php
 
 $IP = getenv( 'MW_INSTALL_PATH' );
 if ( $IP === false ) {
@@ -30,11 +30,10 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 	 * @inheritDoc
 	 */
 	public function doDbUpdates() {
+		$dbr = GlobalNewFilesHooks::getGlobalDB( DB_REPLICA );
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 		$lookup = $this->getServiceContainer()->getCentralIdLookup();
 
-		$connectionProvider = $this->getServiceContainer()->getConnectionProvider();
-		$dbr = $connectionProvider->getReplicaDatabase( 'virtual-globalnewfiles' );
 		if ( !( $dbr instanceof IMaintainableDatabase ) ) {
 			throw new RuntimeException( 'Database class must be IMaintainableDatabase' );
 		}
