@@ -3,7 +3,7 @@
 use MediaWiki\Installer\DatabaseUpdater;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
-use Wikimedia\Rdbms\IDatabase;
+use Wikimedia\Rdbms\DBConnRef;
 
 class GlobalNewFilesHooks {
 
@@ -106,9 +106,9 @@ class GlobalNewFilesHooks {
 	/**
 	 * @param int $index DB_PRIMARY/DB_REPLICA
 	 * @param string|null $group
-	 * @return IDatabase
+	 * @return DBConnRef
 	 */
-	public static function getGlobalDB( int $index, ?string $group = null ): IDatabase {
+	public static function getGlobalDB( int $index, ?string $group = null ) {
 		$connectionProvider = MediaWikiServices::getInstance()->getConnectionProvider();
 
 		if ( $index === DB_PRIMARY ) {
