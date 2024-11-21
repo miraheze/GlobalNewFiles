@@ -17,7 +17,7 @@ class GlobalNewFilesInsertJob extends Job {
 	public function run() {
 		$services = MediaWikiServices::getInstance();
 
-		$config = $services->getConfigFactory()->makeConfig( 'GlobalNewFiles' );
+		$config = $services->getMainConfig();
 		$permissionManager = $services->getPermissionManager();
 
 		$uploadedFile = $services->getRepoGroup()->getLocalRepo()->newFile( $this->getTitle() );
