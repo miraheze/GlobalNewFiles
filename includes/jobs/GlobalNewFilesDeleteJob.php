@@ -14,7 +14,7 @@ class GlobalNewFilesDeleteJob extends Job {
 	 * @return bool
 	 */
 	public function run() {
-		$config = MediaWikiServices::getInstance()->getConfigFactory()->makeConfig( 'GlobalNewFiles' );
+		$config = MediaWikiServices::getInstance()->getMainConfig();
 
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 
