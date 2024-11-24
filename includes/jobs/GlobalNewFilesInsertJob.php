@@ -37,7 +37,7 @@ class GlobalNewFilesInsertJob extends Job {
 				'files_page' => $config->get( 'Server' ) . $uploadedFile->getDescriptionUrl(),
 				'files_private' => (int)!$permissionManager->isEveryoneAllowed( 'read' ),
 				'files_timestamp' => $dbw->timestamp(),
-				'files_url' => $uploadedFile->getViewURL(),
+				'files_url' => $uploadedFile->getFullUrl(),
 				'files_uploader' => $centralIdLookup->centralIdFromLocalUser( $uploader ),
 			],
 			__METHOD__
