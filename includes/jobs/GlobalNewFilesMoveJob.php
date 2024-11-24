@@ -35,7 +35,7 @@ class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
 			'gnf_files',
 			[
 				'files_name' => $fileNew->getName(),
-				'files_url' => $fileNew->getViewURL(),
+				'files_url' => $fileNew->getFullUrl(),
 				'files_page' => $config->get( 'Server' ) . $fileNew->getDescriptionUrl(),
 			],
 			[
