@@ -12,6 +12,15 @@ class GlobalNewFilesPager extends TablePager {
 	/** @var LinkRenderer */
 	private $linkRenderer;
 
+	/**
+	 * The unique sort fields for the sort options for unique paginate
+	 */
+	private const INDEX_FIELDS = [
+		'files_timestamp' => [ 'files_timestamp' ],
+		'files_dbname'    => [ 'files_dbname' ],
+		'files_name'      => [ 'files_name' ],
+	];
+
 	public function __construct( IContextSource $context, LinkRenderer $linkRenderer ) {
 		parent::__construct( $context );
 
@@ -118,7 +127,7 @@ class GlobalNewFilesPager extends TablePager {
 		return 'files_timestamp';
 	}
 
-	public function isFieldSortable( $name ) {
-		return true;
+	public function isFieldSortable( $field ) {
+		return isset( self::INDEX_FIELDS[$field] );
 	}
 }
