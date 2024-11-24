@@ -9,3 +9,4 @@ CREATE TABLE /*_*/gnf_files (
 ) /*$wgDBTableOptions*/;
 
 CREATE INDEX /*i*/files_dbname ON /*_*/gnf_files (files_dbname);
+CREATE INDEX /*i*/files_timestamp ON /*_*/gnf_files (files_timestamp);
