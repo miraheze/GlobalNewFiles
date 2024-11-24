@@ -22,8 +22,6 @@ class GlobalNewFilesPager extends TablePager {
 	];
 
 	public function __construct( IContextSource $context, LinkRenderer $linkRenderer ) {
-		parent::__construct( $context );
-
 		$this->linkRenderer = $linkRenderer;
 
 		$this->mDb = GlobalNewFilesHooks::getGlobalDB( DB_REPLICA, 'gnf_files' );
@@ -33,6 +31,8 @@ class GlobalNewFilesPager extends TablePager {
 		} else {
 			$this->mDefaultDirection = IndexPager::DIR_ASCENDING;
 		}
+
+		parent::__construct( $context, $linkRenderer );
 	}
 
 	public function getFieldNames() {
@@ -121,6 +121,10 @@ class GlobalNewFilesPager extends TablePager {
 		}
 
 		return $info;
+	}
+
+	public function getIndexField() {
+		return [ self::INDEX_FIELDS[$this->mSort] ];
 	}
 
 	public function getDefaultSort() {
