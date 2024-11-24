@@ -123,10 +123,6 @@ class GlobalNewFilesPager extends TablePager {
 		return $info;
 	}
 
-	public function getIndexField() {
-		return [ self::INDEX_FIELDS[$this->mSort] ];
-	}
-
 	public function getDefaultSort() {
 		return 'files_timestamp';
 	}
