@@ -7,5 +7,6 @@
 	"action-viewglobalprivatefiles": "عرض الملفات الخاصة العالمية",
 	"globalnewfiles": "ملفات عالمية جديدة",
 	"globalnewfiles-description": "صفحة خاصة بالملفات العالمية الجديدة",
+	"globalnewfiles-label-dbname": "اسم قاعدة البيانات",
 	"right-viewglobalprivatefiles": "اعرض الملفات العالمية التي تمت تصفيتها من مواقع الويكي الخاصة"
 }
