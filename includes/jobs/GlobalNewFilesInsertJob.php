@@ -26,7 +26,7 @@ class GlobalNewFilesInsertJob extends Job {
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 
 		$uploader = $uploadedFile->getUploader( File::RAW );
-		if ( $uploader === null ) {
+		if ( !$uploader ) {
 			$uploader = $services->getActorStore()->getUnknownActor();
 
 			// Slightly hacky logging in production for the elusive bug, T12339
