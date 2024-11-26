@@ -32,7 +32,8 @@ class GlobalNewFilesInsertJob extends Job {
 			$logger->warning( 'GlobalNewFilesInsertJob: $uploader is null for {name}', [
 				'name' => $uploadedFile->getName(),
 				'uploader' => $uploader,
-				'fileTitle' => $this->getTitle()
+				'fileTitle' => $this->getTitle(),
+				'uploadedFile' => $uploadedFile
 			] );
 
 			$uploader = $services->getActorStore()->getUnknownActor();
