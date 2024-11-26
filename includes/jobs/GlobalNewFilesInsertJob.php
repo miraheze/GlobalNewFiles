@@ -27,13 +27,15 @@ class GlobalNewFilesInsertJob extends Job {
 
 		$uploader = $uploadedFile->getUploader( File::RAW );
 		if ( !$uploader ) {
-			$uploader = $services->getActorStore()->getUnknownActor();
-
 			// Slightly hacky logging in production for the elusive bug, T12339
 			$logger = LoggerFactory::getInstance( 'GlobalNewFiles' );
 			$logger->warning( 'GlobalNewFilesInsertJob: $uploader is null for {name}', [
 				'name' => $uploadedFile->getName(),
+				'uploader' => $uploader,
+				'fileTitle' => $this->getTitle()
 			] );
+
+			$uploader = $services->getActorStore()->getUnknownActor();
 
 			try {
 				$cacheKey = $uploadedFile->getRepo()->getSharedCacheKey( 'file', sha1( $uploadedFile->getName() ) );
