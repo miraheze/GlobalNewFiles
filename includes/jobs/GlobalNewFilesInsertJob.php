@@ -42,7 +42,7 @@ class GlobalNewFilesInsertJob extends Job {
 					'cacheKey' => $cacheKey,
 				] );
 
-				$ttl = 'Unset for whatever reason';
+				$ttl = null;
 				$cachedData = $services->getMainWANObjectCache()->get( $cacheKey, $ttl );
 				$logger->debug( 'GlobalNewFilesInsertJob: Cached data for {name} (TTL: {ttl}): {cachedData}', [
 					'name' => $uploadedFile->getName(),
