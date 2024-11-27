@@ -74,7 +74,7 @@ class GlobalNewFilesHooks {
 					],
 					__METHOD__
 				);
-			}
+			} );
 		}
 	}
 
