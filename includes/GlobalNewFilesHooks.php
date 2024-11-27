@@ -46,6 +46,7 @@ class GlobalNewFilesHooks {
 	public static function onUploadComplete( $uploadBase ) {
 		$file = $uploadBase->getLocalFile();
 		$user = RequestContext::getMain()->getUser();
+		$method = __METHOD__;
 
 		if ( $file === null ) {
 			// This should not happen, but if the $file is null then log this as a warning.
@@ -72,7 +73,7 @@ class GlobalNewFilesHooks {
 						'files_url' => $file->getFullUrl(),
 						'files_uploader' => $centralIdLookup->centralIdFromLocalUser( $user ),
 					],
-					__METHOD__
+					$method
 				);
 			} );
 		}
