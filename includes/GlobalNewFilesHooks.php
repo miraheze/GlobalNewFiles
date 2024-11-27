@@ -46,7 +46,7 @@ class GlobalNewFilesHooks {
 			$file = $uploadBase->getLocalFile();
 			$user = RequestContext::getMain()->getUser();
 	
-			DeferredUpdates::addCallableUpdate( function () use ( $file, $uploadBase, $user ) {
+			DeferredUpdates::addCallableUpdate( function () use ( $file, $user ) {
 				$services = MediaWikiServices::getInstance();
 		
 				$config = $services->getMainConfig();
@@ -69,9 +69,6 @@ class GlobalNewFilesHooks {
 					__METHOD__
 				);
 			}
-		MediaWikiServices::getInstance()->getJobQueueGroup()->push(
-			new GlobalNewFilesInsertJob( $uploadBase->getTitle(), [] )
-		);
 	}
 
 	public static function onFileDeleteComplete( $file, $oldimage, $article, $user, $reason ) {
