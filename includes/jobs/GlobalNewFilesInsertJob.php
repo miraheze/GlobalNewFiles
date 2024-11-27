@@ -1,20 +1,19 @@
 <?php
 
 use MediaWiki\MediaWikiServices;
-use MediaWiki\User\User;
 use MediaWiki\WikiMap\WikiMap;
 
 class GlobalNewFilesInsertJob extends Job {
 
-	/** @var User */
-	private $user;
+	/** @var int */
+	private $userId;
 
 	/**
 	 * @param array $params
 	 */
 	public function __construct( $title, $params ) {
 		parent::__construct( 'GlobalNewFilesInsertJob', $title, $params );
-		$this->user = $params['user'];
+		$this->userId = (int)$params['userId'];
 	}
 
 	/**
@@ -30,8 +29,6 @@ class GlobalNewFilesInsertJob extends Job {
 
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 
-		$centralIdLookup = $services->getCentralIdLookup();
-
 		$dbw->insert(
 			'gnf_files',
 			[
@@ -41,7 +38,7 @@ class GlobalNewFilesInsertJob extends Job {
 				'files_private' => (int)!$permissionManager->isEveryoneAllowed( 'read' ),
 				'files_timestamp' => $dbw->timestamp(),
 				'files_url' => $uploadedFile->getFullUrl(),
-				'files_uploader' => $centralIdLookup->centralIdFromLocalUser( $this->user ),
+				'files_uploader' => $this->userId,
 			],
 			__METHOD__
 		);
