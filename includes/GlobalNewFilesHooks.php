@@ -44,8 +44,11 @@ class GlobalNewFilesHooks {
 
 	public static function onUploadComplete( $uploadBase ) {
 		$user = RequestContext::getMain()->getUser();
+		$services = MediaWikiServices::getInstance();
+		$centralIdLookup = $services->getCentralIdLookup();
+		$userId = $centralIdLookup->centralIdFromLocalUser( $user );
 		MediaWikiServices::getInstance()->getJobQueueGroup()->push(
-			new GlobalNewFilesInsertJob( $uploadBase->getTitle(), [ 'user' => $user ] )
+			new GlobalNewFilesInsertJob( $uploadBase->getTitle(), [ 'userId' => $userId ] )
 		);
 	}
 
