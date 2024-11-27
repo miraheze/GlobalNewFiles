@@ -74,6 +74,9 @@
 		"FileDeleteComplete": [
 			"GlobalNewFilesHooks::onFileDeleteComplete"
 		],
+		"FileUndeleteComplete": [
+			"GlobalNewFilesHooks::onFileUndeleteComplete"
+		],
 		"PageMoveComplete": [
 			"GlobalNewFilesHooks::onPageMoveComplete"
 		],
