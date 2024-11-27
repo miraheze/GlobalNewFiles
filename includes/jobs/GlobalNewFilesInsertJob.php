@@ -16,6 +16,8 @@ class GlobalNewFilesInsertJob extends Job {
 	 * @return bool
 	 */
 	public function run() {
+		$user = $this->params['user'];
+
 		$services = MediaWikiServices::getInstance();
 
 		$config = $services->getMainConfig();
@@ -24,41 +26,6 @@ class GlobalNewFilesInsertJob extends Job {
 		$uploadedFile = $services->getRepoGroup()->getLocalRepo()->newFile( $this->getTitle() );
 
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
-
-		$uploader = $uploadedFile->getUploader( File::RAW );
-		if ( !$uploader ) {
-			// Slightly hacky logging in production for the elusive bug, T12339
-			$logger = LoggerFactory::getInstance( 'GlobalNewFiles' );
-			$logger->warning( 'GlobalNewFilesInsertJob: $uploader is null for {name}', [
-				'name' => $uploadedFile->getName(),
-				'uploader' => $uploader,
-				'fileTitle' => $this->getTitle(),
-				'uploadedFile' => $uploadedFile
-			] );
-
-			$uploader = $services->getActorStore()->getUnknownActor();
-
-			try {
-				$cacheKey = $uploadedFile->getRepo()->getSharedCacheKey( 'file', sha1( $uploadedFile->getName() ) );
-				$logger->debug( 'GlobalNewFilesInsertJob: Cache key for {name}: {cacheKey}', [
-					'name' => $uploadedFile->getName(),
-					'cacheKey' => $cacheKey,
-				] );
-
-				$ttl = null;
-				$cachedData = $services->getMainWANObjectCache()->get( $cacheKey, $ttl );
-				$logger->debug( 'GlobalNewFilesInsertJob: Cached data for {name} (TTL: {ttl}): {cachedData}', [
-					'name' => $uploadedFile->getName(),
-					'ttl' => $ttl,
-					'cachedData' => $cachedData,
-				] );
-			} catch ( Exception $e ) {
-				$logger->warning( 'GlobalNewFilesInsertJob: Exception when grabbing internal MediaWiki details for {name}: {exception}', [
-					'name' => $uploadedFile->getName(),
-					'exception' => $e,
-				] );
-			}
-		}
 
 		$centralIdLookup = $services->getCentralIdLookup();
 
@@ -71,7 +38,7 @@ class GlobalNewFilesInsertJob extends Job {
 				'files_private' => (int)!$permissionManager->isEveryoneAllowed( 'read' ),
 				'files_timestamp' => $dbw->timestamp(),
 				'files_url' => $uploadedFile->getFullUrl(),
-				'files_uploader' => $centralIdLookup->centralIdFromLocalUser( $uploader ),
+				'files_uploader' => $centralIdLookup->centralIdFromLocalUser( $user ),
 			],
 			__METHOD__
 		);
