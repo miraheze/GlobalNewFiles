@@ -58,6 +58,19 @@ class GlobalNewFilesHooks {
 		);
 	}
 
+	/**
+	 * Hook to FileUndeleteComplete
+	 * @param Title $title
+	 * @param array $versions
+	 * @param User $user
+	 * @param string $reason
+	 */
+	public function onFileUndeleteComplete( $title, $versions, $user, $reason ) {
+		MediaWikiServices::getInstance()->getJobQueueGroup()->push(
+			new GlobalNewFilesInsertJob( $title, [] )
+		);
+	}
+
 	public static function onPageMoveComplete( $old, $new, $userIdentity, $pageid, $redirid, $reason, $revision ) {
 		$oldTitle = Title::newFromLinkTarget( $old );
 		$newTitle = Title::newFromLinkTarget( $new );
