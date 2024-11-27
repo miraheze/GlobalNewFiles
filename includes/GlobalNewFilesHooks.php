@@ -53,7 +53,7 @@ class GlobalNewFilesHooks {
 			$logger = LoggerFactory::getInstance( 'GlobalNewFiles' );
 			$logger->warning( 'UploadBase::getLocalFile is null on run of UploadComplete hook.' );
 		} else {
-			DeferredUpdates::addCallableUpdate( static function () use ( $file, $user ) {
+			DeferredUpdates::addCallableUpdate( static function () use ( $file, $user, $method ) {
 				$services = MediaWikiServices::getInstance();
 
 				$config = $services->getMainConfig();
