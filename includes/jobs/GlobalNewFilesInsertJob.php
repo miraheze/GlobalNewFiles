@@ -1,22 +1,26 @@
 <?php
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\User\User;
 use MediaWiki\WikiMap\WikiMap;
 
 class GlobalNewFilesInsertJob extends Job {
+
+	/** @var User */
+	private $user;
+
 	/**
 	 * @param array $params
 	 */
 	public function __construct( $title, $params ) {
 		parent::__construct( 'GlobalNewFilesInsertJob', $title, $params );
+		$this->user = $params['user'];
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function run() {
-		$user = $this->params['user'];
-
 		$services = MediaWikiServices::getInstance();
 
 		$config = $services->getMainConfig();
@@ -37,7 +41,7 @@ class GlobalNewFilesInsertJob extends Job {
 				'files_private' => (int)!$permissionManager->isEveryoneAllowed( 'read' ),
 				'files_timestamp' => $dbw->timestamp(),
 				'files_url' => $uploadedFile->getFullUrl(),
-				'files_uploader' => $centralIdLookup->centralIdFromLocalUser( $user ),
+				'files_uploader' => $centralIdLookup->centralIdFromLocalUser( $this->user ),
 			],
 			__METHOD__
 		);
