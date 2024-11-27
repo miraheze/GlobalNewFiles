@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\Installer\DatabaseUpdater;
+use MediaWiki\Logger\LoggerFactory;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use Wikimedia\Rdbms\IDatabase;
@@ -43,9 +44,14 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onUploadComplete( $uploadBase ) {
-			$file = $uploadBase->getLocalFile();
-			$user = RequestContext::getMain()->getUser();
+		$file = $uploadBase->getLocalFile();
+		$user = RequestContext::getMain()->getUser();
 
+		if ( $file === null ) {
+			// This should not happen, but if the $file is null then log this as a warning.
+			$logger = LoggerFactory::getInstance( 'GlobalNewFiles' );
+			$logger->warning( 'UploadBase::getLocalFile is null on run of UploadComplete hook.' );
+		} else {
 			DeferredUpdates::addCallableUpdate( static function () use ( $file, $user ) {
 				$services = MediaWikiServices::getInstance();
 
@@ -69,6 +75,7 @@ class GlobalNewFilesHooks {
 					__METHOD__
 				);
 			}
+		}
 	}
 
 	public static function onFileDeleteComplete( $file, $oldimage, $article, $user, $reason ) {
