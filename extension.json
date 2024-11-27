@@ -31,13 +31,11 @@
 		"GlobalNewFilesHooks": "includes/GlobalNewFilesHooks.php",
 		"GlobalNewFilesPager": "includes/GlobalNewFilesPager.php",
 		"SpecialGlobalNewFiles": "includes/SpecialGlobalNewFiles.php",
-		"GlobalNewFilesInsertJob": "includes/jobs/GlobalNewFilesInsertJob.php",
 		"GlobalNewFilesDeleteJob": "includes/jobs/GlobalNewFilesDeleteJob.php",
 		"GlobalNewFilesMoveJob": "includes/jobs/GlobalNewFilesMoveJob.php",
 		"PopulateUploaderCentralIds": "maintenance/PopulateUploaderCentralIds.php"
 	},
 	"JobClasses": {
-		"GlobalNewFilesInsertJob": "GlobalNewFilesInsertJob",
 		"GlobalNewFilesDeleteJob": "GlobalNewFilesDeleteJob",
 		"GlobalNewFilesMoveJob": "GlobalNewFilesMoveJob"
 	},

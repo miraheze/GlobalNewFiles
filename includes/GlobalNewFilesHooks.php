@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\Installer\DatabaseUpdater;
+use MediaWiki\Logger\LoggerFactory;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use Wikimedia\Rdbms\IDatabase;
@@ -43,9 +44,39 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onUploadComplete( $uploadBase ) {
-		MediaWikiServices::getInstance()->getJobQueueGroup()->push(
-			new GlobalNewFilesInsertJob( $uploadBase->getTitle(), [] )
-		);
+		$file = $uploadBase->getLocalFile();
+		$user = RequestContext::getMain()->getUser();
+		$method = __METHOD__;
+
+		if ( $file === null ) {
+			// This should not happen, but if the $file is null then log this as a warning.
+			$logger = LoggerFactory::getInstance( 'GlobalNewFiles' );
+			$logger->warning( 'UploadBase::getLocalFile is null on run of UploadComplete hook.' );
+		} else {
+			DeferredUpdates::addCallableUpdate( static function () use ( $file, $user, $method ) {
+				$services = MediaWikiServices::getInstance();
+
+				$config = $services->getMainConfig();
+				$permissionManager = $services->getPermissionManager();
+
+				$centralIdLookup = $services->getCentralIdLookup();
+
+				$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
+				$dbw->insert(
+					'gnf_files',
+					[
+						'files_dbname' => WikiMap::getCurrentWikiId(),
+						'files_name' => $file->getName(),
+						'files_page' => $config->get( 'Server' ) . $file->getDescriptionUrl(),
+						'files_private' => (int)!$permissionManager->isEveryoneAllowed( 'read' ),
+						'files_timestamp' => $dbw->timestamp(),
+						'files_url' => $file->getFullUrl(),
+						'files_uploader' => $centralIdLookup->centralIdFromLocalUser( $user ),
+					],
+					$method
+				);
+			} );
+		}
 	}
 
 	public static function onFileDeleteComplete( $file, $oldimage, $article, $user, $reason ) {
