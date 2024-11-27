@@ -45,15 +45,15 @@ class GlobalNewFilesHooks {
 	public static function onUploadComplete( $uploadBase ) {
 			$file = $uploadBase->getLocalFile();
 			$user = RequestContext::getMain()->getUser();
-	
-			DeferredUpdates::addCallableUpdate( function () use ( $file, $user ) {
+
+			DeferredUpdates::addCallableUpdate( static function () use ( $file, $user ) {
 				$services = MediaWikiServices::getInstance();
-		
+
 				$config = $services->getMainConfig();
 				$permissionManager = $services->getPermissionManager();
-	
+
 				$centralIdLookup = $services->getCentralIdLookup();
-	
+
 				$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 				$dbw->insert(
 					'gnf_files',
