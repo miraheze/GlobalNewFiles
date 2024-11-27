@@ -43,6 +43,32 @@ class GlobalNewFilesHooks {
 	}
 
 	public static function onUploadComplete( $uploadBase ) {
+			$file = $uploadBase->getLocalFile();
+			$user = RequestContext::getMain()->getUser();
+	
+			DeferredUpdates::addCallableUpdate( function () use ( $file, $uploadBase, $user ) {
+				$services = MediaWikiServices::getInstance();
+		
+				$config = $services->getMainConfig();
+				$permissionManager = $services->getPermissionManager();
+	
+				$centralIdLookup = $services->getCentralIdLookup();
+	
+				$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
+				$dbw->insert(
+					'gnf_files',
+					[
+						'files_dbname' => WikiMap::getCurrentWikiId(),
+						'files_name' => $file->getName(),
+						'files_page' => $config->get( 'Server' ) . $file->getDescriptionUrl(),
+						'files_private' => (int)!$permissionManager->isEveryoneAllowed( 'read' ),
+						'files_timestamp' => $dbw->timestamp(),
+						'files_url' => $file->getFullUrl(),
+						'files_uploader' => $centralIdLookup->centralIdFromLocalUser( $user ),
+					],
+					__METHOD__
+				);
+			}
 		MediaWikiServices::getInstance()->getJobQueueGroup()->push(
 			new GlobalNewFilesInsertJob( $uploadBase->getTitle(), [] )
 		);
