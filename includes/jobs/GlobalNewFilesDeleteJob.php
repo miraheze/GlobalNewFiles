@@ -1,6 +1,7 @@
 <?php
 
 use MediaWiki\MediaWikiServices;
+use MediaWiki\WikiMap\WikiMap;
 
 class GlobalNewFilesDeleteJob extends Job {
 	/**
@@ -23,7 +24,7 @@ class GlobalNewFilesDeleteJob extends Job {
  			'*',
  			[
  				'files_dbname' => WikiMap::getCurrentWikiId(),
- 				'files_name' => $uploadedFile->getName(),
+ 				'files_name' => $this->getTitle()->getDBkey(),
  			],
  			__METHOD__,
  			[ 'LIMIT' => 1 ]
@@ -33,7 +34,7 @@ class GlobalNewFilesDeleteJob extends Job {
 			$dbw->delete(
 				'gnf_files',
 				[
-					'files_dbname' => $config->get( 'DBname' ),
+					'files_dbname' => WikiMap::getCurrentWikiId(),
 					'files_name' => $this->getTitle()->getDBkey(),
 				],
 				__METHOD__
