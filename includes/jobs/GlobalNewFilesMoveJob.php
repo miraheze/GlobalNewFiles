@@ -2,6 +2,7 @@
 
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
+use MediaWiki\WikiMap\WikiMap;
 
 class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
 	/** @var Title */
@@ -31,19 +32,32 @@ class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
 		$fileOld = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo()->newFile( $this->oldTitle );
 		$fileNew = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo()->newFile( $this->newTitle );
 
-		$dbw->update(
-			'gnf_files',
-			[
-				'files_name' => $fileNew->getName(),
-				'files_url' => $fileNew->getFullUrl(),
-				'files_page' => $config->get( 'Server' ) . $fileNew->getDescriptionUrl(),
-			],
-			[
-				'files_dbname' => $config->get( 'DBname' ),
-				'files_name' => $fileOld->getName(),
-			],
-			__METHOD__
-		);
+		$exists = $dbw->selectRowCount(
+ 			'gnf_files',
+ 			'*',
+ 			[
+ 				'files_dbname' => WikiMap::getCurrentWikiId(),
+ 				'files_name' => $fileOld->getName(),
+ 			],
+ 			__METHOD__,
+ 			[ 'LIMIT' => 1 ]
+ 		);
+
+		if ( $exists ) {
+			$dbw->update(
+				'gnf_files',
+				[
+					'files_name' => $fileNew->getName(),
+					'files_url' => $fileNew->getFullUrl(),
+					'files_page' => $config->get( 'Server' ) . $fileNew->getDescriptionUrl(),
+				],
+				[
+					'files_dbname' => WikiMap::getCurrentWikiId(),,
+					'files_name' => $fileOld->getName(),
+				],
+				__METHOD__
+			);
+		}
 
 		return true;
 	}
