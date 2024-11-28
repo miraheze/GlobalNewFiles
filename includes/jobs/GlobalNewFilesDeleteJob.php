@@ -19,16 +19,16 @@ class GlobalNewFilesDeleteJob extends Job {
 
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 
- 		$exists = $dbw->selectRowCount(
- 			'gnf_files',
- 			'*',
- 			[
- 				'files_dbname' => WikiMap::getCurrentWikiId(),
- 				'files_name' => $this->getTitle()->getDBkey(),
- 			],
- 			__METHOD__,
- 			[ 'LIMIT' => 1 ]
- 		);
+		$exists = $dbw->selectRowCount(
+			'gnf_files',
+			'*',
+			[
+				'files_dbname' => WikiMap::getCurrentWikiId(),
+				'files_name' => $this->getTitle()->getDBkey(),
+			],
+			__METHOD__,
+			[ 'LIMIT' => 1 ]
+		);
 
 		if ( $exists ) {
 			$dbw->delete(
