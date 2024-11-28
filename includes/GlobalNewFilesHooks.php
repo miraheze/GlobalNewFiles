@@ -66,8 +66,12 @@ class GlobalNewFilesHooks {
 	 * @param string $reason
 	 */
 	public function onFileUndeleteComplete( $title, $versions, $user, $reason ) {
-		MediaWikiServices::getInstance()->getJobQueueGroup()->push(
-			new GlobalNewFilesInsertJob( $title, [] )
+		$services = MediaWikiServices::getInstance();
+		$userId = $services->getCentralIdLookup()->centralIdFromLocalUser(
+			RequestContext::getMain()->getUser()
+		);
+		$services->getJobQueueGroup()->push(
+			new GlobalNewFilesInsertJob( $title, [ 'userId' => $userId ] )
 		);
 	}
 
