@@ -33,15 +33,15 @@ class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
 		$fileNew = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo()->newFile( $this->newTitle );
 
 		$exists = $dbw->selectRowCount(
- 			'gnf_files',
- 			'*',
- 			[
- 				'files_dbname' => WikiMap::getCurrentWikiId(),
- 				'files_name' => $fileOld->getName(),
- 			],
- 			__METHOD__,
- 			[ 'LIMIT' => 1 ]
- 		);
+			'gnf_files',
+			'*',
+			[
+				'files_dbname' => WikiMap::getCurrentWikiId(),
+				'files_name' => $fileOld->getName(),
+			],
+			__METHOD__,
+			[ 'LIMIT' => 1 ]
+		);
 
 		if ( $exists ) {
 			$dbw->update(
