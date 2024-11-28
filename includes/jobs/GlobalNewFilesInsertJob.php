@@ -44,7 +44,6 @@ class GlobalNewFilesInsertJob extends Job {
 			$dbw->update(
 				'gnf_files',
 				[
-					'files_name' => $fileNew->getName(),
 					'files_timestamp' => $dbw->timestamp(),
 					'files_url' => $uploadedFile->getFullUrl(),
 					'files_uploader' => $this->userId,
