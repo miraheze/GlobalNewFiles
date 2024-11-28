@@ -18,14 +18,27 @@ class GlobalNewFilesDeleteJob extends Job {
 
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 
-		$dbw->delete(
-			'gnf_files',
-			[
-				'files_dbname' => $config->get( 'DBname' ),
-				'files_name' => $this->getTitle()->getDBkey(),
-			],
-			__METHOD__
-		);
+ 		$exists = $dbw->selectRowCount(
+ 			'gnf_files',
+ 			'*',
+ 			[
+ 				'files_dbname' => WikiMap::getCurrentWikiId(),
+ 				'files_name' => $uploadedFile->getName(),
+ 			],
+ 			__METHOD__,
+ 			[ 'LIMIT' => 1 ]
+ 		);
+
+		if ( $exists ) {
+			$dbw->delete(
+				'gnf_files',
+				[
+					'files_dbname' => $config->get( 'DBname' ),
+					'files_name' => $this->getTitle()->getDBkey(),
+				],
+				__METHOD__
+			);
+		}
 
 		return true;
 	}
