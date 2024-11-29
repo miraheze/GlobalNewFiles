@@ -38,7 +38,6 @@ class GlobalNewFilesInsertJob extends Job {
 			[ [ 'files_dbname', 'files_name' ] ],
 			[
 				'files_dbname' => WikiMap::getCurrentWikiId(),
-				'files_dbname' => WikiMap::getCurrentWikiId(),
  				'files_name' => $uploadedFile->getName(),
  				'files_page' => $config->get( 'Server' ) . $uploadedFile->getDescriptionUrl(),
  				'files_private' => (int)!$permissionManager->isEveryoneAllowed( 'read' ),
