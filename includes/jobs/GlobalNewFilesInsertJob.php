@@ -41,20 +41,19 @@ class GlobalNewFilesInsertJob extends Job {
 		);
 
 		if ( $exists ) {
-			$dbw->upsert(
-				'gnf_files',
-				[
-					'files_dbname' => WikiMap::getCurrentWikiId(),
-					'files_name' => $uploadedFile->getName(),
-				],
-				[],
-				[
-					'files_dbname' => WikiMap::getCurrentWikiId(),
-					'files_timestamp' => $dbw->timestamp(),
-					'files_url' => $uploadedFile->getFullUrl(),
-					'files_uploader' => $this->userId,
-				]
-			);
+			$dbw->update(
+ 				'gnf_files',
+ 				[
+ 					'files_timestamp' => $dbw->timestamp(),
+ 					'files_url' => $uploadedFile->getFullUrl(),
+ 					'files_uploader' => $this->userId,
+ 				],
+ 				[
+ 					'files_dbname' => WikiMap::getCurrentWikiId(),
+ 					'files_name' => $uploadedFile->getName(),
+ 				],
+ 				__METHOD__
+ 			);
 
 			return true;
 		}
