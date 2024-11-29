@@ -13,4 +13,4 @@ CREATE INDEX /*i*/files_timestamp ON /*_*/gnf_files (files_timestamp);
 CREATE INDEX /*i*/files_name ON /*_*/gnf_files (files_name);
 CREATE INDEX /*i*/files_private ON /*_*/gnf_files (files_private);
 
-CREATE UNIQUE INDEX /*i*/files_name ON /*_*/gnf_files (files_dbname, files_name);
+CREATE UNIQUE INDEX /*i*/files_name_unique ON /*_*/gnf_files (files_dbname, files_name);
