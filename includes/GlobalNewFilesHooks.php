@@ -25,7 +25,8 @@ class GlobalNewFilesHooks {
 			],
 			[
 				'files_dbname' => $dbname
-			]
+			],
+			__METHOD__
 		);
 	}
 
@@ -38,7 +39,8 @@ class GlobalNewFilesHooks {
 			],
 			[
 				'files_dbname' => $dbname
-			]
+			],
+			__METHOD__
 		);
 	}
 
