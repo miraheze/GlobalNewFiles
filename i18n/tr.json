@@ -2,11 +2,13 @@
 	"@metadata": {
 		"authors": [
 			"Can",
-			"Hedda"
+			"Hedda",
+			"Joseph"
 		]
 	},
 	"action-viewglobalprivatefiles": "küresel özel dosyaları görüntüle",
 	"globalnewfiles": "Küresel Yeni Dosyalar",
 	"globalnewfiles-description": "Küresel yeni dosyalar özel sayfası",
+	"globalnewfiles-label-dbname": "Veritabanı adı",
 	"right-viewglobalprivatefiles": "Özel vikilerden filtrelenen küresel dosyaları görüntüle"
 }
