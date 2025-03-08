@@ -110,7 +110,6 @@ class GlobalNewFilesHooks {
 			'virtual-globalnewfiles',
 			'runMaintenance',
 			PopulateUploaderCentralIds::class,
-			PopulateUploaderCentralIds::class,
 		] );
 
 		$updater->addExtensionUpdateOnVirtualDomain( [

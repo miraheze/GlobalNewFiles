@@ -1,13 +1,7 @@
 <?php
 
-$IP = getenv( 'MW_INSTALL_PATH' );
-if ( $IP === false ) {
-	$IP = __DIR__ . '/../../..';
-}
-
-require_once "$IP/maintenance/Maintenance.php";
-
 use MediaWiki\MainConfigNames;
+use MediaWiki\Maintenance\LoggedUpdateMaintenance;
 use MediaWiki\User\CentralId\CentralIdLookup;
 use Wikimedia\Rdbms\IMaintainableDatabase;
 
@@ -99,5 +93,6 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 	}
 }
 
-$maintClass = PopulateUploaderCentralIds::class;
-require_once RUN_MAINTENANCE_IF_MAIN;
+// @codeCoverageIgnoreStart
+return PopulateUploaderCentralIds::class;
+// @codeCoverageIgnoreEnd
