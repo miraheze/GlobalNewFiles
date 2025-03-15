@@ -29,37 +29,13 @@ class GlobalNewFilesInsertJob extends Job {
 
 		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
 
-		$exists = $dbw->selectRowCount(
+		$dbw->upsert(
 			'gnf_files',
-			'*',
 			[
 				'files_dbname' => WikiMap::getCurrentWikiId(),
 				'files_name' => $uploadedFile->getName(),
 			],
-			__METHOD__,
-			[ 'LIMIT' => 1 ]
-		);
-
-		if ( $exists ) {
-			$dbw->update(
-				'gnf_files',
-				[
-					'files_timestamp' => $dbw->timestamp(),
-					'files_url' => $uploadedFile->getFullUrl(),
-					'files_uploader' => $this->userId,
-				],
-				[
-					'files_dbname' => WikiMap::getCurrentWikiId(),
-					'files_name' => $uploadedFile->getName(),
-				],
-				__METHOD__
-			);
-
-			return true;
-		}
-
-		$dbw->insert(
-			'gnf_files',
+			[ [ 'files_dbname', 'files_name' ] ],
 			[
 				'files_dbname' => WikiMap::getCurrentWikiId(),
 				'files_name' => $uploadedFile->getName(),
@@ -68,8 +44,7 @@ class GlobalNewFilesInsertJob extends Job {
 				'files_timestamp' => $dbw->timestamp(),
 				'files_url' => $uploadedFile->getFullUrl(),
 				'files_uploader' => $this->userId,
-			],
-			__METHOD__
+			]
 		);
 
 		return true;
