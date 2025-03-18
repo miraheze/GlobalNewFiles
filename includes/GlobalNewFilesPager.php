@@ -1,5 +1,7 @@
 <?php
 
+namespace Miraheze\GlobalNewFiles;
+
 use MediaWiki\Context\IContextSource;
 use MediaWiki\Html\Html;
 use MediaWiki\Linker\LinkRenderer;
@@ -24,7 +26,7 @@ class GlobalNewFilesPager extends TablePager {
 	public function __construct( IContextSource $context, LinkRenderer $linkRenderer ) {
 		$this->linkRenderer = $linkRenderer;
 
-		$this->mDb = GlobalNewFilesHooks::getGlobalDB( DB_REPLICA, 'gnf_files' );
+		$this->mDb = Hooks::getGlobalDB( DB_REPLICA, 'gnf_files' );
 
 		if ( $context->getRequest()->getText( 'sort', 'files_date' ) == 'files_date' ) {
 			$this->mDefaultDirection = IndexPager::DIR_DESCENDING;

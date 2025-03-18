@@ -1,7 +1,10 @@
 <?php
 
+namespace Miraheze\GlobalNewFiles\Specials;
+
 use MediaWiki\Linker\LinkRenderer;
 use MediaWiki\SpecialPage\SpecialPage;
+use Miraheze\GlobalNewFiles\GlobalNewFilesPager;
 
 class SpecialGlobalNewFiles extends SpecialPage {
 	/** @var LinkRenderer */

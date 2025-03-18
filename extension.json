@@ -22,28 +22,23 @@
 		]
 	},
 	"ExtensionMessagesFiles": {
-		"GlobalNewFilesAliases": "includes/GlobalNewFilesAliases.php"
+		"GlobalNewFilesAliases": "GlobalNewFilesAliases.php"
 	},
 	"AvailableRights": [
 		"viewglobalprivatefiles"
 	],
-	"AutoloadClasses": {
-		"GlobalNewFilesHooks": "includes/GlobalNewFilesHooks.php",
-		"GlobalNewFilesPager": "includes/GlobalNewFilesPager.php",
-		"SpecialGlobalNewFiles": "includes/SpecialGlobalNewFiles.php",
-		"GlobalNewFilesInsertJob": "includes/jobs/GlobalNewFilesInsertJob.php",
-		"GlobalNewFilesDeleteJob": "includes/jobs/GlobalNewFilesDeleteJob.php",
-		"GlobalNewFilesMoveJob": "includes/jobs/GlobalNewFilesMoveJob.php",
-		"PopulateUploaderCentralIds": "maintenance/PopulateUploaderCentralIds.php"
+	"AutoloadNamespaces": {
+		"Miraheze\\GlobalNewFiles\\": "includes/",
+		"Miraheze\\GlobalNewFiles\\Maintenance\\": "maintenance/"
 	},
 	"JobClasses": {
-		"GlobalNewFilesInsertJob": "GlobalNewFilesInsertJob",
-		"GlobalNewFilesDeleteJob": "GlobalNewFilesDeleteJob",
-		"GlobalNewFilesMoveJob": "GlobalNewFilesMoveJob"
+		"GlobalNewFilesInsertJob": "Miraheze\\GlobalNewFiles\\Jobs\\GlobalNewFilesInsertJob",
+		"GlobalNewFilesDeleteJob": "Miraheze\\GlobalNewFiles\\Jobs\\GlobalNewFilesDeleteJob",
+		"GlobalNewFilesMoveJob": "Miraheze\\GlobalNewFiles\\Jobs\\GlobalNewFilesMoveJob"
 	},
 	"SpecialPages": {
 		"GlobalNewFiles": {
-			"class": "SpecialGlobalNewFiles",
+			"class": "Miraheze\\GlobalNewFiles\\Specials\\SpecialGlobalNewFiles",
 			"services": [
 				"LinkRenderer"
 			]
@@ -60,25 +55,25 @@
 	},
 	"Hooks": {
 		"CreateWikiTables": [
-			"GlobalNewFilesHooks::onCreateWikiTables"
+			"Miraheze\\GlobalNewFiles\\Hooks::onCreateWikiTables"
 		],
 		"CreateWikiStatePrivate": [
-			"GlobalNewFilesHooks::onCreateWikiStatePrivate"
+			"Miraheze\\GlobalNewFiles\\Hooks::onCreateWikiStatePrivate"
 		],
 		"CreateWikiStatePublic": [
-			"GlobalNewFilesHooks::onCreateWikiStatePublic"
+			"Miraheze\\GlobalNewFiles\\Hooks::onCreateWikiStatePublic"
 		],
 		"LoadExtensionSchemaUpdates": [
-			"GlobalNewFilesHooks::onLoadExtensionSchemaUpdates"
+			"Miraheze\\GlobalNewFiles\\Hooks::onLoadExtensionSchemaUpdates"
 		],
 		"FileDeleteComplete": [
-			"GlobalNewFilesHooks::onFileDeleteComplete"
+			"Miraheze\\GlobalNewFiles\\Hooks::onFileDeleteComplete"
 		],
 		"PageMoveComplete": [
-			"GlobalNewFilesHooks::onPageMoveComplete"
+			"Miraheze\\GlobalNewFiles\\Hooks::onPageMoveComplete"
 		],
 		"UploadComplete": [
-			"GlobalNewFilesHooks::onUploadComplete"
+			"Miraheze\\GlobalNewFiles\\Hooks::onUploadComplete"
 		]
 	},
 	"DatabaseVirtualDomains": [

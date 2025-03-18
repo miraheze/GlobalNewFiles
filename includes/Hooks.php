@@ -1,12 +1,19 @@
 <?php
 
+namespace Miraheze\GlobalNewFiles;
+
+use MediaWiki\Context\RequestContext;
 use MediaWiki\Installer\DatabaseUpdater;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
+use Miraheze\GlobalNewFiles\Jobs\GlobalNewFilesDeleteJob;
+use Miraheze\GlobalNewFiles\Jobs\GlobalNewFilesInsertJob;
+use Miraheze\GlobalNewFiles\Jobs\GlobalNewFilesMoveJob;
+use Miraheze\GlobalNewFiles\Maintenance\PopulateUploaderCentralIds;
 use Wikimedia\Rdbms\IDatabase;
 use Wikimedia\Rdbms\IReadableDatabase;
 
-class GlobalNewFilesHooks {
+class Hooks {
 
 	/**
 	 * Used for when renaming or deleting the wiki, the entry is removed or updated
