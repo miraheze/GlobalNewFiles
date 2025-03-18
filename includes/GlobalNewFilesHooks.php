@@ -1,5 +1,7 @@
 <?php
 
+namespace Miraheze\GlobalNewFiles;
+
 use MediaWiki\Installer\DatabaseUpdater;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
