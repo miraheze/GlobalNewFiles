@@ -1,7 +1,11 @@
 <?php
 
+namespace Miraheze\GlobalNewFiles\Jobs;
+
+use Job;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\WikiMap\WikiMap;
+use Miraheze\GlobalNewFiles\Hooks;
 
 class GlobalNewFilesInsertJob extends Job {
 
@@ -27,7 +31,7 @@ class GlobalNewFilesInsertJob extends Job {
 
 		$uploadedFile = $services->getRepoGroup()->getLocalRepo()->newFile( $this->getTitle() );
 
-		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
+		$dbw = Hooks::getGlobalDB( DB_PRIMARY );
 
 		$exists = $dbw->selectRowCount(
 			'gnf_files',
