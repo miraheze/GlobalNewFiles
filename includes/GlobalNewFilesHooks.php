@@ -5,6 +5,10 @@ namespace Miraheze\GlobalNewFiles;
 use MediaWiki\Installer\DatabaseUpdater;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
+use Miraheze\GlobalNewFiles\Jobs\GlobalNewFilesDeleteJob;
+use Miraheze\GlobalNewFiles\Jobs\GlobalNewFilesInsertJob;
+use Miraheze\GlobalNewFiles\Jobs\GlobalNewFilesMoveJob;
+use Miraheze\GlobalNewFiles\Maintenance\PopulateUploaderCentralIds;
 use Wikimedia\Rdbms\IDatabase;
 use Wikimedia\Rdbms\IReadableDatabase;
 
