@@ -2,6 +2,7 @@
 
 namespace Miraheze\GlobalNewFiles;
 
+use MediaWiki\Context\RequestContext;
 use MediaWiki\Installer\DatabaseUpdater;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
