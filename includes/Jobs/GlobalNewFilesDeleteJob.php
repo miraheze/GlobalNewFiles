@@ -1,6 +1,10 @@
 <?php
 
+namespace Miraheze\GlobalNewFiles\Jobs;
+
+use Job;
 use MediaWiki\MediaWikiServices;
+use Miraheze\GlobalNewFiles\Hooks;
 
 class GlobalNewFilesDeleteJob extends Job {
 	/**
@@ -16,7 +20,7 @@ class GlobalNewFilesDeleteJob extends Job {
 	public function run() {
 		$config = MediaWikiServices::getInstance()->getMainConfig();
 
-		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
+		$dbw = Hooks::getGlobalDB( DB_PRIMARY );
 
 		$dbw->delete(
 			'gnf_files',
