@@ -1,5 +1,7 @@
 <?php
 
+namespace Miraheze\GlobalNewFiles;
+
 use MediaWiki\Linker\LinkRenderer;
 use MediaWiki\SpecialPage\SpecialPage;
 
