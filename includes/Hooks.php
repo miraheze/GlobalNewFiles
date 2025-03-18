@@ -12,7 +12,7 @@ use Miraheze\GlobalNewFiles\Maintenance\PopulateUploaderCentralIds;
 use Wikimedia\Rdbms\IDatabase;
 use Wikimedia\Rdbms\IReadableDatabase;
 
-class GlobalNewFilesHooks {
+class Hooks {
 
 	/**
 	 * Used for when renaming or deleting the wiki, the entry is removed or updated
