@@ -1,8 +1,12 @@
 <?php
 
+namespace Miraheze\GlobalNewFiles\Maintenance;
+
 use MediaWiki\MainConfigNames;
 use MediaWiki\Maintenance\LoggedUpdateMaintenance;
 use MediaWiki\User\CentralId\CentralIdLookup;
+use Miraheze\GlobalNewFiles\Hooks;
+use RuntimeException;
 use Wikimedia\Rdbms\IMaintainableDatabase;
 
 class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
@@ -24,8 +28,8 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 	 * @inheritDoc
 	 */
 	public function doDbUpdates() {
-		$dbr = GlobalNewFilesHooks::getGlobalDB( DB_REPLICA );
-		$dbw = GlobalNewFilesHooks::getGlobalDB( DB_PRIMARY );
+		$dbr = Hooks::getGlobalDB( DB_REPLICA );
+		$dbw = Hooks::getGlobalDB( DB_PRIMARY );
 		$lookup = $this->getServiceContainer()->getCentralIdLookup();
 
 		if ( !( $dbr instanceof IMaintainableDatabase ) ) {
