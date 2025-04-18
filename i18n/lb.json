@@ -1,9 +1,11 @@
 {
 	"@metadata": {
 		"authors": [
-			"Robby"
+			"Robby",
+			"Volvox"
 		]
 	},
 	"globalnewfiles": "Global Nei Fichieren",
-	"globalnewfiles-description": "Global Nei Fichieren Spezialsäit"
+	"globalnewfiles-description": "Global Nei Fichieren Spezialsäit",
+	"globalnewfiles-label-dbname": "Datebanknumm"
 }
