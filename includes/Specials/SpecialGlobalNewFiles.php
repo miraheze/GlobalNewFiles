@@ -2,30 +2,41 @@
 
 namespace Miraheze\GlobalNewFiles\Specials;
 
-use MediaWiki\Linker\LinkRenderer;
 use MediaWiki\SpecialPage\SpecialPage;
+use MediaWiki\User\CentralId\CentralIdLookup;
 use Miraheze\GlobalNewFiles\GlobalNewFilesPager;
 
 class SpecialGlobalNewFiles extends SpecialPage {
-	/** @var LinkRenderer */
-	private $linkRenderer;
 
-	public function __construct( LinkRenderer $linkRenderer ) {
+	public function __construct(
+		private readonly CentralIdLookup $centralIdLookup
+	) {
 		parent::__construct( 'GlobalNewFiles' );
-		$this->linkRenderer = $linkRenderer;
 	}
 
-	public function execute( $par ) {
+	/**
+	 * @param ?string $par
+	 */
+	public function execute( $par ): void {
 		$this->setHeaders();
 		$this->outputHeader();
 
-		$pager = new GlobalNewFilesPager( $this->getContext(), $this->linkRenderer );
+		$pager = new GlobalNewFilesPager(
+			$this->centralIdLookup,
+			$this->getContext(),
+			$this->getLinkRenderer()
+		);
 
-		$this->getOutput()->addModuleStyles( [ 'ext.globalnewfiles.styles' ] );
-		$this->getOutput()->addParserOutputContent( $pager->getFullOutput() );
+		$this->getOutput()->addModuleStyles(
+			[ 'ext.globalnewfiles.styles' ]
+		);
+
+		$table = $pager->getFullOutput();
+		$this->getOutput()->addParserOutputContent( $table );
 	}
 
-	protected function getGroupName() {
-		return 'other';
+	/** @inheritDoc */
+	protected function getGroupName(): string {
+		return 'changes';
 	}
 }
