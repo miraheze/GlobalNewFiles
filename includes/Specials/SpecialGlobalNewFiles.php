@@ -37,6 +37,6 @@ class SpecialGlobalNewFiles extends SpecialPage {
 
 	/** @inheritDoc */
 	protected function getGroupName(): string {
-		return 'other';
+		return 'changes';
 	}
 }
