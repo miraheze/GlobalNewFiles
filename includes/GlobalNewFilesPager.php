@@ -9,66 +9,51 @@ use MediaWiki\MediaWikiServices;
 use MediaWiki\Pager\IndexPager;
 use MediaWiki\Pager\TablePager;
 use MediaWiki\SpecialPage\SpecialPage;
+use MediaWiki\User\CentralId\CentralIdLookup;
 
 class GlobalNewFilesPager extends TablePager {
-	/** @var LinkRenderer */
-	private $linkRenderer;
+
+	/** @inheritDoc */
+	public $mDefaultDirection = IndexPager::DIR_DESCENDING;
 
 	/**
 	 * The unique sort fields for the sort options for unique paginate
 	 */
 	private const INDEX_FIELDS = [
 		'files_timestamp' => [ 'files_timestamp' ],
-		'files_dbname'    => [ 'files_dbname' ],
-		'files_name'      => [ 'files_name' ],
+		'files_dbname' => [ 'files_dbname' ],
+		'files_name' => [ 'files_name' ],
 	];
 
-	public function __construct( IContextSource $context, LinkRenderer $linkRenderer ) {
-		$this->linkRenderer = $linkRenderer;
-
-		$this->mDb = Hooks::getGlobalDB( DB_REPLICA, 'gnf_files' );
-
-		if ( $context->getRequest()->getText( 'sort', 'files_date' ) == 'files_date' ) {
-			$this->mDefaultDirection = IndexPager::DIR_DESCENDING;
-		} else {
-			$this->mDefaultDirection = IndexPager::DIR_ASCENDING;
-		}
-
+	public function __construct(
+		private readonly CentralIdLookup $centralIdLookup,
+		IContextSource $context,
+		LinkRenderer $linkRenderer
+	) {
 		parent::__construct( $context, $linkRenderer );
+		$this->mDb = Hooks::getGlobalDB( DB_REPLICA, 'gnf_files' );
 	}
 
-	public function getFieldNames() {
-		$headers = [
-			'files_timestamp' => 'listfiles_date',
-			'files_dbname'    => 'globalnewfiles-label-dbname',
-			'files_name'      => 'listfiles_name',
-			'files_url'       => 'listfiles_thumb',
-			'files_uploader'  => 'listfiles_user',
+	/** @inheritDoc */
+	public function getFieldNames(): array {
+		return [
+			'files_timestamp' => $this->msg( 'listfiles_date' )->text(),
+			'files_dbname' => $this->msg( 'globalnewfiles-label-dbname' )->text(),
+			'files_name' => $this->msg( 'listfiles_name' )->text(),
+			'files_url' => $this->msg( 'listfiles_thumb' )->text(),
+			'files_uploader' => $this->msg( 'listfiles_user' )->text(),
 		];
-
-		foreach ( $headers as &$msg ) {
-			$msg = $this->msg( $msg )->text();
-		}
-
-		return $headers;
 	}
 
-	/**
-	 * Safely HTML-escapes $value
-	 *
-	 * @param string $value
-	 * @return string
-	 */
-	private function escape( $value ) {
-		return htmlspecialchars( $value, ENT_QUOTES );
-	}
-
-	public function formatValue( $name, $value ) {
-		$row = $this->mCurrentRow;
+	/** @inheritDoc */
+	public function formatValue( $name, $value ): string {
+		$row = $this->getCurrentRow();
 
 		switch ( $name ) {
 			case 'files_timestamp':
-				$formatted = $this->escape( $this->getLanguage()->userTimeAndDate( $row->files_timestamp, $this->getUser() ) );
+				$formatted = $this->escape( $this->getLanguage()->userTimeAndDate(
+					$row->files_timestamp, $this->getUser()
+				) );
 				break;
 			case 'files_dbname':
 				$formatted = $this->escape( $row->files_dbname );
@@ -78,62 +63,77 @@ class GlobalNewFilesPager extends TablePager {
 					'img',
 					[
 						'src' => $row->files_url,
-						'style' => 'width: 135px; height: 135px;'
+						'style' => 'width: 135px; height: 135px;',
 					]
 				);
 				break;
 			case 'files_name':
 				$formatted = Html::element(
 					'a',
-					[
-						'href' => $row->files_page,
-					],
+					[ 'href' => $row->files_page ],
 					$row->files_name
 				);
 
 				break;
 			case 'files_uploader':
-				$centralIdLookup = MediaWikiServices::getInstance()->getCentralIdLookup();
-				$name = $centralIdLookup->nameFromCentralId( $row->files_uploader );
-
-				$formatted = $this->linkRenderer->makeLink(
+				$name = $this->centralIdLookup->nameFromCentralId( $row->files_uploader );
+				$formatted = $this->getLinkRenderer()->makeLink(
 					SpecialPage::getTitleFor( 'CentralAuth', $name ),
 					$name
 				);
 				break;
 			default:
 				$formatted = $this->escape( "Unable to format $name" );
-				break;
 		}
 
 		return $formatted;
 	}
 
-	public function getQueryInfo() {
+	/**
+	 * Safely HTML-escapes $value
+	 */
+	private function escape( string $value ): string {
+		return htmlspecialchars( $value, ENT_QUOTES );
+	}
+
+	/** @inheritDoc */
+	public function getQueryInfo(): array {
 		$info = [
-			'tables' => [ 'gnf_files' ],
-			'fields' => [ 'files_dbname', 'files_url', 'files_page', 'files_name', 'files_uploader', 'files_private', 'files_timestamp' ],
+			'tables' => [
+				'gnf_files',
+			],
+			'fields' => [
+				'files_dbname',
+				'files_name',
+				'files_page',
+				'files_private',
+				'files_timestamp',
+				'files_uploader',
+				'files_url',
+			],
 			'conds' => [],
 			'joins_conds' => [],
 		];
 
-		$permissionManager = MediaWikiServices::getInstance()->getPermissionManager();
-		if ( !$permissionManager->userHasRight( $this->getUser(), 'viewglobalprivatefiles' ) ) {
+		if ( !$this->getAuthority()->isAllowed( 'viewglobalprivatefiles' ) ) {
 			$info['conds']['files_private'] = 0;
 		}
 
 		return $info;
 	}
 
-	public function getIndexField() {
+	/** @inheritDoc */
+	public function getIndexField(): array {
 		return [ self::INDEX_FIELDS[$this->mSort] ];
 	}
 
-	public function getDefaultSort() {
+	/** @inheritDoc */
+	public function getDefaultSort(): string {
 		return 'files_timestamp';
 	}
 
-	public function isFieldSortable( $field ) {
-		return isset( self::INDEX_FIELDS[$field] );
+	/** @inheritDoc */
+	public function isFieldSortable( $name ): bool {
+		return isset( self::INDEX_FIELDS[$name] );
 	}
 }
