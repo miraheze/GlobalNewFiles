@@ -3,11 +3,14 @@
 namespace Miraheze\GlobalNewFiles\Specials;
 
 use MediaWiki\SpecialPage\SpecialPage;
+use MediaWiki\User\CentralId\CentralIdLookup;
 use Miraheze\GlobalNewFiles\GlobalNewFilesPager;
 
 class SpecialGlobalNewFiles extends SpecialPage {
 
-	public function __construct() {
+	public function __construct(
+		private readonly CentralIdLookup $centralIdLookup
+	) {
 		parent::__construct( 'GlobalNewFiles' );
 	}
 
@@ -19,6 +22,7 @@ class SpecialGlobalNewFiles extends SpecialPage {
 		$this->outputHeader();
 
 		$pager = new GlobalNewFilesPager(
+			$this->centralIdLookup,
 			$this->getContext(),
 			$this->getLinkRenderer()
 		);
