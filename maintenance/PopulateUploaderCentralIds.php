@@ -17,17 +17,11 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 		$this->requireExtension( 'GlobalNewFiles' );
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-	public function getUpdateKey() {
+	public function getUpdateKey(): string {
 		return 'GlobalNewFilesPopulateUploaderCentralIds';
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-	public function doDbUpdates() {
+	public function doDBUpdates(): bool {
 		$dbr = Hooks::getGlobalDB( DB_REPLICA );
 		$dbw = Hooks::getGlobalDB( DB_PRIMARY );
 		$lookup = $this->getServiceContainer()->getCentralIdLookup();
