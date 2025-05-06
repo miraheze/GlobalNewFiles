@@ -5,7 +5,6 @@ namespace Miraheze\GlobalNewFiles\Maintenance;
 use MediaWiki\MainConfigNames;
 use MediaWiki\Maintenance\LoggedUpdateMaintenance;
 use MediaWiki\User\CentralId\CentralIdLookup;
-use Miraheze\GlobalNewFiles\Hooks;
 use RuntimeException;
 use Wikimedia\Rdbms\IMaintainableDatabase;
 
@@ -22,8 +21,10 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 	}
 
 	public function doDBUpdates(): bool {
-		$dbr = Hooks::getGlobalDB( DB_REPLICA );
-		$dbw = Hooks::getGlobalDB( DB_PRIMARY );
+		$connectionProvider = $this->getServiceContainer()->getConnectionProvider();
+		$dbr = $connectionProvider->getReplicaDatabase( 'virtual-globalnewfiles' );
+		$dbw = $connectionProvider->getPrimaryDatabase( 'virtual-globalnewfiles' );
+
 		$lookup = $this->getServiceContainer()->getCentralIdLookup();
 
 		if ( !( $dbr instanceof IMaintainableDatabase ) ) {
