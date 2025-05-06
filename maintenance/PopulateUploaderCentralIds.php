@@ -36,14 +36,14 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 		}
 
 		$count = 0;
-		foreach ( $this->getConfig()->get( MainConfigNames::LocalDatabases ) as $wiki ) {
+		foreach ( $this->getConfig()->get( MainConfigNames::LocalDatabases ) as $dbname ) {
 			while ( true ) {
 				$res = $dbr->newSelectQueryBuilder()
 					->select( 'files_user' )
 					->from( 'gnf_files' )
 					->where( [
 						'files_uploader' => null,
-						'files_dbname' => $wiki,
+						'files_dbname' => $dbname,
 					] )
 					->limit( $this->getBatchSize() )
 					->useIndex( 'files_dbname' )
@@ -62,7 +62,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 							->deleteFrom( 'gnf_files' )
 							->where( [
 								'files_user' => $row->files_user,
-								'files_dbname' => $wiki,
+								'files_dbname' => $dbname,
 							] )
 							->caller( __METHOD__ )
 							->execute();
@@ -74,7 +74,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 						->set( [ 'files_uploader' => $centralId ] )
 						->where( [
 							'files_user' => $row->files_user,
-							'files_dbname' => $wiki,
+							'files_dbname' => $dbname,
 						] )
 						->caller( __METHOD__ )
 						->execute();
@@ -84,7 +84,7 @@ class PopulateUploaderCentralIds extends LoggedUpdateMaintenance {
 				$this->output( "$count\n" );
 			}
 
-			$this->output( "Completed migration for $wiki\n" );
+			$this->output( "Completed migration for $dbname\n" );
 		}
 
 		return true;
