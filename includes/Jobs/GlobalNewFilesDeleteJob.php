@@ -5,20 +5,19 @@ namespace Miraheze\GlobalNewFiles\Jobs;
 use Job;
 use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 use Miraheze\GlobalNewFiles\Hooks;
 
 class GlobalNewFilesDeleteJob extends Job {
-	/**
-	 * @param array $params
-	 */
-	public function __construct( $title, $params ) {
+
+	public function __construct( Title $title, array $params ) {
 		parent::__construct( 'GlobalNewFilesDeleteJob', $title, $params );
 	}
 
 	/**
 	 * @return bool
 	 */
-	public function run() {
+	public function run(): bool {
 		$config = MediaWikiServices::getInstance()->getMainConfig();
 		$dbw = Hooks::getGlobalDB( DB_PRIMARY );
 
