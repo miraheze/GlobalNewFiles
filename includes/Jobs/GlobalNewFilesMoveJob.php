@@ -7,7 +7,6 @@ use Job;
 use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
-use Miraheze\GlobalNewFiles\Hooks;
 
 class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
 
@@ -26,7 +25,9 @@ class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
 	 */
 	public function run(): bool {
 		$config = MediaWikiServices::getInstance()->getMainConfig();
-		$dbw = Hooks::getGlobalDB( DB_PRIMARY );
+
+		$connectionProvider = MediaWikiServices::getInstance()->getConnectionProvider();
+		$dbw = $connectionProvider->getPrimaryDatabase( 'virtual-globalnewfiles' );
 
 		$fileOld = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo()->newFile( $this->oldTitle );
 		$fileNew = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo()->newFile( $this->newTitle );

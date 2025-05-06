@@ -9,8 +9,6 @@ use Miraheze\GlobalNewFiles\Jobs\GlobalNewFilesDeleteJob;
 use Miraheze\GlobalNewFiles\Jobs\GlobalNewFilesInsertJob;
 use Miraheze\GlobalNewFiles\Jobs\GlobalNewFilesMoveJob;
 use Miraheze\GlobalNewFiles\Maintenance\PopulateUploaderCentralIds;
-use Wikimedia\Rdbms\IDatabase;
-use Wikimedia\Rdbms\IReadableDatabase;
 
 class Hooks {
 
@@ -19,7 +17,8 @@ class Hooks {
 	}
 
 	public static function onCreateWikiStatePrivate( string $dbname ): void {
-		$dbw = self::getGlobalDB( DB_PRIMARY );
+		$connectionProvider = MediaWikiServices::getInstance()->getConnectionProvider();
+		$dbw = $connectionProvider->getPrimaryDatabase( 'virtual-globalnewfiles' );
 		$dbw->newUpdateQueryBuilder()
 			->update( 'gnf_files' )
 			->set( [ 'files_private' => 1 ] )
@@ -29,7 +28,8 @@ class Hooks {
 	}
 
 	public static function onCreateWikiStatePublic( string $dbname ): void {
-		$dbw = self::getGlobalDB( DB_PRIMARY );
+		$connectionProvider = MediaWikiServices::getInstance()->getConnectionProvider();
+		$dbw = $connectionProvider->getPrimaryDatabase( 'virtual-globalnewfiles' );
 		$dbw->newUpdateQueryBuilder()
 			->update( 'gnf_files' )
 			->set( [ 'files_private' => 0 ] )
@@ -123,15 +123,5 @@ class Hooks {
 			__DIR__ . '/../sql/patches/patch-gnf_files-drop-files_user.sql',
 			true,
 		] );
-	}
-
-	public static function getGlobalDB( int $index, ?string $group = null ): IDatabase|IReadableDatabase {
-		$connectionProvider = MediaWikiServices::getInstance()->getConnectionProvider();
-
-		if ( $index === DB_PRIMARY ) {
-			return $connectionProvider->getPrimaryDatabase( 'virtual-globalnewfiles' );
-		}
-
-		return $connectionProvider->getReplicaDatabase( 'virtual-globalnewfiles', $group );
 	}
 }

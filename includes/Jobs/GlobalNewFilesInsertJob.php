@@ -6,7 +6,6 @@ use Job;
 use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
-use Miraheze\GlobalNewFiles\Hooks;
 
 class GlobalNewFilesInsertJob extends Job {
 
@@ -27,7 +26,9 @@ class GlobalNewFilesInsertJob extends Job {
 		$permissionManager = $services->getPermissionManager();
 
 		$uploadedFile = $services->getRepoGroup()->getLocalRepo()->newFile( $this->getTitle() );
-		$dbw = Hooks::getGlobalDB( DB_PRIMARY );
+
+		$connectionProvider = $services->getConnectionProvider();
+		$dbw = $connectionProvider->getPrimaryDatabase( 'virtual-globalnewfiles' );
 
 		$exists = (bool)$dbw->newSelectQueryBuilder()
 			->select( '*' )
