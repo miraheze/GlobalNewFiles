@@ -9,6 +9,7 @@ use MediaWiki\Pager\IndexPager;
 use MediaWiki\Pager\TablePager;
 use MediaWiki\SpecialPage\SpecialPage;
 use MediaWiki\User\CentralId\CentralIdLookup;
+use Wikimedia\Rdbms\IConnectionProvider;
 
 class GlobalNewFilesPager extends TablePager {
 
@@ -26,11 +27,12 @@ class GlobalNewFilesPager extends TablePager {
 
 	public function __construct(
 		private readonly CentralIdLookup $centralIdLookup,
+		IConnectionProvider $connectionProvider,
 		IContextSource $context,
 		LinkRenderer $linkRenderer
 	) {
 		parent::__construct( $context, $linkRenderer );
-		$this->mDb = Hooks::getGlobalDB( DB_REPLICA, 'gnf_files' );
+		$this->mDb = $connectionProvider->getReplicaDatabase( 'virtual-globalnewfiles' );
 	}
 
 	/** @inheritDoc */
