@@ -40,7 +40,8 @@
 		"GlobalNewFiles": {
 			"class": "Miraheze\\GlobalNewFiles\\Specials\\SpecialGlobalNewFiles",
 			"services": [
-				"CentralIdLookup"
+				"CentralIdLookup",
+				"ConnectionProvider"
 			]
 		}
 	},
