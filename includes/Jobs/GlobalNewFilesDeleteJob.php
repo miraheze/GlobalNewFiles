@@ -3,6 +3,7 @@
 namespace Miraheze\GlobalNewFiles\Jobs;
 
 use Job;
+use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
 use Miraheze\GlobalNewFiles\Hooks;
 
@@ -19,13 +20,12 @@ class GlobalNewFilesDeleteJob extends Job {
 	 */
 	public function run() {
 		$config = MediaWikiServices::getInstance()->getMainConfig();
-
 		$dbw = Hooks::getGlobalDB( DB_PRIMARY );
 
 		$dbw->delete(
 			'gnf_files',
 			[
-				'files_dbname' => $config->get( 'DBname' ),
+				'files_dbname' => $config->get( MainConfigNames::DBname ),
 				'files_name' => $this->getTitle()->getDBkey(),
 			],
 			__METHOD__
