@@ -36,19 +36,19 @@ class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
 		$fileOld = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo()->newFile( $this->oldTitle );
 		$fileNew = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo()->newFile( $this->newTitle );
 
-		$dbw->update(
-			'gnf_files',
-			[
+		$dbw->newUpdateQueryBuilder()
+			->update( 'gnf_files' )
+			->set( [
 				'files_name' => $fileNew->getName(),
 				'files_url' => $fileNew->getFullUrl(),
 				'files_page' => $config->get( MainConfigNames::Server ) . $fileNew->getDescriptionUrl(),
-			],
-			[
+			] )
+			->where( [
 				'files_dbname' => $config->get( MainConfigNames::DBname ),
 				'files_name' => $fileOld->getName(),
-			],
-			__METHOD__
-		);
+			] )
+			->caller( __METHOD__ )
+			->execute();
 
 		return true;
 	}
