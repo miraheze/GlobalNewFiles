@@ -3,8 +3,8 @@
 namespace Miraheze\GlobalNewFiles\Jobs;
 
 use Job;
+use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
-use MediaWiki\WikiMap\WikiMap;
 use Miraheze\GlobalNewFiles\Hooks;
 
 class GlobalNewFilesInsertJob extends Job {
@@ -30,14 +30,13 @@ class GlobalNewFilesInsertJob extends Job {
 		$permissionManager = $services->getPermissionManager();
 
 		$uploadedFile = $services->getRepoGroup()->getLocalRepo()->newFile( $this->getTitle() );
-
 		$dbw = Hooks::getGlobalDB( DB_PRIMARY );
 
 		$exists = $dbw->selectRowCount(
 			'gnf_files',
 			'*',
 			[
-				'files_dbname' => WikiMap::getCurrentWikiId(),
+				'files_dbname' => $config->get( MainConfigNames::DBname ),
 				'files_name' => $uploadedFile->getName(),
 			],
 			__METHOD__,
@@ -53,7 +52,7 @@ class GlobalNewFilesInsertJob extends Job {
 					'files_uploader' => $this->userId,
 				],
 				[
-					'files_dbname' => WikiMap::getCurrentWikiId(),
+					'files_dbname' => $config->get( MainConfigNames::DBname ),
 					'files_name' => $uploadedFile->getName(),
 				],
 				__METHOD__
@@ -65,9 +64,9 @@ class GlobalNewFilesInsertJob extends Job {
 		$dbw->insert(
 			'gnf_files',
 			[
-				'files_dbname' => WikiMap::getCurrentWikiId(),
+				'files_dbname' => $config->get( MainConfigNames::DBname ),
 				'files_name' => $uploadedFile->getName(),
-				'files_page' => $config->get( 'Server' ) . $uploadedFile->getDescriptionUrl(),
+				'files_page' => $config->get( MainConfigNames::Server ) . $uploadedFile->getDescriptionUrl(),
 				'files_private' => (int)!$permissionManager->isEveryoneAllowed( 'read' ),
 				'files_timestamp' => $dbw->timestamp(),
 				'files_url' => $uploadedFile->getFullUrl(),
