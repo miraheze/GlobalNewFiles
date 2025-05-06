@@ -22,14 +22,14 @@ class GlobalNewFilesDeleteJob extends Job {
 		$config = MediaWikiServices::getInstance()->getMainConfig();
 		$dbw = Hooks::getGlobalDB( DB_PRIMARY );
 
-		$dbw->delete(
-			'gnf_files',
-			[
+		$dbw->newDeleteQueryBuilder()
+			->deleteFrom( 'gnf_files' )
+			->where( [
 				'files_dbname' => $config->get( MainConfigNames::DBname ),
 				'files_name' => $this->getTitle()->getDBkey(),
-			],
-			__METHOD__
-		);
+			] )
+			->caller( __METHOD__ )
+			->execute();
 
 		return true;
 	}

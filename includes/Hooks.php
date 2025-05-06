@@ -25,30 +25,22 @@ class Hooks {
 
 	public static function onCreateWikiStatePrivate( $dbname ) {
 		$dbw = self::getGlobalDB( DB_PRIMARY );
-		$dbw->update(
-			'gnf_files',
-			[
-				'files_private' => 1
-			],
-			[
-				'files_dbname' => $dbname
-			],
-			__METHOD__
-		);
+		$dbw->newUpdateQueryBuilder()
+			->update( 'gnf_files' )
+			->set( [ 'files_private' => 1 ] )
+			->where( [ 'files_dbname' => $dbname ] )
+			->caller( __METHOD__ )
+			->execute();
 	}
 
 	public static function onCreateWikiStatePublic( $dbname ) {
 		$dbw = self::getGlobalDB( DB_PRIMARY );
-		$dbw->update(
-			'gnf_files',
-			[
-				'files_private' => 0
-			],
-			[
-				'files_dbname' => $dbname
-			],
-			__METHOD__
-		);
+		$dbw->newUpdateQueryBuilder()
+			->update( 'gnf_files' )
+			->set( [ 'files_private' => 0 ] )
+			->where( [ 'files_dbname' => $dbname ] )
+			->caller( __METHOD__ )
+			->execute();
 	}
 
 	public static function onUploadComplete( $uploadBase ) {

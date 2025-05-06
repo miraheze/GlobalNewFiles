@@ -32,38 +32,38 @@ class GlobalNewFilesInsertJob extends Job {
 		$uploadedFile = $services->getRepoGroup()->getLocalRepo()->newFile( $this->getTitle() );
 		$dbw = Hooks::getGlobalDB( DB_PRIMARY );
 
-		$exists = $dbw->selectRowCount(
-			'gnf_files',
-			'*',
-			[
+		$exists = (bool)$dbw->newSelectQueryBuilder()
+			->select( '*' )
+			->from( 'gnf_files' )
+			->where( [
 				'files_dbname' => $config->get( MainConfigNames::DBname ),
 				'files_name' => $uploadedFile->getName(),
-			],
-			__METHOD__,
-			[ 'LIMIT' => 1 ]
-		);
+			] )
+			->limit( 1 )
+			->caller( __METHOD__ )
+			->fetchRowCount();
 
 		if ( $exists ) {
-			$dbw->update(
-				'gnf_files',
-				[
+			$dbw->newUpdateQueryBuilder()
+				->update( 'gnf_files' )
+				->set( [
 					'files_timestamp' => $dbw->timestamp(),
 					'files_url' => $uploadedFile->getFullUrl(),
 					'files_uploader' => $this->userId,
-				],
-				[
+				] )
+				->where( [
 					'files_dbname' => $config->get( MainConfigNames::DBname ),
 					'files_name' => $uploadedFile->getName(),
-				],
-				__METHOD__
-			);
+				] )
+				->caller( __METHOD__ )
+				->execute();
 
 			return true;
 		}
 
-		$dbw->insert(
-			'gnf_files',
-			[
+		$dbw->newInsertQueryBuilder()
+			->insertInto( 'gnf_files' )
+			->row( [
 				'files_dbname' => $config->get( MainConfigNames::DBname ),
 				'files_name' => $uploadedFile->getName(),
 				'files_page' => $config->get( MainConfigNames::Server ) . $uploadedFile->getDescriptionUrl(),
@@ -71,9 +71,9 @@ class GlobalNewFilesInsertJob extends Job {
 				'files_timestamp' => $dbw->timestamp(),
 				'files_url' => $uploadedFile->getFullUrl(),
 				'files_uploader' => $this->userId,
-			],
-			__METHOD__
-		);
+			] )
+			->caller( __METHOD__ )
+			->execute();
 
 		return true;
 	}
