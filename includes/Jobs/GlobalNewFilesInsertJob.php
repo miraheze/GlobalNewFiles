@@ -5,17 +5,14 @@ namespace Miraheze\GlobalNewFiles\Jobs;
 use Job;
 use MediaWiki\MainConfigNames;
 use MediaWiki\MediaWikiServices;
+use MediaWiki\Title\Title;
 use Miraheze\GlobalNewFiles\Hooks;
 
 class GlobalNewFilesInsertJob extends Job {
 
-	/** @var int */
-	private $userId;
+	private readonly int $userId;
 
-	/**
-	 * @param array $params
-	 */
-	public function __construct( $title, $params ) {
+	public function __construct( Title $title, array $params ) {
 		parent::__construct( 'GlobalNewFilesInsertJob', $title, $params );
 		$this->userId = (int)$params['userId'];
 	}
@@ -23,7 +20,7 @@ class GlobalNewFilesInsertJob extends Job {
 	/**
 	 * @return bool
 	 */
-	public function run() {
+	public function run(): bool {
 		$services = MediaWikiServices::getInstance();
 
 		$config = $services->getMainConfig();

@@ -3,7 +3,6 @@
 namespace Miraheze\GlobalNewFiles;
 
 use MediaWiki\Context\RequestContext;
-use MediaWiki\Installer\DatabaseUpdater;
 use MediaWiki\MediaWikiServices;
 use MediaWiki\Title\Title;
 use Miraheze\GlobalNewFiles\Jobs\GlobalNewFilesDeleteJob;
@@ -15,15 +14,11 @@ use Wikimedia\Rdbms\IReadableDatabase;
 
 class Hooks {
 
-	/**
-	 * Used for when renaming or deleting the wiki, the entry is removed or updated
-	 * from the GlobalNewFiles table.
-	 */
-	public static function onCreateWikiTables( &$tables ) {
+	public static function onCreateWikiTables( array &$tables ): void {
 		$tables['gnf_files'] = 'files_dbname';
 	}
 
-	public static function onCreateWikiStatePrivate( $dbname ) {
+	public static function onCreateWikiStatePrivate( string $dbname ): void {
 		$dbw = self::getGlobalDB( DB_PRIMARY );
 		$dbw->newUpdateQueryBuilder()
 			->update( 'gnf_files' )
@@ -33,7 +28,7 @@ class Hooks {
 			->execute();
 	}
 
-	public static function onCreateWikiStatePublic( $dbname ) {
+	public static function onCreateWikiStatePublic( string $dbname ): void {
 		$dbw = self::getGlobalDB( DB_PRIMARY );
 		$dbw->newUpdateQueryBuilder()
 			->update( 'gnf_files' )
@@ -59,7 +54,7 @@ class Hooks {
 		);
 	}
 
-	public static function onPageMoveComplete( $old, $new, $userIdentity, $pageid, $redirid, $reason, $revision ) {
+	public static function onPageMoveComplete( $old, $new, $user, $pageid, $redirid, $reason, $revision ) {
 		$oldTitle = Title::newFromLinkTarget( $old );
 		$newTitle = Title::newFromLinkTarget( $new );
 
@@ -70,7 +65,7 @@ class Hooks {
 		}
 	}
 
-	public static function onLoadExtensionSchemaUpdates( DatabaseUpdater $updater ) {
+	public static function onLoadExtensionSchemaUpdates( $updater ) {
 		$updater->addExtensionUpdateOnVirtualDomain( [
 			'virtual-globalnewfiles',
 			'addTable',
@@ -130,11 +125,6 @@ class Hooks {
 		] );
 	}
 
-	/**
-	 * @param int $index DB_PRIMARY/DB_REPLICA
-	 * @param string|null $group
-	 * @return IDatabase|IReadableDatabase
-	 */
 	public static function getGlobalDB( int $index, ?string $group = null ): IDatabase|IReadableDatabase {
 		$connectionProvider = MediaWikiServices::getInstance()->getConnectionProvider();
 

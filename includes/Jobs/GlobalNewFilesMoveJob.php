@@ -10,15 +10,10 @@ use MediaWiki\Title\Title;
 use Miraheze\GlobalNewFiles\Hooks;
 
 class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
-	/** @var Title */
-	private $oldTitle;
 
-	/** @var Title */
-	private $newTitle;
+	private readonly Title $oldTitle;
+	private readonly Title $newTitle;
 
-	/**
-	 * @param array $params
-	 */
 	public function __construct( array $params ) {
 		parent::__construct( 'GlobalNewFilesMoveJob', $params );
 
@@ -29,7 +24,7 @@ class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
 	/**
 	 * @return bool
 	 */
-	public function run() {
+	public function run(): bool {
 		$config = MediaWikiServices::getInstance()->getMainConfig();
 		$dbw = Hooks::getGlobalDB( DB_PRIMARY );
 
