@@ -9,6 +9,8 @@ use Wikimedia\Rdbms\IConnectionProvider;
 
 class GlobalNewFilesDeleteJob extends Job {
 
+	public const JOB_NAME = 'GlobalNewFilesDeleteJob';
+
 	private readonly string $fileName;
 
 	public function __construct(
@@ -16,7 +18,7 @@ class GlobalNewFilesDeleteJob extends Job {
 		private readonly IConnectionProvider $connectionProvider,
 		private readonly Config $config
 	) {
-		parent::__construct( 'GlobalNewFilesDeleteJob', $title, $params );
+		parent::__construct( self::JOB_NAME, $params );
 		$this->fileName = $params['fileName'];
 	}
 
