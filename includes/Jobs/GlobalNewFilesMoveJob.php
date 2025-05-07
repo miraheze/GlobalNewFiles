@@ -22,16 +22,16 @@ class GlobalNewFilesMoveJob extends Job {
 		private readonly RepoGroup $repoGroup
 	) {
 		parent::__construct( self::JOB_NAME, $params );
-		$this->oldFileName = $params['oldFileName'];
 		$this->newFileName = $params['newFileName'];
+		$this->oldFileName = $params['oldFileName'];
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function run(): bool {
-		$oldFile = $this->repoGroup->getLocalRepo()->newFile( $this->oldFileName );
 		$newFile = $this->repoGroup->getLocalRepo()->newFile( $this->newFileName );
+		$oldFile = $this->repoGroup->getLocalRepo()->newFile( $this->oldFileName );
 
 		$dbw = $this->connectionProvider->getPrimaryDatabase( 'virtual-globalnewfiles' );
 		$dbw->newUpdateQueryBuilder()
