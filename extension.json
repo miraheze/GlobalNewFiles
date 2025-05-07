@@ -32,9 +32,33 @@
 		"Miraheze\\GlobalNewFiles\\Maintenance\\": "maintenance/"
 	},
 	"JobClasses": {
-		"GlobalNewFilesInsertJob": "Miraheze\\GlobalNewFiles\\Jobs\\GlobalNewFilesInsertJob",
-		"GlobalNewFilesDeleteJob": "Miraheze\\GlobalNewFiles\\Jobs\\GlobalNewFilesDeleteJob",
-		"GlobalNewFilesMoveJob": "Miraheze\\GlobalNewFiles\\Jobs\\GlobalNewFilesMoveJob"
+		"GlobalNewFilesDeleteJob": {
+			"class": "Miraheze\\GlobalNewFiles\\Jobs\\GlobalNewFilesDeleteJob",
+			"services": [
+				"ConnectionProvider",
+				"MainConfig"
+			],
+			"needsPage": false
+		},
+		"GlobalNewFilesInsertJob": {
+			"class": "Miraheze\\GlobalNewFiles\\Jobs\\GlobalNewFilesInsertJob",
+			"services": [
+				"ConnectionProvider",
+				"MainConfig",
+				"PermissionManager",
+				"RepoGroup"
+			],
+			"needsPage": false
+		},
+		"GlobalNewFilesMoveJob": {
+			"class": "Miraheze\\GlobalNewFiles\\Jobs\\GlobalNewFilesMoveJob",
+			"services": [
+				"ConnectionProvider",
+				"MainConfig",
+				"RepoGroup"
+			],
+			"needsPage": false
+		}
 	},
 	"SpecialPages": {
 		"GlobalNewFiles": {
