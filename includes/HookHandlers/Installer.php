@@ -1,6 +1,6 @@
 <?php
 
-namespace Miraheze\CreateWiki\Hooks\Handlers;
+namespace Miraheze\GlobalNewFiles\HookHandlers;
 
 use MediaWiki\Installer\Hook\LoadExtensionSchemaUpdatesHook;
 use Miraheze\GlobalNewFiles\Maintenance\PopulateUploaderCentralIds;
