@@ -64,11 +64,11 @@
 		"CreateWikiTables": {
 			"handler": "CreateWiki"
 		},
-		"LoadExtensionSchemaUpdates": {
-			"handler": "Installer"
-		},
 		"FileDeleteComplete": {
 			"handler": "Main"
+		},
+		"LoadExtensionSchemaUpdates": {
+			"handler": "Installer"
 		},
 		"PageMoveComplete": {
 			"handler": "Main"
