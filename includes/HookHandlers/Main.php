@@ -3,6 +3,7 @@
 namespace Miraheze\GlobalNewFiles\HookHandlers;
 
 use JobQueueGroup;
+use JobSpecification;
 use MediaWiki\Context\RequestContext;
 use MediaWiki\Hook\FileDeleteCompleteHook;
 use MediaWiki\Hook\PageMoveCompleteHook;
@@ -29,8 +30,9 @@ class Main implements
 	/** @inheritDoc */
 	public function onFileDeleteComplete( $file, $oldimage, $article, $user, $reason ) {
 		$this->jobQueueGroup->push(
-			new GlobalNewFilesDeleteJob(
-				$file->getTitle(), []
+			new JobSpecification(
+				GlobalNewFilesDeleteJob::JOB_NAME,
+				[ 'fileName' => $file->getTitle()->getDBkey() ]
 			)
 		);
 	}
@@ -38,28 +40,33 @@ class Main implements
 	/** @inheritDoc */
 	public function onPageMoveComplete( $old, $new, $user, $pageid, $redirid, $reason, $revision ) {
 		$oldTitle = $this->titleFactory->newFromLinkTarget( $old );
-		$newTitle = $this->titleFactory->newFromLinkTarget( $new );
-
 		if ( $oldTitle->inNamespace( NS_FILE ) ) {
+			$newTitle = $this->titleFactory->newFromLinkTarget( $new );
 			$this->jobQueueGroup->push(
-				new GlobalNewFilesMoveJob( [
-					'oldtitle' => $oldTitle,
-					'newtitle' => $newTitle,
-				] )
+				new JobSpecification(
+					GlobalNewFilesMoveJob::JOB_NAME,
+					[
+						'newFileName' => $newTitle->getDBkey(),
+						'oldFileName' => $oldTitle->getDBkey(),
+					]
+				)
 			);
 		}
 	}
 
 	/** @inheritDoc */
 	public function onUploadComplete( $uploadBase ) {
-		$userId = $this->centralIdLookup->centralIdFromLocalUser(
+		$centralUserId = $this->centralIdLookup->centralIdFromLocalUser(
 			RequestContext::getMain()->getUser()
 		);
 
 		$this->jobQueueGroup->push(
-			new GlobalNewFilesInsertJob(
-				$uploadBase->getTitle(),
-				[ 'userId' => $userId ]
+			new JobSpecification(
+				GlobalNewFilesInsertJob::JOB_NAME,
+				[
+					'centralUserId' => $centralUserId,
+					'fileName' => $uploadBase->getTitle()->getDBkey(),
+				]
 			)
 		);
 	}
