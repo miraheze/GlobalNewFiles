@@ -55,27 +55,46 @@
 		"remoteExtPath": "GlobalNewFiles/resources"
 	},
 	"Hooks": {
-		"CreateWikiTables": [
-			"Miraheze\\GlobalNewFiles\\Hooks::onCreateWikiTables"
-		],
-		"CreateWikiStatePrivate": [
-			"Miraheze\\GlobalNewFiles\\Hooks::onCreateWikiStatePrivate"
-		],
-		"CreateWikiStatePublic": [
-			"Miraheze\\GlobalNewFiles\\Hooks::onCreateWikiStatePublic"
-		],
-		"LoadExtensionSchemaUpdates": [
-			"Miraheze\\GlobalNewFiles\\Hooks::onLoadExtensionSchemaUpdates"
-		],
-		"FileDeleteComplete": [
-			"Miraheze\\GlobalNewFiles\\Hooks::onFileDeleteComplete"
-		],
-		"PageMoveComplete": [
-			"Miraheze\\GlobalNewFiles\\Hooks::onPageMoveComplete"
-		],
-		"UploadComplete": [
-			"Miraheze\\GlobalNewFiles\\Hooks::onUploadComplete"
-		]
+		"CreateWikiStatePrivate": {
+			"handler": "CreateWiki"
+		},
+		"CreateWikiStatePublic": {
+			"handler": "CreateWiki"
+		},
+		"CreateWikiTables": {
+			"handler": "CreateWiki"
+		},
+		"FileDeleteComplete": {
+			"handler": "Main"
+		},
+		"LoadExtensionSchemaUpdates": {
+			"handler": "Installer"
+		},
+		"PageMoveComplete": {
+			"handler": "Main"
+		},
+		"UploadComplete": {
+			"handler": "Main"
+		}
+	},
+	"HookHandlers": {
+		"CreateWiki": {
+			"class": "Miraheze\\GlobalNewFiles\\HookHandlers\\CreateWiki",
+			"services": [
+				"ConnectionProvider"
+			]
+		},
+		"Installer": {
+			"class": "Miraheze\\GlobalNewFiles\\HookHandlers\\Installer"
+		},
+		"Main": {
+			"class": "Miraheze\\GlobalNewFiles\\HookHandlers\\Main",
+			"services": [
+				"CentralIdLookup",
+				"JobQueueGroup",
+				"TitleFactory"
+			]
+		}
 	},
 	"DatabaseVirtualDomains": [
 		"virtual-globalnewfiles"
