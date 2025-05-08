@@ -38,6 +38,20 @@ class Main implements
 	}
 
 	/** @inheritDoc */
+	public function onFileUndeleteComplete( $title, $fileVersions, $user, $reason ) {
+		$centralUserId = $this->centralIdLookup->centralIdFromLocalUser( $user );
+		$this->jobQueueGroup->push(
+			new JobSpecification(
+				GlobalNewFilesInsertJob::JOB_NAME,
+				[
+					'centralUserId' => $centralUserId,
+					'fileName' => $title->getDBkey(),
+				]
+			)
+		);
+	}
+
+	/** @inheritDoc */
 	public function onPageMoveComplete( $old, $new, $user, $pageid, $redirid, $reason, $revision ) {
 		$oldTitle = $this->titleFactory->newFromLinkTarget( $old );
 		if ( $oldTitle->inNamespace( NS_FILE ) ) {
