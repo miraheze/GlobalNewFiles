@@ -6,6 +6,7 @@ use JobQueueGroup;
 use JobSpecification;
 use MediaWiki\Context\RequestContext;
 use MediaWiki\Hook\FileDeleteCompleteHook;
+use MediaWiki\Hook\FileUndeleteCompleteHook;
 use MediaWiki\Hook\PageMoveCompleteHook;
 use MediaWiki\Hook\UploadCompleteHook;
 use MediaWiki\Title\TitleFactory;
@@ -16,6 +17,7 @@ use Miraheze\GlobalNewFiles\Jobs\GlobalNewFilesMoveJob;
 
 class Main implements
 	FileDeleteCompleteHook,
+	FileUndeleteCompleteHook,
 	PageMoveCompleteHook,
 	UploadCompleteHook
 {
@@ -33,6 +35,20 @@ class Main implements
 			new JobSpecification(
 				GlobalNewFilesDeleteJob::JOB_NAME,
 				[ 'fileName' => $file->getTitle()->getDBkey() ]
+			)
+		);
+	}
+
+	/** @inheritDoc */
+	public function onFileUndeleteComplete( $title, $fileVersions, $user, $reason ) {
+		$centralUserId = $this->centralIdLookup->centralIdFromLocalUser( $user );
+		$this->jobQueueGroup->push(
+			new JobSpecification(
+				GlobalNewFilesInsertJob::JOB_NAME,
+				[
+					'centralUserId' => $centralUserId,
+					'fileName' => $title->getDBkey(),
+				]
 			)
 		);
 	}

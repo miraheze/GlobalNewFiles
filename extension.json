@@ -91,6 +91,9 @@
 		"FileDeleteComplete": {
 			"handler": "Main"
 		},
+		"FileUndeleteComplete": {
+			"handler": "Main"
+		},
 		"LoadExtensionSchemaUpdates": {
 			"handler": "Installer"
 		},
