@@ -2,46 +2,48 @@
 
 namespace Miraheze\GlobalNewFiles\Jobs;
 
-use GenericParameterJob;
 use Job;
+use MediaWiki\Config\Config;
 use MediaWiki\MainConfigNames;
-use MediaWiki\MediaWikiServices;
-use MediaWiki\Title\Title;
+use RepoGroup;
+use Wikimedia\Rdbms\IConnectionProvider;
 
-class GlobalNewFilesMoveJob extends Job implements GenericParameterJob {
+class GlobalNewFilesMoveJob extends Job {
 
-	private readonly Title $oldTitle;
-	private readonly Title $newTitle;
+	public const JOB_NAME = 'GlobalNewFilesMoveJob';
 
-	public function __construct( array $params ) {
-		parent::__construct( 'GlobalNewFilesMoveJob', $params );
+	private readonly string $newFileName;
+	private readonly string $oldFileName;
 
-		$this->oldTitle = $params['oldtitle'];
-		$this->newTitle = $params['newtitle'];
+	public function __construct(
+		array $params,
+		private readonly IConnectionProvider $connectionProvider,
+		private readonly Config $config,
+		private readonly RepoGroup $repoGroup
+	) {
+		parent::__construct( self::JOB_NAME, $params );
+		$this->newFileName = $params['newFileName'];
+		$this->oldFileName = $params['oldFileName'];
 	}
 
 	/**
 	 * @return bool
 	 */
 	public function run(): bool {
-		$config = MediaWikiServices::getInstance()->getMainConfig();
+		$newFile = $this->repoGroup->getLocalRepo()->newFile( $this->newFileName );
+		$oldFile = $this->repoGroup->getLocalRepo()->newFile( $this->oldFileName );
 
-		$connectionProvider = MediaWikiServices::getInstance()->getConnectionProvider();
-		$dbw = $connectionProvider->getPrimaryDatabase( 'virtual-globalnewfiles' );
-
-		$fileOld = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo()->newFile( $this->oldTitle );
-		$fileNew = MediaWikiServices::getInstance()->getRepoGroup()->getLocalRepo()->newFile( $this->newTitle );
-
+		$dbw = $this->connectionProvider->getPrimaryDatabase( 'virtual-globalnewfiles' );
 		$dbw->newUpdateQueryBuilder()
 			->update( 'gnf_files' )
 			->set( [
-				'files_name' => $fileNew->getName(),
-				'files_url' => $fileNew->getFullUrl(),
-				'files_page' => $config->get( MainConfigNames::Server ) . $fileNew->getDescriptionUrl(),
+				'files_name' => $newFile->getName(),
+				'files_url' => $newFile->getFullUrl(),
+				'files_page' => $this->config->get( MainConfigNames::Server ) . $newFile->getDescriptionUrl(),
 			] )
 			->where( [
-				'files_dbname' => $config->get( MainConfigNames::DBname ),
-				'files_name' => $fileOld->getName(),
+				'files_dbname' => $this->config->get( MainConfigNames::DBname ),
+				'files_name' => $oldFile->getName(),
 			] )
 			->caller( __METHOD__ )
 			->execute();
