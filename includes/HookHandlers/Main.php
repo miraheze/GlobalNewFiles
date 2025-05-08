@@ -6,6 +6,7 @@ use JobQueueGroup;
 use JobSpecification;
 use MediaWiki\Context\RequestContext;
 use MediaWiki\Hook\FileDeleteCompleteHook;
+use MediaWiki\Hook\FileUndeleteCompleteHook;
 use MediaWiki\Hook\PageMoveCompleteHook;
 use MediaWiki\Hook\UploadCompleteHook;
 use MediaWiki\Title\TitleFactory;
@@ -16,6 +17,7 @@ use Miraheze\GlobalNewFiles\Jobs\GlobalNewFilesMoveJob;
 
 class Main implements
 	FileDeleteCompleteHook,
+	FileUndeleteCompleteHook,
 	PageMoveCompleteHook,
 	UploadCompleteHook
 {
