@@ -8,5 +8,6 @@
 	"action-viewglobalprivatefiles": "pregledate globalne privatne datoteke",
 	"globalnewfiles": "Globalne nove datoteke",
 	"globalnewfiles-description": "Posebna stranica za globalne nove datoteke",
+	"globalnewfiles-label-dbname": "Ime baze podataka",
 	"right-viewglobalprivatefiles": "Pregledanje globalnih datoteka filtriranih sa privatnih vikija"
 }
