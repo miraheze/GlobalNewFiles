@@ -47,44 +47,46 @@ class GlobalNewFilesPager extends TablePager {
 	}
 
 	/** @inheritDoc */
-	public function formatValue( $name, $value ): string {
-		$row = $this->getCurrentRow();
+	public function formatValue( $field, $value ): string {
+		if ( $value === null ) {
+			return '';
+		}
 
-		switch ( $name ) {
+		switch ( $field ) {
 			case 'files_timestamp':
 				$formatted = $this->escape( $this->getLanguage()->userTimeAndDate(
-					$row->files_timestamp, $this->getUser()
+					$value, $this->getUser()
 				) );
 				break;
 			case 'files_dbname':
-				$formatted = $this->escape( $row->files_dbname );
+				$formatted = $this->escape( $value );
 				break;
 			case 'files_url':
 				$formatted = Html::element(
 					'img',
 					[
-						'src' => $row->files_url,
+						'src' => $value,
 						'style' => 'width: 135px; height: 135px;',
 					]
 				);
 				break;
 			case 'files_name':
+				$row = $this->getCurrentRow();
 				$formatted = Html::element(
 					'a',
 					[ 'href' => $row->files_page ],
-					$row->files_name
+					$value
 				);
-
 				break;
 			case 'files_uploader':
-				$name = $this->centralIdLookup->nameFromCentralId( $row->files_uploader );
+				$name = $this->centralIdLookup->nameFromCentralId( (int)$value );
 				$formatted = $this->getLinkRenderer()->makeLink(
 					SpecialPage::getTitleFor( 'CentralAuth', $name ),
 					$name
 				);
 				break;
 			default:
-				$formatted = $this->escape( "Unable to format $name" );
+				$formatted = $this->escape( "Unable to format $field" );
 		}
 
 		return $formatted;
@@ -134,7 +136,7 @@ class GlobalNewFilesPager extends TablePager {
 	}
 
 	/** @inheritDoc */
-	public function isFieldSortable( $name ): bool {
-		return isset( self::INDEX_FIELDS[$name] );
+	public function isFieldSortable( $field ): bool {
+		return isset( self::INDEX_FIELDS[$field] );
 	}
 }
