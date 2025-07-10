@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Умар"
+		]
+	},
+	"globalnewfiles": "Глобалан керла файлаш",
+	"globalnewfiles-description": "Глобалан керла файлийн белхан агӀо",
+	"globalnewfiles-label-dbname": "Хаамийн базин цӀе"
+}
