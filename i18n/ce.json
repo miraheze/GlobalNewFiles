@@ -7,5 +7,6 @@
 	"action-viewglobalprivatefiles": "глобалан къайлайаьхна файлаш хьажа",
 	"globalnewfiles": "Глобалан керла файлаш",
 	"globalnewfiles-description": "Глобалан керла файлийн белхан агӀо",
-	"globalnewfiles-label-dbname": "Хаамийн базин цӀе"
+	"globalnewfiles-label-dbname": "Хаамийн базин цӀе",
+	"right-viewglobalprivatefiles": "ДӀакъевлинчу викишкара фильтраци йина глобалан файлаш хьажа"
 }
