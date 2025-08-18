@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"شاه زمان پټان"
+		]
+	},
+	"action-viewglobalprivatefiles": "نړۍ‌والې ځانواله دوتنې کتل",
+	"globalnewfiles": "نړۍ‌والې نوې دوتنې",
+	"globalnewfiles-description": "نړۍ‌والو نوو دوتنو ځانگړی مخ",
+	"globalnewfiles-label-dbname": "اومتوک‌اډانې نوم",
+	"right-viewglobalprivatefiles": "د ځانواله ويکي‌گانو نه چاڼ شوي نړۍوالې دوتنې کتل"
+}
