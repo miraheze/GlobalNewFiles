@@ -7,6 +7,6 @@
 	"action-viewglobalprivatefiles": "vis globale private filer",
 	"globalnewfiles": "Globale nye filer",
 	"globalnewfiles-description": "Spesialside for globale nye filer",
-	"globalnewfiles-label-dbname": "Databasenavn:",
+	"globalnewfiles-label-dbname": "Databasenavn",
 	"right-viewglobalprivatefiles": "Vis globale filer filtrert fra private wikier"
 }
