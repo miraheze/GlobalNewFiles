@@ -23,6 +23,7 @@ class Installer implements LoadExtensionSchemaUpdatesHook {
 		$updater->addExtensionUpdateOnVirtualDomain( [
 			'virtual-globalnewfiles',
 			'modifyField',
+			'gnf_files',
 			'files_timestamp',
 			__DIR__ . '/../../sql/patches/patch-gnf_files-binary.sql',
 			true,
