@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Toliño"
+		]
+	},
+	"action-viewglobalprivatefiles": "ver ficheiros privados globais",
+	"globalnewfiles": "Novos ficheiros globais",
+	"globalnewfiles-description": "Páxina especial de novos ficheiros globais",
+	"globalnewfiles-label-dbname": "Nome da base de datos",
+	"right-viewglobalprivatefiles": "Ver ficheiros globais filtrados de wikis privados"
+}
