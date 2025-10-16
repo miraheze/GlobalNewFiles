@@ -7,5 +7,6 @@
 	"action-viewglobalprivatefiles": "ogled globalnih zasebnih datotek",
 	"globalnewfiles": "Nove globalne datoteke",
 	"globalnewfiles-description": "Posebna stran za nove globalne datoteke",
+	"globalnewfiles-label-dbname": "Ime podatkovne zbirke",
 	"right-viewglobalprivatefiles": "Ogled globalnih datotek, filtriranih iz zasebnih vikijev"
 }
