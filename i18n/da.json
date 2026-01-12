@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"Zakawer2"
+		]
+	},
+	"action-viewglobalprivatefiles": "se globale private filer",
+	"globalnewfiles": "Globale nye filer",
+	"globalnewfiles-description": "Specialside for globale nye filer",
+	"globalnewfiles-label-dbname": "Databasenavn",
+	"right-viewglobalprivatefiles": "Se globale filer filtreret fra private wikier"
+}
