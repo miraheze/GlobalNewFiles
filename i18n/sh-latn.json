@@ -1,6 +1,7 @@
 {
 	"@metadata": {
 		"authors": [
+			"Aca",
 			"Vlad5250",
 			"Winston Sung"
 		]
@@ -9,5 +10,5 @@
 	"globalnewfiles": "Globalne nove datoteke",
 	"globalnewfiles-description": "Posebna stranica za globalne nove datoteke",
 	"globalnewfiles-label-dbname": "Ime baze podataka",
-	"right-viewglobalprivatefiles": "Pregledanje globalnih datoteka filtriranih sa privatnih vikija"
+	"right-viewglobalprivatefiles": "Pregledanje globalnih datoteka filtriranih sa privatnih wikija"
 }
