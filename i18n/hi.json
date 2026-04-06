@@ -5,8 +5,8 @@
 			"ThisIsACreeper0101"
 		]
 	},
-	"action-viewglobalprivatefiles": "ग्लोबल व्यक्तिगत चित्र देखने",
-	"globalnewfiles": "ग्लोबल नए चित्र",
-	"globalnewfiles-description": "ग्लोबल नए चित्रों का विशेष पृष्ठ",
-	"right-viewglobalprivatefiles": "व्यक्तिगत विकियों से लाए गए ग्लोबल चित्र देखें"
+	"action-viewglobalprivatefiles": "वैश्विक गोपनीय फ़ाइलें देखने",
+	"globalnewfiles": "वैश्विक नए चित्र",
+	"globalnewfiles-description": "वैश्विक नए चित्रों का विशेष पृष्ठ",
+	"right-viewglobalprivatefiles": "गोपनीय विकियों से छानी गई वैश्विक फ़ाइलें देखें"
 }
