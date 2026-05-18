@@ -1,0 +1,10 @@
+{
+	"@metadata": {
+		"authors": [
+			"Smaugryu"
+		]
+	},
+	"globalnewfiles": "新ファイル公開すん",
+	"globalnewfiles-description": "新ファイルぬ別段ページ公開すん",
+	"globalnewfiles-label-dbname": "データベース名"
+}

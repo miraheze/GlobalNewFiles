@@ -5,7 +5,7 @@
 			"Ykhwong"
 		]
 	},
-	"action-viewglobalprivatefiles": "전역 개인 파일을 볼",
+	"action-viewglobalprivatefiles": "전역 비공개 파일을 확인",
 	"globalnewfiles": "전역 신규 파일",
 	"globalnewfiles-description": "전역 신규 파일 특수 문서",
 	"globalnewfiles-label-dbname": "데이터베이스 이름",
