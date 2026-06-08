@@ -3,11 +3,13 @@
 		"authors": [
 			"DDPAT",
 			"Ice bulldog",
-			"Ignatgg"
+			"Ignatgg",
+			"Movses"
 		]
 	},
 	"action-viewglobalprivatefiles": "переглядати глобальні приватні файли",
 	"globalnewfiles": "Глобальні нові файли",
 	"globalnewfiles-description": "Глобальна спеціальна сторінка нових файлів",
+	"globalnewfiles-label-dbname": "Ім'я бази даних",
 	"right-viewglobalprivatefiles": "Перегляд глобальних файлів, відфільтрованих з приватних вікі"
 }
