@@ -1,0 +1,12 @@
+{
+	"@metadata": {
+		"authors": [
+			"AhmedG612"
+		]
+	},
+	"action-viewglobalprivatefiles": "Eeg faylasha gaarka ah ee caalamiga ah",
+	"globalnewfiles": "Faylasha Cusub ee Caalamiga ah",
+	"globalnewfiles-description": "Bogga gaarka ah ee faylasha cusub ee caalamiga ah",
+	"globalnewfiles-label-dbname": "Magaca kaydka xogta",
+	"right-viewglobalprivatefiles": "Eeg faylasha caalamiga ah ee laga sifeeyay wiki-yada gaarka ah"
+}
